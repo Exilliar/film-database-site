@@ -4,7 +4,9 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import {MatTableModule} from '@angular/material/table';
+import { MatInputModule, MatPaginatorModule, MatProgressSpinnerModule, 
+  MatSortModule, MatTableModule } from "@angular/material";
+
 
 @NgModule({
   declarations: [
@@ -13,7 +15,11 @@ import {MatTableModule} from '@angular/material/table';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MatTableModule
+    MatTableModule,
+    MatInputModule, 
+    MatPaginatorModule, 
+    MatProgressSpinnerModule, 
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]

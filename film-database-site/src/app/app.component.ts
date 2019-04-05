@@ -24,7 +24,9 @@ export const ELEMENT_DATA: data[] = [{position:1,name:'film 1',length:100,watche
 export class AppComponent {
   title = 'film-database-site';
 
+  displayedColumns: string[] = ['position', 'name', 'length', 'watched'];
+
   dataSource = ELEMENT_DATA;
 
-  displayedColumns: string[] = ['position', 'name', 'length', 'watched?'];
+  
 }
