@@ -4,8 +4,10 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { MatInputModule, MatPaginatorModule, MatProgressSpinnerModule, 
-  MatSortModule, MatTableModule } from "@angular/material";
+import { MatInputModule, MatPaginatorModule, MatProgressSpinnerModule, MatSortModule, MatTableModule } from "@angular/material";
+
+import {CdkTableModule} from '@angular/cdk/table';
+
 
 
 @NgModule({
@@ -19,7 +21,8 @@ import { MatInputModule, MatPaginatorModule, MatProgressSpinnerModule,
     MatInputModule, 
     MatPaginatorModule, 
     MatProgressSpinnerModule, 
-    MatSortModule
+    MatSortModule,
+    CdkTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
