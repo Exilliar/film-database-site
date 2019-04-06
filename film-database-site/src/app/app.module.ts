@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { MatInputModule, MatPaginatorModule, MatProgressSpinnerModule, MatSortModule, MatTableModule } from "@angular/material";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import {CdkTableModule} from '@angular/cdk/table';
 
@@ -22,7 +23,8 @@ import {CdkTableModule} from '@angular/cdk/table';
     MatPaginatorModule, 
     MatProgressSpinnerModule, 
     MatSortModule,
-    CdkTableModule
+    CdkTableModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
