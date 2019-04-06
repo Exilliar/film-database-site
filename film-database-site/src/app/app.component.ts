@@ -1,5 +1,5 @@
-import { Component,ViewChild, AfterViewInit } from '@angular/core';
-import { MatSort, MatPaginator } from '@angular/material'
+import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material'
 
 export interface data {
   position: number;
@@ -24,16 +24,22 @@ export const ELEMENT_DATA: data[] = [{position:1,name:'film 1',length:100,watche
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less']
 })
-export class AppComponent {
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+export class AppComponent implements OnInit{
 
   title = 'film-database-site';
 
   displayedColumns: string[] = ['position', 'name', 'length', 'watched'];
 
-  dataSource = ELEMENT_DATA;
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
   
+  ngOnInit(){
+    
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   onRowClicked(row)
   {
     console.log('Row clicked:',row);
