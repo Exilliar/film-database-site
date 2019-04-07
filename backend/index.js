@@ -36,31 +36,7 @@ app.get('/api/getData', (req,res) => {
   getAllData()
   .then(function(data) {
     console.log(data);
-
-    res.status(200).send(
-      data
-    // [{
-    //   position: 1,
-    //   name: 'film 1',
-    //   length: 100,
-    //   watched: true
-    // },{
-    //   position: 2,
-    //   name: 'film 2',
-    //   length: 100,
-    //   watched: true
-    // },{
-    //   position: 3,
-    //   name: 'film 3',
-    //   length: 100,
-    //   watched: true
-    // },{
-    //   position: 4,
-    //   name: 'film 4',
-    //   length: 100,
-    //   watched: true
-    // }]
-    )
+    res.status(200).send(data);
   })
   
   
