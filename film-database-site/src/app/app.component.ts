@@ -17,7 +17,7 @@ export class AppComponent implements OnInit{
 
   title = 'film-database-site';
 
-  displayedColumns: string[] = ['position', 'name', 'length', 'watched'];
+  displayedColumns: string[] = ['id', 'name', 'length', 'watched'];
 
   
 
