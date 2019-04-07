@@ -1,14 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { DataServiceService } from 'src/app/services/data-service.service';
-
-
-export interface data {
-  position: number;
-  name: string;
-  length: number;
-  watched: boolean;
-}
+import { DataSource } from '@angular/cdk/collections';
+import { Data } from './models/data.model';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +10,8 @@ export interface data {
   styleUrls: ['./app.component.less']
 })
 export class AppComponent implements OnInit{
+  
+  
   constructor(
     private dataservice: DataServiceService
   ) { }
@@ -30,10 +26,10 @@ export class AppComponent implements OnInit{
   dataSource = new MatTableDataSource();
   
   ngOnInit(){
-    this.dataservice.getData().subscribe(
-      res => {
+    this.dataservice.getData()
+    .subscribe(res => {
         console.log(res);
-        
+        this.dataSource.data = res;
       }
     )
   }
