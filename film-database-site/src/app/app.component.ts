@@ -1,23 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material'
-
-export interface data {
-  position: number;
-  name: string;
-  length: number;
-  watched: boolean;
-}
-
-export const ELEMENT_DATA: data[] = [{position:1,name:'film 1',length:100,watched:true},
-                              {position:2,name:'film 2',length:100,watched:true},
-                              {position:3,name:'film 3',length:100,watched:true},
-                              {position:4,name:'film 4',length:100,watched:true},
-                              {position:5,name:'film 5',length:100,watched:true},
-                              {position:6,name:'film 6',length:100,watched:true}
-                            ];
-
-
-
+import { MatTableDataSource } from '@angular/material';
+import { DataServiceService } from 'src/app/services/data-service.service';
 
 @Component({
   selector: 'app-root',
@@ -25,15 +8,28 @@ export const ELEMENT_DATA: data[] = [{position:1,name:'film 1',length:100,watche
   styleUrls: ['./app.component.less']
 })
 export class AppComponent implements OnInit{
+  
+  
+  constructor(
+    private dataservice: DataServiceService
+  ) { }
+
 
   title = 'film-database-site';
 
   displayedColumns: string[] = ['position', 'name', 'length', 'watched'];
 
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  
+
+  dataSource = new MatTableDataSource();
   
   ngOnInit(){
-    
+    this.dataservice.getData()
+    .subscribe(res => {
+        console.log(res);
+        this.dataSource.data = res;
+      }
+    )
   }
 
   applyFilter(filterValue: string) {
