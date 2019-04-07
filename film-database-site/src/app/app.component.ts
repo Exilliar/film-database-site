@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { DataServiceService } from 'src/app/services/data-service.service';
-import { DataSource } from '@angular/cdk/collections';
-import { Data } from './models/data.model';
 
 @Component({
   selector: 'app-root',
