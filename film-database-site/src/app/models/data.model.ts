@@ -1,5 +1,5 @@
 export interface Data {
-    position: number;
+    id: number;
     name: string;
     length: number;
     watched: boolean;

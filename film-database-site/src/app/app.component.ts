@@ -8,18 +8,13 @@ import { DataServiceService } from 'src/app/services/data-service.service';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent implements OnInit{
-  
-  
   constructor(
     private dataservice: DataServiceService
   ) { }
 
-
   title = 'film-database-site';
 
-  displayedColumns: string[] = ['position', 'name', 'length', 'watched'];
-
-  
+  displayedColumns: string[] = ['id', 'name', 'length', 'watched'];
 
   dataSource = new MatTableDataSource();
   

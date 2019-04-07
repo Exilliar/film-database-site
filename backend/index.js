@@ -3,6 +3,15 @@ const app = express();
 
 const cors = require('cors');
 
+var pgp = require('pg-promise')(/*options*/);
+var db = pgp('postgres://filmdatabase:' + process.env.POSTGRES_PASSOWRD + '@film-database.ciyl3ymdaics.eu-west-2.rds.amazonaws.com:5432/filmdatabase');
+
+function getAllData() {
+  return new Promise((resolve,reject) => {
+    resolve(db.any('SELECT * FROM blurays'));
+  })
+}
+
 var corsOptions = {
   origin: 'http://localhost:4200',
   optionsSuccessStatus: 200
@@ -15,27 +24,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/getData', (req,res) => {
-  res.status(200).send([{
-    position: 1,
-    name: 'film 1',
-    length: 100,
-    watched: true
-  },{
-    position: 2,
-    name: 'film 2',
-    length: 100,
-    watched: true
-  },{
-    position: 3,
-    name: 'film 3',
-    length: 100,
-    watched: true
-  },{
-    position: 4,
-    name: 'film 4',
-    length: 100,
-    watched: true
-  }])
+  getAllData()
+  .then(function(data) {
+    console.log(data);
+    res.status(200).send(data);
+  })
 })
 
 app.listen(8000, () => {
