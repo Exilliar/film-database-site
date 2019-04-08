@@ -9,6 +9,7 @@ var db = pgp('postgres://filmdatabase:' + process.env.POSTGRES_PASSOWRD + '@film
 function getAllData() {
   return new Promise((resolve,reject) => {
     resolve(db.any('SELECT * FROM blurays'));
+    // reject('reject');
   })
 }
 
@@ -29,8 +30,12 @@ app.get('/api/getData', (req,res) => {
     console.log(data);
     res.status(200).send(data);
   })
+  .catch(function(err) {
+    console.log("error in getAllData",err);
+    res.status(200).send("error:",err);
+  })
 })
 
-app.listen(8000, () => {
-  console.log('Example app listening on port 8000!')
+app.listen(8081, () => {
+  console.log('Example app listening on port 8081!')
 });
