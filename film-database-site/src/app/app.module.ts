@@ -10,12 +10,14 @@ import { MatInputModule, MatPaginatorModule, MatProgressSpinnerModule, MatSortMo
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import {CdkTableModule} from '@angular/cdk/table';
+import { BluraysComponent } from './pages/blurays/blurays.component';
 
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BluraysComponent
   ],
   imports: [
     BrowserModule,
