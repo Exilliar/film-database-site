@@ -17,7 +17,7 @@ export class DataServiceService {
     console.log("calling api");
 
     return this.http.get<Data[]>(
-      'http://filmdatabaseapi-env.wyupjntpd3.eu-west-2.elasticbeanstalk.com/api/getData'
+      'https://filmdatabaseapi-env.wyupjntpd3.eu-west-2.elasticbeanstalk.com/api/getData'
     );
   }
 }
