@@ -14,7 +14,7 @@ function getAllData() {
 }
 
 var corsOptions = {
-  origin: 'http://localhost:4200',
+  origin: 'https://film-database.co.uk/',
   optionsSuccessStatus: 200
 }
 
