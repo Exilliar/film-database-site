@@ -17,8 +17,7 @@ export class DataServiceService {
     console.log("calling api");
 
     return this.http.get<Data[]>(
-      // 'https://filmdatabaseapi-env.wyupjntpd3.eu-west-2.elasticbeanstalk.com/api/getData'
-          'http://localhost:8081/api/getData'
+      'https://api.film-database.co.uk/api/getData'
     );
   }
 }
