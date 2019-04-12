@@ -11,7 +11,7 @@ import { MaterialModule } from './material.module';
 import {CdkTableModule} from '@angular/cdk/table';
 import { BluraysComponent } from './pages/blurays/blurays.component';
 
-
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,8 @@ import { BluraysComponent } from './pages/blurays/blurays.component';
     AppRoutingModule,
     CdkTableModule,
     HttpClientModule,
-    MaterialModule
+    MaterialModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -5,7 +5,8 @@ import {
     MatIconModule,
     MatListModule,
     MatButtonModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatDialogModule
 } from '@angular/material';
 
 import { MatInputModule, MatPaginatorModule, MatProgressSpinnerModule, MatSortModule, MatTableModule } from "@angular/material";
@@ -24,7 +25,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
         MatProgressSpinnerModule, 
         MatSortModule, 
         MatTableModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        MatDialogModule
     ],
     exports: [
         MatSidenavModule,
@@ -38,7 +40,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
         MatProgressSpinnerModule, 
         MatSortModule, 
         MatTableModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        MatDialogModule
     ]
 })
 
