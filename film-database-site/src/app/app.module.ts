@@ -6,8 +6,7 @@ import { AppComponent } from './app.component';
 
 import { HttpClientModule } from '@angular/common/http';
 
-import { MatInputModule, MatPaginatorModule, MatProgressSpinnerModule, MatSortModule, MatTableModule } from "@angular/material";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MaterialModule } from './material.module';
 
 import {CdkTableModule} from '@angular/cdk/table';
 import { BluraysComponent } from './pages/blurays/blurays.component';
@@ -22,14 +21,9 @@ import { BluraysComponent } from './pages/blurays/blurays.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MatTableModule,
-    MatInputModule, 
-    MatPaginatorModule, 
-    MatProgressSpinnerModule, 
-    MatSortModule,
     CdkTableModule,
-    BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
