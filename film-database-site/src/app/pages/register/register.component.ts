@@ -18,8 +18,8 @@ export class RegisterComponent implements OnInit {
 
   constructor( 
     public authService: AuthService,
-    public router: Router,
-    public fb: FormBuilder
+    private router: Router,
+    private fb: FormBuilder
      ) {
        this.createForm();
       }
@@ -50,7 +50,7 @@ export class RegisterComponent implements OnInit {
   tryGoogleLogin(){
     this.authService.GoogleLogin()
     .then(res =>{
-      this.router.navigate(['/user']);
+      this.router.navigate(['/blurays']);
     }, err => console.log(err)
     )
   }

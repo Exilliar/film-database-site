@@ -16,14 +16,19 @@ const routes: Routes = [
   }, {
     path: 'login',
     component: LoginComponent,
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard]
   }, {
     path: 'register',
     component: RegisterComponent,
     canActivate: [AuthGuard]
   }, {
     path: 'blurays',
-    component: BluraysComponent
+    component: BluraysComponent,
+    canActivate: [AuthGuard]
+  }, {
+    path: 'user',
+    redirectTo: '/blurays',
+    pathMatch: 'full' // this is just a temp fix, somewhere is linking to /user when the user is logged in
   }
 ];
 
