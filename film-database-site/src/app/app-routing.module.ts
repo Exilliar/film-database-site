@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { BluraysComponent } from './pages/blurays/blurays.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { UserComponent } from './pages/user/user.component';
 
 import { AuthGuard } from './auth/auth.guard';
 
@@ -27,8 +28,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   }, {
     path: 'user',
-    redirectTo: '/blurays',
-    pathMatch: 'full' // this is just a temp fix, somewhere is linking to /user when the user is logged in
+    component: UserComponent
   }
 ];
 

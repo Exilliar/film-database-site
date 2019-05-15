@@ -30,13 +30,15 @@ import { UserService } from './auth/user.service';
 
 // Forms
 import { ReactiveFormsModule } from '@angular/forms';
+import { UserComponent } from './pages/user/user.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BluraysComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
