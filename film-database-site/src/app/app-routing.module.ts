@@ -20,8 +20,7 @@ const routes: Routes = [
     // canActivate: [AuthGuard]
   }, {
     path: 'register',
-    component: RegisterComponent,
-    canActivate: [AuthGuard]
+    component: RegisterComponent
   }, {
     path: 'blurays',
     component: BluraysComponent,
