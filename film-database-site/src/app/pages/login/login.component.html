@@ -1,4 +1,4 @@
-<h1 class="header">Login with Firebase or Social Providers</h1>
+<!-- <h1 class="header">Login with Firebase or Social Providers</h1>
 <div class="container">
   <div class="row">
     <div class="col-md-6 col-md-offset-3">
@@ -26,4 +26,6 @@
       <p>No account yet? <a href="/register">Create an account</a></p>
     </div>
   </div>
-</div>
+</div> -->
+
+<ngx-auth-firebaseui [providers]="['google']" (onSuccess)="printUser($event)" (onError)="printError()"></ngx-auth-firebaseui>

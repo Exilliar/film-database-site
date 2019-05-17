@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { Router, Params } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserService } from '../../auth/user.service';
 
 @Component({
   selector: 'page-login',
@@ -16,7 +17,8 @@ export class LoginComponent {
   constructor(
     public authService: AuthService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private userService: UserService
   ) {
     this.createForm();
   }
@@ -43,5 +45,29 @@ export class LoginComponent {
       console.log(err);
       this.errorMessage = err.message;
     })
+  }
+
+  printUser(event) {
+    console.log("event", event);
+    this.userService.updateCurrentUser(event)
+    .then(res => {
+      this.router.navigate(['/blurays']);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+    
+
+    // this.authService.Login(event)
+    // .then(res => {
+    //   this.router.navigate(['/blurays']);
+    //   console.log("should have redirected");
+    // })
+    // .catch(err => {
+    //   console.log(err);
+    // })
+  }
+  printError(event) {
+    console.error(event);
   }
 }
