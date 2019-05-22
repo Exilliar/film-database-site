@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { DataServiceService } from 'src/app/services/data-service.service';
 
+import { environment } from '../environments/environment';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -13,6 +15,8 @@ export class AppComponent implements OnInit{
   ) { }
 
   title = 'film-database-site';
+
+  ver = environment.version;
 
   displayedColumns: string[] = ['id', 'name', 'length', 'watched'];
 
