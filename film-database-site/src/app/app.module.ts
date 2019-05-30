@@ -55,18 +55,6 @@ import { tryParse } from 'selenium-webdriver/http';
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     ReactiveFormsModule,
-    // NgxAuthFirebaseUIModule.forRoot(
-    //         {
-    //         apiKey: environment.firebase.apiKey,
-    //         authDomain: environment.firebase.authDomain,
-    //         projectId: environment.firebase.projectId
-    //         },
-    //         () => 'Film Database',
-    //         {
-    //           enableFirestoreSync: true,
-    //           toastMessageOnAuthSuccess: false,
-    //           toastMessageOnAuthError: false
-    //         })
   ],
   providers: [AuthService, UserService, AuthGuard],
   bootstrap: [AppComponent]
