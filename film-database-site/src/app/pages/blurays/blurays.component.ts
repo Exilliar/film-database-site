@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { DataServiceService } from 'src/app/services/data-service.service';
+import { UserService } from './../../auth/user.service';
 
 @Component({
   selector: 'app-blurays',
@@ -10,10 +11,13 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 export class BluraysComponent implements OnInit {
 
   constructor(
-    private dataservice: DataServiceService
+    private dataservice: DataServiceService,
+    private userService: UserService
   ) { }
 
   title = 'film-database-site';
+
+  user:any = null;
 
   displayedColumns: string[] = ['id', 'name', 'length', 'watched'];
 
@@ -26,6 +30,15 @@ export class BluraysComponent implements OnInit {
         this.dataSource.data = res;
       }
     )
+
+    this.userService.getCurrentUser()
+    .then(res => {
+      console.log(res);
+      this.user = res;
+    })
+    .catch(err => {
+      console.log("error getting user");
+    })
   }
 
   applyFilter(filterValue: string) {
