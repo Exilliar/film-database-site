@@ -1,30 +1,39 @@
-<h1 class="header">Create an account with Firebase or Social Providers</h1>
-<div class="container">
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <form [formGroup]="registerForm">
-        <div class="form-group">
-          <label>Email address</label>
-          <input type="email" formControlName="email" class="form-control">
+<div class="all">
+    <mat-card class="container">
+      <h1 class="header">Create an account with Firebase or Social Providers</h1>
+      <div class="form">
+        <form [formGroup]="registerForm">
+          <div>
+            <mat-form-field>
+              <input matInput type="email" formControlName="email" class="form-control" placeholder="Email Address">
+            </mat-form-field>
+          </div>
+  
+          <div>
+            <mat-form-field>
+              <input matInput type="password" class="form-control" formControlName="password" placeholder="Password">
+            </mat-form-field>
+          </div>
+  
+          <div>
+            <label matInput class="error">{{errorMessage}}</label>
+          </div>
+          <div>
+              <label matInput class="success">{{successMessage}}</label>
+          </div>
+  
+          <div>
+            <button mat-stroked-button type="submit" (click)="tryRegister(registerForm.value)" class="btn btn-default">Register</button>
+          </div>
+        </form>
+  
+        <div class="google">
+          <button mat-stroked-button type="button" class="btn btn-danger btn-block" (click)="tryGoogleLogin()"><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" width="30vw" height="30vh"> Register with Google</button>
         </div>
-        <div class="form-group">
-          <label>Password</label>
-          <input type="password" class="form-control" formControlName="password">
-          <label class="error">{{errorMessage}}</label>
-          <label class="success">{{successMessage}}</label>
+  
+        <div>
+          <p>Already have an account? <a href="/login">Login</a></p>
         </div>
-        <button type="submit" (click)="tryRegister(registerForm.value)" class="btn btn-default">Register</button>
-      </form>
-    </div>
+      </div>
+    </mat-card>
   </div>
-  <div class="row">
-    <div class="col-md-4 col-md-offset-4">
-      <button type="button" class="btn btn-danger btn-block" (click)="tryGoogleLogin()">Register with Google</button>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4 col-md-offset-4">
-      <p>Already have an account? <a href="/login">Login</a></p>
-    </div>
-  </div>
-</div>
