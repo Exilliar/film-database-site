@@ -32,6 +32,10 @@ import { UserService } from './auth/user.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserComponent } from './pages/user/user.component';
 
+// Firebase UI
+import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
+import { tryParse } from 'selenium-webdriver/http';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +54,7 @@ import { UserComponent } from './pages/user/user.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [AuthService, UserService, AuthGuard],
   bootstrap: [AppComponent]

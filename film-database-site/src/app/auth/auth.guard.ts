@@ -17,13 +17,13 @@ export class AuthGuard implements CanActivate {
     return new Promise((resolve, reject) => {
       this.userService.getCurrentUser()
       .then(user => {
+        console.log("yup");
         return resolve(true);
-        // this.router.navigate(['/blurays']);
-        // return resolve(false);
       }, err => {
+        console.log(err);
         this.router.navigate(['/login']);
+        console.log("nope");
         return resolve(false);
-        // return resolve(true);
       })
     })
   }
