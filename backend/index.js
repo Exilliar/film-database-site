@@ -40,6 +40,48 @@ app.get('/api/getData', (req,res) => {
   })
 })
 
+app.get('/api/getUser', (req,res) => {
+  const user = req.headers.user;
+
+  console.log(user);
+
+  db.one('SELECT * FROM users WHERE uid=$1',[user])
+  .then((data) => {
+    res.status(200).send(data);
+  })
+  .catch((err) => {
+    if (err.message === 'No data returned from the query.') {
+      db.any('INSERT INTO users (uid,role) VALUES ($1,$2)',[user,1])
+        .then(() => {
+          db.one('SELECT * FROM users WHERE uid=$1',[user])
+        .then((data) => {
+          res.status(200).send(data);
+        })
+        .catch((err) => {
+          res.status(500).send(err);
+        })
+      })
+      .catch((err) => {
+        res.status(500).send(err);
+      })
+    }
+    else 
+    {
+      console.log("printed error:", err);
+      res.status(500).send("error getting user");
+    }
+  })
+})
+
+app.post('/adduser', (req,res) => {
+  const user = req.headers.user;
+  console.log(user);
+
+  db.any('INSERT INTO users (uid,role) VALUES ($1,$2)',[user,1]);
+
+  res.status(200).send("success");
+})
+
 app.listen(process.env.PORT || 8081, () => {
-  console.log('Example app listening on port',process.env.PORT || 8081 + "!")
+  console.log('App listening on port',process.env.PORT || 8081 + "!")
 });
