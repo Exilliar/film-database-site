@@ -22,6 +22,7 @@ export class BluraysComponent implements OnInit {
   dataSource = new MatTableDataSource();
 
   user = null;
+  role = null;
   
   ngOnInit(){
     this.dataservice.getData()
@@ -33,11 +34,11 @@ export class BluraysComponent implements OnInit {
 
     this.userService.getCurrentUser()
     .then((user) => {
-      console.log("firebase user:", user.uid);
       this.dataservice.getUser(user.uid)
       .subscribe(res => {
         this.user = res;
-        console.log("user:", this.user);
+        this.role = this.user.role;
+        console.log("role:", this.role);
       })
     })
     .catch(() => {

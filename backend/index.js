@@ -18,15 +18,17 @@ var corsOptions = {
   optionsSuccessStatus: 200
 }
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
-  req.header("Access-Control-Allow-Origin", "*");
-  req.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
 
-  next();
-});
+
+//   next();
+// });
+
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
@@ -35,7 +37,6 @@ app.get('/', (req, res) => {
 app.get('/api/getData', (req,res) => {
   getAllData()
   .then(function(data) {
-    console.log(data);
     res.status(200).send(data);
   })
   .catch(function(err) {

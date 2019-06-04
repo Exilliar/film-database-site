@@ -14,6 +14,7 @@ export class DataServiceService {
   ) { }
 
   baseurl = "https://api.film-database.co.uk"
+  // baseurl = "http://localhost:8081"
 
   getData(): Observable<Data[]> {
     return this.http.get<Data[]>(
@@ -24,6 +25,7 @@ export class DataServiceService {
   getUser(uid): Observable<Data[]> {
     const headerDict = {
       'user': uid,
+      'Access-Control-Allow-Origin': origin,
     }
 
     const requestOptions = {
