@@ -1,7 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { UserService } from './../../auth/user.service';
+import {MatDialog } from '@angular/material/dialog';
+import { AddFilmDialogComponent } from './../../components/add-film-dialog/add-film-dialog.component';
+
+export interface DialogData {
+  name: string;
+  length: number;
+  watched: boolean;
+}
 
 @Component({
   selector: 'app-blurays',
@@ -12,7 +20,9 @@ export class BluraysComponent implements OnInit {
 
   constructor(
     private dataservice: DataServiceService,
-    private userService: UserService
+    private userService: UserService,
+    private dialog: MatDialog,
+    private addFilmDialogComponent: AddFilmDialogComponent,
   ) { }
 
   title = 'film-database-site';
@@ -53,6 +63,22 @@ export class BluraysComponent implements OnInit {
   onRowClicked(row)
   {
     console.log('Row clicked:',row);
+  }
+
+  addFilm() {
+    console.log("add a film");
+    let newfilm, name, length, watched;
+
+    const dialogRef = this.dialog.open(AddFilmDialogComponent, {
+      width: '250px',
+      data: {name: name, length: length, watched: watched}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      newfilm = result;
+    });
+ 
   }
 
 }

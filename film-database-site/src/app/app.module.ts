@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 
 // Material modules
 import { MaterialModule } from './material.module';
@@ -15,6 +16,9 @@ import {CdkTableModule} from '@angular/cdk/table';
 import { BluraysComponent } from './pages/blurays/blurays.component';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
+
+// General components
+import { AddFilmDialogComponent } from './components/add-film-dialog/add-film-dialog.component';
 
 // Firebase authentication
 import { AngularFireModule } from '@angular/fire';
@@ -31,10 +35,8 @@ import { UserService } from './auth/user.service';
 // Forms
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserComponent } from './pages/user/user.component';
+import { FormsModule } from '@angular/forms';
 
-// Firebase UI
-import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
-import { tryParse } from 'selenium-webdriver/http';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,8 @@ import { tryParse } from 'selenium-webdriver/http';
     BluraysComponent,
     LoginComponent,
     RegisterComponent,
-    UserComponent
+    UserComponent,
+    AddFilmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -55,8 +58,11 @@ import { tryParse } from 'selenium-webdriver/http';
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     ReactiveFormsModule,
+    FormsModule,
+    HttpModule,
   ],
   providers: [AuthService, UserService, AuthGuard],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [AddFilmDialogComponent],
 })
 export class AppModule { }

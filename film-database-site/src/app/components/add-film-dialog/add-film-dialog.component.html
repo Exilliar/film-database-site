@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Add Film</h1>
+<div mat-dialog-content>
+  <p>Name</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.name">
+  </mat-form-field>
+  <p>Length</p>
+  <mat-form-field>
+      <input matInput [(ngModel)]="data.length">
+  </mat-form-field>
+  <p>Watched?</p>
+  <mat-form-field>
+      <input matInput [(ngModel)]="data.watched">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
+</div>
