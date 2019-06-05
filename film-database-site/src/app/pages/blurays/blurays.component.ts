@@ -17,11 +17,12 @@ export class BluraysComponent implements OnInit {
 
   title = 'film-database-site';
 
-  user:any = null;
-
   displayedColumns: string[] = ['id', 'name', 'length', 'watched'];
 
   dataSource = new MatTableDataSource();
+
+  user = null;
+  role = null;
   
   ngOnInit(){
     this.dataservice.getData()
@@ -32,12 +33,16 @@ export class BluraysComponent implements OnInit {
     )
 
     this.userService.getCurrentUser()
-    .then(res => {
-      console.log(res);
-      this.user = res;
+    .then((user) => {
+      this.dataservice.getUser(user.uid)
+      .subscribe(res => {
+        this.user = res;
+        this.role = this.user.role;
+        console.log("role:", this.role);
+      })
     })
-    .catch(err => {
-      console.log("error getting user");
+    .catch(() => {
+      console.log("error getting user")
     })
   }
 

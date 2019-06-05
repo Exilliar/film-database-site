@@ -18,11 +18,17 @@ var corsOptions = {
   optionsSuccessStatus: 200
 }
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
+
+
+//   next();
+// });
+
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
@@ -31,7 +37,6 @@ app.get('/', (req, res) => {
 app.get('/api/getData', (req,res) => {
   getAllData()
   .then(function(data) {
-    console.log(data);
     res.status(200).send(data);
   })
   .catch(function(err) {
@@ -40,6 +45,48 @@ app.get('/api/getData', (req,res) => {
   })
 })
 
+app.get('/api/getUser', (req,res) => {
+  const user = req.headers.user;
+
+  console.log(user);
+
+  db.one('SELECT * FROM users WHERE uid=$1',[user])
+  .then((data) => {
+    res.status(200).send(data);
+  })
+  .catch((err) => {
+    if (err.message === 'No data returned from the query.') {
+      db.any('INSERT INTO users (uid,role) VALUES ($1,$2)',[user,1])
+        .then(() => {
+          db.one('SELECT * FROM users WHERE uid=$1',[user])
+        .then((data) => {
+          res.status(200).send(data);
+        })
+        .catch((err) => {
+          res.status(500).send(err);
+        })
+      })
+      .catch((err) => {
+        res.status(500).send(err);
+      })
+    }
+    else 
+    {
+      console.log("printed error:", err);
+      res.status(500).send("error getting user");
+    }
+  })
+})
+
+app.post('/adduser', (req,res) => {
+  const user = req.headers.user;
+  console.log(user);
+
+  db.any('INSERT INTO users (uid,role) VALUES ($1,$2)',[user,1]);
+
+  res.status(200).send("success");
+})
+
 app.listen(process.env.PORT || 8081, () => {
-  console.log('Example app listening on port',process.env.PORT || 8081 + "!")
+  console.log('App listening on port',process.env.PORT || 8081 + "!")
 });
