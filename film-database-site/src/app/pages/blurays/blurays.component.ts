@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { UserService } from './../../auth/user.service';
-import {MatDialog } from '@angular/material/dialog';
+import {MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AddFilmDialogComponent } from './../../components/add-film-dialog/add-film-dialog.component';
 
 export interface DialogData {
@@ -22,7 +22,6 @@ export class BluraysComponent implements OnInit {
     private dataservice: DataServiceService,
     private userService: UserService,
     private dialog: MatDialog,
-    private addFilmDialogComponent: AddFilmDialogComponent,
   ) { }
 
   title = 'film-database-site';
@@ -67,18 +66,31 @@ export class BluraysComponent implements OnInit {
 
   addFilm() {
     console.log("add a film");
-    let newfilm, name, length, watched;
+    let name, len, watched;
 
-    const dialogRef = this.dialog.open(AddFilmDialogComponent, {
-      width: '250px',
-      data: {name: name, length: length, watched: watched}
-    });
+    const dialogConfig = new MatDialogConfig();
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      newfilm = result;
-    });
- 
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {
+      name: name, 
+      length: len, 
+      watched: watched
+    }
+
+    const dialogRef = this.dialog.open(AddFilmDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      data => {
+        console.log("data:", data);
+        this.dataservice.addFilm(data)
+        .subscribe(
+          data => {
+            console.log("called api:", data);
+          }
+        );
+      }
+    )
   }
 
 }

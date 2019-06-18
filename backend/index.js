@@ -1,10 +1,11 @@
 const express = require('express')
 const app = express();
+const bodyParser = require('body-parser')
 
 const cors = require('cors');
 
-var pgp = require('pg-promise')(/*options*/);
-var db = pgp('postgres://filmdatabase:' + process.env.POSTGRES_PASSOWRD + '@film-database.ciyl3ymdaics.eu-west-2.rds.amazonaws.com:5432/filmdatabase');
+const pgp = require('pg-promise')(/*options*/);
+const db = pgp('postgres://filmdatabase:' + process.env.POSTGRES_PASSOWRD + '@film-database.ciyl3ymdaics.eu-west-2.rds.amazonaws.com:5432/filmdatabase');
 
 function getAllData() {
   return new Promise((resolve,reject) => {
@@ -13,22 +14,8 @@ function getAllData() {
   })
 }
 
-var corsOptions = {
-  origin: 'http://localhost:4200/',
-  optionsSuccessStatus: 200
-}
-
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-
-//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
-
-
-//   next();
-// });
-
 app.use(cors());
+app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
@@ -48,7 +35,7 @@ app.get('/api/getData', (req,res) => {
 app.get('/api/getUser', (req,res) => {
   const user = req.headers.user;
 
-  console.log(user);
+  // console.log(user);
 
   db.one('SELECT * FROM users WHERE uid=$1',[user])
   .then((data) => {
@@ -83,6 +70,16 @@ app.post('/adduser', (req,res) => {
   console.log(user);
 
   db.any('INSERT INTO users (uid,role) VALUES ($1,$2)',[user,1]);
+
+  res.status(200).send("success");
+})
+
+app.post('/api/addFilm', (req,res) => {
+
+  console.log("req:", req.body);
+  const data = req.body.film;
+
+  console.log("film:", data);
 
   res.status(200).send("success");
 })

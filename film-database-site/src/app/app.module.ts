@@ -37,6 +37,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { UserComponent } from './pages/user/user.component';
 import { FormsModule } from '@angular/forms';
 
+import {
+  MatDialogModule,
+} from '@angular/material/dialog';
+
 
 @NgModule({
   declarations: [
@@ -60,8 +64,9 @@ import { FormsModule } from '@angular/forms';
     ReactiveFormsModule,
     FormsModule,
     HttpModule,
+    MatDialogModule,
   ],
-  providers: [AuthService, UserService, AuthGuard],
+  providers: [AuthService, UserService, AuthGuard,/* AddFilmDialogComponent, {provide: MatDialogRef, useValue: {}}*/],
   bootstrap: [AppComponent],
   entryComponents: [AddFilmDialogComponent],
 })

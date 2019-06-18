@@ -15,10 +15,9 @@ import {
     
 } from '@angular/material';
 
-import {
-    MatDialogModule,
-    MatDialogRef,
-} from '@angular/material/dialog';
+// import {
+//     MatDialogModule,
+// } from '@angular/material/dialog';
 
 import {  } from "@angular/material";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -37,8 +36,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
         MatSortModule, 
         MatTableModule,
         BrowserAnimationsModule,
-        MatDialogModule,
-        MatCardModule
+        // MatDialogModule,
+        MatCardModule,
     ],
     exports: [
         MatSidenavModule,
@@ -53,8 +52,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
         MatSortModule, 
         MatTableModule,
         BrowserAnimationsModule,
-        MatDialogModule,
-        MatCardModule
+        // MatDialogModule,
+        MatCardModule,
     ],
     // providers: [MatDialogRef]
 })

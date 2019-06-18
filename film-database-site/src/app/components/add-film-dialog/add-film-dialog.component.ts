@@ -12,14 +12,15 @@ export interface DialogData {
   templateUrl: './add-film-dialog.component.html',
   styleUrls: ['./add-film-dialog.component.less']
 })
-@Injectable({
-  providedIn: 'root'
-})
+// @Injectable({
+//   providedIn: 'root'
+// })
 export class AddFilmDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<AddFilmDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+    ) {}
 
   onNoClick(): void {
     this.dialogRef.close();
