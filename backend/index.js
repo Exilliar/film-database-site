@@ -78,10 +78,16 @@ app.post('/api/addFilm', (req,res) => {
 
   console.log("req:", req.body);
   const data = req.body.film;
+  const name = data.name;
+  const length = data.length;
+  const watched = data.watched;
+
+  db.any('INSERT INTO blurays (name, length, watched) VALUES ($1,$2,$3)',[name,length,watched])
+  .then(() => {
+    res.status(200).send("success");
+  });
 
   console.log("film:", data);
-
-  res.status(200).send("success");
 })
 
 app.listen(process.env.PORT || 8081, () => {
