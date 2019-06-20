@@ -12,8 +12,11 @@
   <mat-form-field>
       <input matInput [(ngModel)]="data.watched">
   </mat-form-field>
+  <div *ngIf="!valid">
+    <p class="invaild">Input not valid</p>
+  </div>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+  <button mat-button (click)="save()" cdkFocusInitial>Ok</button>
 </div>

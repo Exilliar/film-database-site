@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 export interface DialogData {
   name: string;
   length: number;
-  watched: boolean;
+  watched: string;
 }
 
 @Component({
@@ -22,8 +22,20 @@ export class AddFilmDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: DialogData
     ) {}
 
+  valid: boolean = true;
+
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  save() {
+    this.data.watched = this.data.watched.toLowerCase();
+    if ((this.data.watched === 'true' || this.data.watched === 'false') && !isNaN(+this.data.length)) {
+      this.dialogRef.close(this.data);
+    }
+    else {
+      this.valid = false;
+    }
   }
 
 }

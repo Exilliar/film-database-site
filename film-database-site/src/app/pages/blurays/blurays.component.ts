@@ -32,6 +32,8 @@ export class BluraysComponent implements OnInit {
 
   user = null;
   role = null;
+
+  admin = false;
   
   ngOnInit(){
     this.getFilms();
@@ -42,6 +44,7 @@ export class BluraysComponent implements OnInit {
       .subscribe(res => {
         this.user = res;
         this.role = this.user.role;
+        if (this.role === 2) this.admin = true;
         console.log("role:", this.role);
       })
     })
@@ -68,6 +71,10 @@ export class BluraysComponent implements OnInit {
     )
   }
 
+  addFilmButton() {
+    return 
+  }
+
   addFilm() {
     console.log("add a film");
     let name, len, watched;
@@ -86,18 +93,13 @@ export class BluraysComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(
       data => {
-        console.log("data:", data);
-        if ((data.watched === 'true' || data.watched === 'false') && !isNaN(+data.length)) {
+        if (data) {
           this.dataservice.addFilm(data)
           .subscribe(
-            data => {
-              console.log("called api:", data);
-
+            () => {
               this.getFilms();
             }
           );
-        } else {
-          console.log("invalid input");
         }
       }
     )
