@@ -22,7 +22,7 @@ export class DataServiceService {
     );
   }
 
-  getUser(uid): Observable<Data[]> {
+  getUser(uid) {
     const headerDict = {
       'user': uid,
       'Access-Control-Allow-Origin': origin,
@@ -34,6 +34,17 @@ export class DataServiceService {
 
     const url = this.baseurl + '/api/getUser'
 
-    return this.http.get<Data[]>(url, requestOptions);
+    return this.http.get(url, requestOptions);
+  }
+
+  addFilm(film) {
+    const data = {
+      'film': film,
+      'Access-Control-Allow-Origin': origin,
+    }
+
+    const url = this.baseurl + '/api/addFilm';
+
+    return this.http.post(url, data, {responseType: 'text'});
   }
 }

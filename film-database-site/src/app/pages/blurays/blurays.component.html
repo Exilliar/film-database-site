@@ -1,7 +1,13 @@
 <!-- adding in a filter option -->
-<mat-form-field>
-  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-</mat-form-field>
+<div class="topRow">
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+  <!-- <button mat-stroked-button type="button" (click)="addFilm()">Add film</button> -->
+  <div *ngIf="admin === true">
+    <button mat-stroked-button type="button" class="add" (click)="addFilm()">Add film</button>
+  </div>
+</div>
 
 <!-- will not auto update, call renderRows() to update -->
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">

@@ -1,7 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { UserService } from './../../auth/user.service';
+import {MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { AddFilmDialogComponent } from './../../components/add-film-dialog/add-film-dialog.component';
+
+export interface DialogData {
+  name: string;
+  length: number;
+  watched: boolean;
+}
 
 @Component({
   selector: 'app-blurays',
@@ -12,7 +20,8 @@ export class BluraysComponent implements OnInit {
 
   constructor(
     private dataservice: DataServiceService,
-    private userService: UserService
+    private userService: UserService,
+    private dialog: MatDialog,
   ) { }
 
   title = 'film-database-site';
@@ -23,14 +32,11 @@ export class BluraysComponent implements OnInit {
 
   user = null;
   role = null;
+
+  admin = false;
   
   ngOnInit(){
-    this.dataservice.getData()
-    .subscribe(res => {
-        console.log(res);
-        this.dataSource.data = res;
-      }
-    )
+    this.getFilms();
 
     this.userService.getCurrentUser()
     .then((user) => {
@@ -38,6 +44,7 @@ export class BluraysComponent implements OnInit {
       .subscribe(res => {
         this.user = res;
         this.role = this.user.role;
+        if (this.role === 2) this.admin = true;
         console.log("role:", this.role);
       })
     })
@@ -53,6 +60,49 @@ export class BluraysComponent implements OnInit {
   onRowClicked(row)
   {
     console.log('Row clicked:',row);
+  }
+
+  getFilms() {
+    this.dataservice.getData()
+    .subscribe(res => {
+        console.log(res);
+        this.dataSource.data = res;
+      }
+    )
+  }
+
+  addFilmButton() {
+    return 
+  }
+
+  addFilm() {
+    console.log("add a film");
+    let name, len, watched;
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {
+      name: name, 
+      length: len, 
+      watched: watched
+    }
+
+    const dialogRef = this.dialog.open(AddFilmDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      data => {
+        if (data) {
+          this.dataservice.addFilm(data)
+          .subscribe(
+            () => {
+              this.getFilms();
+            }
+          );
+        }
+      }
+    )
   }
 
 }
