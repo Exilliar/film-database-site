@@ -40,6 +40,7 @@ import { FormsModule } from '@angular/forms';
 import {
   MatDialogModule,
 } from '@angular/material/dialog';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import {
     LoginComponent,
     RegisterComponent,
     UserComponent,
-    AddFilmDialogComponent
+    AddFilmDialogComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
