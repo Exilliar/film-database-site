@@ -18,10 +18,8 @@ export class AuthService {
       this.afAuth.auth
       .signInWithPopup(provider)
       .then(res => {
-        console.log("woooooooooo")
         resolve(res);
       }, err => {
-        console.log(err);
         reject(err);
       })
     })
@@ -42,6 +40,15 @@ export class AuthService {
       .then(res => {
         resolve(res);
       }, err => reject(err))
+    })
+  }
+
+  SignOut(){
+    return new Promise<any>((resolve, reject) => {
+      firebase.auth().signOut()
+      .then(res => {
+        resolve(res);
+      }, err => reject(err));
     })
   }
 }

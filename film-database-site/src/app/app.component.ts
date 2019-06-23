@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { DataServiceService } from 'src/app/services/data-service.service';
+import { AuthService } from './auth/auth.service';
+import { Router } from "@angular/router";
 
 import { environment } from '../environments/environment';
 
@@ -11,7 +13,9 @@ import { environment } from '../environments/environment';
 })
 export class AppComponent implements OnInit{
   constructor(
-    private dataservice: DataServiceService
+    private dataservice: DataServiceService,
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   title = 'film-database-site';
@@ -23,12 +27,7 @@ export class AppComponent implements OnInit{
   dataSource = new MatTableDataSource();
   
   ngOnInit(){
-    this.dataservice.getData()
-    .subscribe(res => {
-        console.log(res);
-        this.dataSource.data = res;
-      }
-    )
+    
   }
 
   applyFilter(filterValue: string) {
@@ -38,5 +37,12 @@ export class AppComponent implements OnInit{
   onRowClicked(row)
   {
     console.log('Row clicked:',row);
+  }
+
+  signOut() {
+    this.authService.SignOut()
+    .then(() => {
+      this.router.navigate(['/login']);
+    })
   }
 }
