@@ -45,11 +45,10 @@ export class BluraysComponent implements OnInit {
         this.user = res;
         this.role = this.user.role;
         if (this.role === 2) this.admin = true;
-        console.log("role:", this.role);
       })
     })
     .catch(() => {
-      console.log("error getting user")
+      console.log("error getting user");
     })
   }
 
@@ -59,13 +58,12 @@ export class BluraysComponent implements OnInit {
 
   onRowClicked(row)
   {
-    console.log('Row clicked:',row);
+
   }
 
   getFilms() {
     this.dataservice.getData()
     .subscribe(res => {
-        console.log(res);
         this.dataSource.data = res;
       }
     )
@@ -76,7 +74,6 @@ export class BluraysComponent implements OnInit {
   }
 
   addFilm() {
-    console.log("add a film");
     let name, len, watched;
 
     const dialogConfig = new MatDialogConfig();
