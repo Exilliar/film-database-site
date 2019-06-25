@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
-import { DataServiceService } from 'src/app/services/data-service.service';
 import { AuthService } from './auth/auth.service';
-import { Router } from "@angular/router";
+import { UserService } from './auth/user.service';
+import { Router, NavigationEnd } from "@angular/router";
 
 import { environment } from '../environments/environment';
 
@@ -13,10 +13,19 @@ import { environment } from '../environments/environment';
 })
 export class AppComponent implements OnInit{
   constructor(
-    private dataservice: DataServiceService,
     private authService: AuthService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private userService: UserService,
+  ) {
+    router.events.forEach((event) => {
+      if (event instanceof NavigationEnd && !this.urlBlacklist.includes(router.url)) {
+        console.log("checking signed in");
+        this.checkSignedIn();
+      }
+    })
+  }
+
+  urlBlacklist = ['/login','/register'] // list of urls that the user will not be on if they are logged in
 
   title = 'film-database-site';
 
@@ -25,9 +34,21 @@ export class AppComponent implements OnInit{
   displayedColumns: string[] = ['id', 'name', 'length', 'watched'];
 
   dataSource = new MatTableDataSource();
+
+  signedIn = false;
   
   ngOnInit(){
-    
+    this.checkSignedIn();
+  }
+  
+  checkSignedIn(){
+    this.userService.getCurrentUser()
+    .then(() => {
+      this.signedIn = true;
+    })
+    .catch(() => {
+      this.signedIn = false;
+    })
   }
 
   applyFilter(filterValue: string) {
@@ -40,6 +61,8 @@ export class AppComponent implements OnInit{
   }
 
   signOut() {
+    this.signedIn = false;
+
     this.authService.SignOut()
     .then(() => {
       this.router.navigate(['/login']);

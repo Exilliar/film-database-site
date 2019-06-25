@@ -26,10 +26,12 @@
        <div fxFlex fxLayout fxLayoutAlign="flex-end"  fxHide.xs>
           <ul fxLayout fxLayoutGap="20px" class="navigation-items">
             <li>
-              <a (click)="signOut()">
-                <mat-icon class="icon">person</mat-icon>
-                <span class="label">Sign Out</span>
-              </a>
+              <div *ngIf="signedIn === true">
+                <a (click)="signOut()">
+                  <mat-icon class="icon">person</mat-icon>
+                  <span class="label">Sign Out</span>
+                </a>
+              </div>
             </li>  
             <li>                
               <a routerLink="/blurays">
