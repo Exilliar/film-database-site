@@ -74,6 +74,14 @@ app.post('/adduser', (req,res) => {
   res.status(200).send("success");
 })
 
+app.post('/api/removeFilm', (req,res) => {
+  const filmid = req.body.filmid;
+
+  db.any('DELETE FROM blurays WHERE id=$1',[filmid]);
+
+  res.status(200).send("success");
+})
+
 app.post('/api/addFilm', (req,res) => {
 
   console.log("req:", req.body);

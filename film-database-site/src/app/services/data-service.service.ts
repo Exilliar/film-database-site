@@ -13,8 +13,8 @@ export class DataServiceService {
     private http: HttpClient,
   ) { }
 
-  baseurl = "https://api.film-database.co.uk"
-  // baseurl = "http://localhost:8081"
+  // baseurl = "https://api.film-database.co.uk";
+  baseurl = "http://localhost:8081";
 
   getData(): Observable<Data[]> {
     return this.http.get<Data[]>(
@@ -44,6 +44,17 @@ export class DataServiceService {
     }
 
     const url = this.baseurl + '/api/addFilm';
+
+    return this.http.post(url, data, {responseType: 'text'});
+  }
+
+  removeFilm(filmid) {
+    const data = {
+      'filmid': filmid,
+      'Access-Control-Allow-Origin': origin,
+    };
+
+    const url = this.baseurl + '/api/removeFilm';
 
     return this.http.post(url, data, {responseType: 'text'});
   }
