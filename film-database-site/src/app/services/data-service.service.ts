@@ -13,8 +13,8 @@ export class DataServiceService {
     private http: HttpClient,
   ) { }
 
-  // baseurl = "https://api.film-database.co.uk";
-  baseurl = "http://localhost:8081";
+  baseurl = "https://api.film-database.co.uk";
+  // baseurl = "http://localhost:8081";
 
   getData(): Observable<Data[]> {
     return this.http.get<Data[]>(
