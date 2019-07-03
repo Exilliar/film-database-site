@@ -42,7 +42,7 @@
   <!-- Delete Button Column (will only be displayed if user is an admin) -->
   <ng-container matColumnDef="removeFilm">
     <th mat-header-cell *matHeaderCellDef>Remove Film</th>
-    <td mat-cell *matCellDef="let element"><button mat-stroked-button type="button" class="remove" (click)="removeFilm()">Remove Film</button></td>
+    <td mat-cell *matCellDef="let element"><button type="button" class="remove" (click)="removeFilm(element.id)">x</button></td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

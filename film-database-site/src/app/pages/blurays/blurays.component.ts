@@ -72,10 +72,6 @@ export class BluraysComponent implements OnInit {
     )
   }
 
-  addFilmButton() {
-    return 
-  }
-
   addFilm() {
     let name, len, watched;
 
@@ -103,6 +99,14 @@ export class BluraysComponent implements OnInit {
         }
       }
     )
+  }
+
+  removeFilm(id) {
+    this.dataservice.removeFilm(id).subscribe(
+      () => {
+        this.getFilms();
+      }
+    );
   }
 
 }
