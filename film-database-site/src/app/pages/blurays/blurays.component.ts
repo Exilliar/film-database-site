@@ -44,7 +44,10 @@ export class BluraysComponent implements OnInit {
       .subscribe(res => {
         this.user = res;
         this.role = this.user.role;
-        if (this.role === 2) this.admin = true;
+        if (this.role === 2) {
+          this.displayedColumns.push('removeFilm');
+          this.admin = true;
+        }
       })
     })
     .catch(() => {
@@ -67,10 +70,6 @@ export class BluraysComponent implements OnInit {
         this.dataSource.data = res;
       }
     )
-  }
-
-  addFilmButton() {
-    return 
   }
 
   addFilm() {
@@ -100,6 +99,14 @@ export class BluraysComponent implements OnInit {
         }
       }
     )
+  }
+
+  removeFilm(id) {
+    this.dataservice.removeFilm(id).subscribe(
+      () => {
+        this.getFilms();
+      }
+    );
   }
 
 }
