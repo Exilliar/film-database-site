@@ -24,8 +24,6 @@ export class BluraysComponent implements OnInit {
     private dialog: MatDialog,
   ) { }
 
-  title = 'film-database-site';
-
   displayedColumns: string[] = ['id', 'name', 'length', 'watched'];
 
   dataSource = new MatTableDataSource();

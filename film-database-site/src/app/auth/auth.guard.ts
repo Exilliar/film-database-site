@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, Router } from "@angular/router";
+import { CanActivate, Router } from "@angular/router";
 import { AngularFireAuth } from '@angular/fire/auth';
 import { UserService } from './user.service';
 
@@ -19,7 +19,6 @@ export class AuthGuard implements CanActivate {
       .then(user => {
         return resolve(true);
       }, err => {
-        console.log(err);
         this.router.navigate(['/login']);
         return resolve(false);
       })
