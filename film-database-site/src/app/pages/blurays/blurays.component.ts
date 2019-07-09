@@ -31,7 +31,9 @@ export class BluraysComponent implements OnInit {
   user = null;
   role = null;
 
-  admin = false;
+  admin: boolean = false;
+
+  isLoading: boolean = true;
   
   ngOnInit(){
     this.getFilms();
@@ -66,6 +68,7 @@ export class BluraysComponent implements OnInit {
     this.dataservice.getData()
     .subscribe(res => {
         this.dataSource.data = res;
+        this.isLoading = false;
       }
     )
   }
