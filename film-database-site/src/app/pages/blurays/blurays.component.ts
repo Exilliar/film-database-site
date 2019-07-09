@@ -102,11 +102,13 @@ export class BluraysComponent implements OnInit {
   }
 
   removeFilm(id) {
-    this.dataservice.removeFilm(id).subscribe(
-      () => {
-        this.getFilms();
-      }
-    );
+    if (confirm("Are you sure you want to delete this film?")){
+      this.dataservice.removeFilm(id).subscribe(
+        () => {
+          this.getFilms();
+        }
+      );
+    }
   }
 
 }
