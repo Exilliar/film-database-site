@@ -2,11 +2,16 @@
 <div class="topRow">
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-  </mat-form-field>
+  </mat-form-field>  
   <!-- <button mat-stroked-button type="button" (click)="addFilm()">Add film</button> -->
   <div *ngIf="admin === true">
     <button mat-stroked-button type="button" class="add" (click)="addFilm()">Add film</button>
   </div>
+</div>
+<div class="secondRow">
+  <mat-card style="height: 3em">
+    <p style="text-align: center">Total Films: {{totalFilms}}</p>
+  </mat-card>
 </div>
 
 <!-- will not auto update, call renderRows() to update -->
@@ -27,13 +32,13 @@
     <td mat-cell *matCellDef="let element"> {{element.name}} </td>
   </ng-container>
 
-  <!-- Weight Column -->
+  <!-- Length Column -->
   <ng-container matColumnDef="length">
     <th mat-header-cell *matHeaderCellDef> Length </th>
     <td mat-cell *matCellDef="let element"> {{element.length}} </td>
   </ng-container>
 
-  <!-- Symbol Column -->
+  <!-- Watched Column -->
   <ng-container matColumnDef="watched">
     <th mat-header-cell *matHeaderCellDef> Watched? </th>
     <td mat-cell *matCellDef="let element"> {{element.watched}} </td>

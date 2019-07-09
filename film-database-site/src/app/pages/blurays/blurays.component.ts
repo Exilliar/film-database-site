@@ -31,6 +31,8 @@ export class BluraysComponent implements OnInit {
   user = null;
   role = null;
 
+  totalFilms: number = null;
+
   admin: boolean = false;
 
   isLoading: boolean = true;
@@ -69,6 +71,7 @@ export class BluraysComponent implements OnInit {
     .subscribe(res => {
         this.dataSource.data = res;
         this.isLoading = false;
+        this.totalFilms = res.length;
       }
     )
   }
