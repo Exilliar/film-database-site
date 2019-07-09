@@ -8,7 +8,9 @@ import { RegisterComponent } from './pages/register/register.component';
 import { UserComponent } from './pages/user/user.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
+// Guards
 import { AuthGuard } from './auth/auth.guard';
+import { LoginGuard } from './auth/login.guard';
 
 const routes: Routes = [
   {
@@ -18,10 +20,11 @@ const routes: Routes = [
   }, {
     path: 'login',
     component: LoginComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [LoginGuard]
   }, {
     path: 'register',
-    component: RegisterComponent
+    component: RegisterComponent,
+    canActivate: [LoginGuard]
   }, {
     path: 'blurays',
     component: BluraysComponent,

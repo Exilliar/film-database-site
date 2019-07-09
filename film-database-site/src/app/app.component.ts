@@ -19,7 +19,6 @@ export class AppComponent implements OnInit{
   ) {
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd && !this.urlBlacklist.includes(router.url)) {
-        console.log("checking signed in");
         this.checkSignedIn();
       }
     })
