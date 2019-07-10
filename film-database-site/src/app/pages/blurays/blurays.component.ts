@@ -50,7 +50,9 @@ export class BluraysComponent implements OnInit {
           this.displayedColumns.push('removeFilm');
           this.admin = true;
         }
-      })
+      }, err => {
+        alert("Error getting user, if you're an admin you will not have the privileges in this session. Refresh the page to try again");
+      });
     })
     .catch(() => {
       console.log("error getting user");
@@ -72,6 +74,17 @@ export class BluraysComponent implements OnInit {
         this.dataSource.data = res;
         this.isLoading = false;
         this.totalFilms = res.length;
+
+        localStorage.setItem("films", JSON.stringify(res));
+      }, err => {
+        console.log(err);
+        const adminMessage: string = this.admin ? ' For admins, adding and removing films will not work.' : ''; // this will only work if the get user call comes in before this one fails which is unlikely, but it's still kinda nice to have
+        const message: string = "Could not get table data, loading data from cache." + adminMessage;
+        alert(message);
+
+        this.dataSource.data = JSON.parse(localStorage.getItem("films"));
+        this.isLoading = false;
+        this.totalFilms = this.dataSource.data.length;
       }
     )
   }
