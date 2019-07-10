@@ -70,7 +70,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     MatDialogModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
-  providers: [AuthService, UserService, AuthGuard,/* AddFilmDialogComponent, {provide: MatDialogRef, useValue: {}}*/],
+  providers: [AuthService, UserService, AuthGuard],
   bootstrap: [AppComponent],
   entryComponents: [AddFilmDialogComponent],
 })
