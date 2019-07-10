@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  version: "0.3.7", // version of the site
+  // version: "0.3.7", // version of the site
+  version: "PWA testing",
   firebase: {
     apiKey: "AIzaSyAzOGedb7dY24y9mr_IFH4aVx9eEm-j0SI",
     authDomain: "film-database-ac9d2.firebaseapp.com",

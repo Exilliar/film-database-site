@@ -41,6 +41,7 @@ import {
   MatDialogModule,
 } from '@angular/material/dialog';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 
 @NgModule({
@@ -67,6 +68,7 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
     FormsModule,
     HttpModule,
     MatDialogModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [AuthService, UserService, AuthGuard,/* AddFilmDialogComponent, {provide: MatDialogRef, useValue: {}}*/],
   bootstrap: [AppComponent],
