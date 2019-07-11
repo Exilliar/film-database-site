@@ -1,6 +1,6 @@
 {
   "name": "Film Database Site",
-  "short_name": "fds",
+  "short_name": "FDS",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
