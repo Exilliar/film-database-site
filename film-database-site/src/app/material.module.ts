@@ -12,7 +12,7 @@ import {
     MatProgressSpinnerModule,
     MatSortModule,
     MatTableModule,
-    
+    MatSnackBarModule,
 } from '@angular/material';
 
 // import {
@@ -38,6 +38,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
         BrowserAnimationsModule,
         // MatDialogModule,
         MatCardModule,
+        MatSnackBarModule,
     ],
     exports: [
         MatSidenavModule,
