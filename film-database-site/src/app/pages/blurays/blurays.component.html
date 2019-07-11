@@ -11,6 +11,10 @@
 <div class="secondRow">
   <mat-card style="height: 3em">
     <p style="text-align: center">Total Films: {{totalFilms}}</p>
+    <div *ngIf="offline === true">
+      <br>
+      <p style="color: red; text-align: center">Offline</p>
+    </div>
   </mat-card>
 </div>
 

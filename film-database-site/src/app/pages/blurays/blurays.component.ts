@@ -1,8 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, } from '@angular/material';
+
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { UserService } from './../../auth/user.service';
+
 import {MatDialog, MatDialogConfig } from '@angular/material/dialog';
+
 import { AddFilmDialogComponent } from './../../components/add-film-dialog/add-film-dialog.component';
 
 export interface DialogData {
@@ -22,6 +25,7 @@ export class BluraysComponent implements OnInit {
     private dataservice: DataServiceService,
     private userService: UserService,
     private dialog: MatDialog,
+    private snackBar: MatSnackBar,
   ) { }
 
   displayedColumns: string[] = ['id', 'name', 'length', 'watched'];
@@ -36,10 +40,9 @@ export class BluraysComponent implements OnInit {
   admin: boolean = false;
 
   isLoading: boolean = true;
+  offline: boolean = false;
   
   ngOnInit(){
-    this.getFilms();
-
     this.userService.getCurrentUser()
     .then((user) => {
       this.dataservice.getUser(user.uid)
@@ -50,8 +53,10 @@ export class BluraysComponent implements OnInit {
           this.displayedColumns.push('removeFilm');
           this.admin = true;
         }
+
+        this.getFilms(false);
       }, err => {
-        alert("Error getting user, if you're an admin you will not have the privileges in this session. Refresh the page to try again");
+        this.getFilms(true);
       });
     })
     .catch(() => {
@@ -68,7 +73,8 @@ export class BluraysComponent implements OnInit {
 
   }
 
-  getFilms() {
+  getFilms(userFailed: boolean) {
+    const userFailedMessage = "Error getting user, if you're an admin you will not have the privileges in this session. Refresh the page to try again.";
     this.dataservice.getData()
     .subscribe(res => {
         this.dataSource.data = res;
@@ -76,17 +82,43 @@ export class BluraysComponent implements OnInit {
         this.totalFilms = res.length;
 
         localStorage.setItem("films", JSON.stringify(res));
+
+        if (userFailed) this.openSnackbar([userFailedMessage]);
       }, err => {
         console.log(err);
         const adminMessage: string = this.admin ? ' For admins, adding and removing films will not work.' : ''; // this will only work if the get user call comes in before this one fails which is unlikely, but it's still kinda nice to have
         const message: string = "Could not get table data, loading data from cache." + adminMessage;
-        alert(message);
+
+        userFailed === true ? this.openSnackbar([userFailedMessage, message]) : this.openSnackbar([message]);
+
+        this.offline = true;
 
         this.dataSource.data = JSON.parse(localStorage.getItem("films"));
         this.isLoading = false;
         this.totalFilms = this.dataSource.data.length;
       }
     )
+  }
+
+  openSnackbar(message: string[]) {
+    const actionButtonLabel: string = 'Okay';
+    const horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+    const verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+    
+    let config = new MatSnackBarConfig();
+    config.verticalPosition = verticalPosition;
+    config.horizontalPosition = horizontalPosition;
+    config.duration = 5000;
+
+    const snackBarRef = this.snackBar.open(message[0], actionButtonLabel, config);
+    console.log("first");
+
+    if (message.length > 1) {
+      snackBarRef.afterDismissed().subscribe(() => {
+        console.log("second");
+        this.snackBar.open(message[1], actionButtonLabel, config);
+      })
+    }
   }
 
   addFilm() {
@@ -110,7 +142,7 @@ export class BluraysComponent implements OnInit {
           this.dataservice.addFilm(data)
           .subscribe(
             () => {
-              this.getFilms();
+              this.getFilms(false);
             }
           );
         }
@@ -122,7 +154,7 @@ export class BluraysComponent implements OnInit {
     if (confirm("Are you sure you want to delete this film?")){
       this.dataservice.removeFilm(id).subscribe(
         () => {
-          this.getFilms();
+          this.getFilms(false);
         }
       );
     }
