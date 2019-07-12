@@ -17,7 +17,7 @@ export interface DialogData {
 @Component({
   selector: 'app-blurays',
   templateUrl: './blurays.component.html',
-  styleUrls: ['./blurays.component.less']
+  styleUrls: ['./blurays.component.scss']
 })
 export class BluraysComponent implements OnInit {
 
