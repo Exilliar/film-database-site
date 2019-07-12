@@ -10,7 +10,7 @@ export interface DialogData {
 @Component({
   selector: 'app-add-film-dialog',
   templateUrl: './add-film-dialog.component.html',
-  styleUrls: ['./add-film-dialog.component.less']
+  styleUrls: ['./add-film-dialog.component.scss']
 })
 // @Injectable({
 //   providedIn: 'root'

@@ -7,7 +7,7 @@ import { UserService } from '../../auth/user.service';
 @Component({
   selector: 'page-login',
   templateUrl: 'login.component.html',
-  styleUrls: ['login.component.less']
+  styleUrls: ['login.component.scss']
 })
 export class LoginComponent {
 
