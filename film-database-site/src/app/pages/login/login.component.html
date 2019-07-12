@@ -1,0 +1,36 @@
+<div class="all">
+  <mat-card class="container">
+    <h1 class="header">Login with Firebase or Social Providers</h1>
+    <div class="form">
+      <form [formGroup]="loginForm">
+        <div>
+          <mat-form-field>
+            <input matInput type="email" formControlName="email" class="form-control" placeholder="Email Address">
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field>
+            <input matInput type="password" class="form-control" formControlName="password" placeholder="Password">
+          </mat-form-field>
+        </div>
+
+        <div>
+          <label matInput class="error">{{errorMessage}}</label>
+        </div>
+
+        <div>
+          <button mat-stroked-button type="submit" (click)="tryLogin(loginForm.value)" class="btn btn-default">Login</button>
+        </div>
+      </form>
+
+      <div class="google">
+        <button mat-stroked-button type="button" class="btn btn-danger btn-block" (click)="tryGoogleLogin()"><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" width="30vw" height="30vh"> Login with Google</button>
+      </div>
+
+      <div>
+        <p>No account yet? <a [routerLink]="" (click)="this.router.navigate(['/register'])">Create an account</a></p>
+      </div>
+    </div>
+  </mat-card>
+</div>

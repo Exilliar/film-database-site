@@ -6,10 +6,20 @@ import {
     MatListModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatDialogModule
+    MatCardModule,
+    MatInputModule, 
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatSortModule,
+    MatTableModule,
+    MatSnackBarModule,
 } from '@angular/material';
 
-import { MatInputModule, MatPaginatorModule, MatProgressSpinnerModule, MatSortModule, MatTableModule } from "@angular/material";
+// import {
+//     MatDialogModule,
+// } from '@angular/material/dialog';
+
+import {  } from "@angular/material";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule ({
@@ -26,7 +36,9 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
         MatSortModule, 
         MatTableModule,
         BrowserAnimationsModule,
-        MatDialogModule
+        // MatDialogModule,
+        MatCardModule,
+        MatSnackBarModule,
     ],
     exports: [
         MatSidenavModule,
@@ -41,8 +53,10 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
         MatSortModule, 
         MatTableModule,
         BrowserAnimationsModule,
-        MatDialogModule
-    ]
+        // MatDialogModule,
+        MatCardModule,
+    ],
+    // providers: [MatDialogRef]
 })
 
 export class MaterialModule {}
