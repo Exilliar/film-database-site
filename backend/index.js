@@ -7,35 +7,25 @@ const cors = require('cors');
 const pgp = require('pg-promise')(/*options*/);
 const db = pgp('postgres://filmdatabase:' + process.env.POSTGRES_PASSOWRD + '@film-database.ciyl3ymdaics.eu-west-2.rds.amazonaws.com:5432/filmdatabase');
 
-function getAllData() {
-  return new Promise((resolve,reject) => {
-    resolve(db.any('SELECT * FROM blurays'));
-    // reject('reject');
-  })
-}
-
 app.use(cors());
 app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send("It's alive!")
 });
 
-app.get('/api/getData', (req,res) => {
-  getAllData()
+app.get('/api/getData', (req,res) => { // Gets all films from blurays table
+  db.any('SELECT * FROM blurays')
   .then(function(data) {
     res.status(200).send(data);
   })
   .catch(function(err) {
-    console.log("error in getAllData",err);
-    res.status(200).send("error:",err);
-  })
+    res.status(500).send(err);
+  });
 })
 
-app.get('/api/getUser', (req,res) => {
+app.get('/api/getUser', (req,res) => { // Gets the user with a given uid, if the user does not exist then adds the user and returns the newly created user
   const user = req.headers.user;
-
-  // console.log(user);
 
   db.one('SELECT * FROM users WHERE uid=$1',[user])
   .then((data) => {
@@ -43,59 +33,37 @@ app.get('/api/getUser', (req,res) => {
   })
   .catch((err) => {
     if (err.message === 'No data returned from the query.') {
-      db.any('INSERT INTO users (uid,role) VALUES ($1,$2)',[user,1])
-        .then(() => {
-          db.one('SELECT * FROM users WHERE uid=$1',[user])
-        .then((data) => {
-          res.status(200).send(data);
-        })
-        .catch((err) => {
-          res.status(500).send(err);
-        })
+      db.any(`INSERT INTO users (uid,role) VALUES ($1,$2); 
+              SELECT * FROM users WHERE uid=$1`,[user,1])
+      .then((data) => {
+        res.status(200).send(data);
       })
       .catch((err) => {
         res.status(500).send(err);
-      })
+      });
     }
-    else 
-    {
-      console.log("printed error:", err);
-      res.status(500).send("error getting user");
+    else {
+      res.status(500).send(err);
     }
-  })
+  });
 })
 
-app.post('/adduser', (req,res) => {
-  const user = req.headers.user;
-  console.log(user);
-
-  db.any('INSERT INTO users (uid,role) VALUES ($1,$2)',[user,1]);
+app.post('/api/removeFilm', (req,res) => { // Removes film from blurays table
+  db.any('DELETE FROM blurays WHERE id=$1',[req.body.filmid]);
 
   res.status(200).send("success");
 })
 
-app.post('/api/removeFilm', (req,res) => {
-  const filmid = req.body.filmid;
-
-  db.any('DELETE FROM blurays WHERE id=$1',[filmid]);
-
-  res.status(200).send("success");
-})
-
-app.post('/api/addFilm', (req,res) => {
-
-  console.log("req:", req.body);
-  const data = req.body.film;
-  const name = data.name;
-  const length = data.length;
-  const watched = data.watched;
+app.post('/api/addFilm', (req,res) => { // Adds film to blurays table
+  const { name, length, watched } = req.body.film;
 
   db.any('INSERT INTO blurays (name, length, watched) VALUES ($1,$2,$3)',[name,length,watched])
   .then(() => {
     res.status(200).send("success");
+  })
+  .catch((err) => {
+    res.status(500).send(err);
   });
-
-  console.log("film:", data);
 })
 
 app.listen(process.env.PORT || 8081, () => {
