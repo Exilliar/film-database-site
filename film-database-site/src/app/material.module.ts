@@ -13,7 +13,10 @@ import {
     MatSortModule,
     MatTableModule,
     MatSnackBarModule,
+    MatSlideToggleModule,
+    MatSelectModule,
 } from '@angular/material';
+// import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 // import {
 //     MatDialogModule,
@@ -39,6 +42,9 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
         // MatDialogModule,
         MatCardModule,
         MatSnackBarModule,
+        MatSlideToggleModule,
+        MatSelectModule,
+        // MatButtonToggleModule,
     ],
     exports: [
         MatSidenavModule,
@@ -55,6 +61,9 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
         BrowserAnimationsModule,
         // MatDialogModule,
         MatCardModule,
+        MatSnackBarModule,
+        MatSlideToggleModule,
+        MatSelectModule,
     ],
     // providers: [MatDialogRef]
 })

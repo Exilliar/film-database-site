@@ -1,6 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
 // @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-@import './theme.scss';
+
+// @import './theme.scss';
+
+// @import '~@angular/material/theming';
+
+// @include mat-core();
+// $primary: mat-palette($mat-indigo);
+// $accent: mat-palette($mat-pink, A200, A100, A400);
+// $warn: mat-palette($mat-red);
+// $theme: mat-light-theme($primary, $accent, $warn); // Or mat-dark-theme
+
+// @include angular-material-theme($theme);
+
+@import './styles/material-theme.scss';
 
 * {
     padding: 0;

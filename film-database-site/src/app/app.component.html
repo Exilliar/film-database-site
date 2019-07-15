@@ -1,52 +1,60 @@
-<mat-sidenav-container style="overflow-x: hidden !important;">
-  <mat-sidenav  #sidenav role="navigation">
-    <mat-nav-list>
-      <div *ngIf="signedIn === true">
-        <a mat-list-item (click)="signOut()">
-          <mat-icon class="icon">person</mat-icon>
-          <span class="label">Sign Out</span>
-        </a>
-      </div>
-      <a mat-list-item routerLink="/blurays">
-        <mat-icon class="icon">home</mat-icon>
-        <span class="label">Blurays</span>
-      </a>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <div fxHide.gt-xs>
-        <button mat-icon-button (click)="sidenav.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
-    </div>
-      <div>
-        <a>
-          <div class="title">Film Database {{ver}}</div> 
-        </a>
-      </div>
-      <div fxFlex fxLayout fxLayoutAlign="flex-end"  fxHide.xs>
-        <ul fxLayout fxLayoutGap="20px" class="navigation-items">
-          <li>
-            <div *ngIf="signedIn === true">
-              <a (click)="signOut()">
-                <mat-icon class="icon">person</mat-icon>
-                <span class="label">Sign Out</span>
-              </a>
-            </div>
-          </li>  
-          <li>                
-            <a routerLink="/blurays">
-              <mat-icon class="icon">home</mat-icon>
-              <span class="label">Blurays</span>
+<div [ngClass]="{'dark-theme': isDarkTheme | async}">
+  <div class="mat-app-background">
+    <mat-sidenav-container style="overflow-x: hidden !important;">
+      <mat-sidenav  #sidenav role="navigation">
+        <mat-nav-list>
+          <div *ngIf="signedIn === true">
+            <a mat-list-item (click)="signOut()">
+              <mat-icon class="icon">person</mat-icon>
+              <span class="label">Sign Out</span>
             </a>
-          </li>
-        </ul>
-      </div>
-    </mat-toolbar>
-    <main>
-        <router-outlet></router-outlet>
-    </main>
-  </mat-sidenav-content>
-</mat-sidenav-container>
-
+          </div>
+          <a mat-list-item routerLink="/blurays">
+            <mat-icon class="icon">home</mat-icon>
+            <span class="label">Blurays</span>
+          </a>
+        </mat-nav-list>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <mat-toolbar color="primary">        
+          <div fxHide.gt-xs>
+            <button mat-icon-button (click)="sidenav.toggle()">
+            <mat-icon>menu</mat-icon>
+          </button>
+        </div>
+          <div>
+            <a>
+              <div class="title">Film Database {{ver}}</div> 
+            </a>
+          </div>
+          <div fxFlex fxLayout fxLayoutAlign="flex-end"  fxHide.xs>
+            <ul fxLayout fxLayoutGap="20px" class="navigation-items">
+              <li>
+                <div class="label">
+                  <mat-slide-toggle [checked]="isDarkTheme | async" (change)="toggleDarkTheme($event.checked)">Dark theme</mat-slide-toggle>
+                </div>              
+              </li>
+              <li>
+                <div *ngIf="signedIn === true">
+                  <a (click)="signOut()">
+                    <mat-icon class="icon">person</mat-icon>
+                    <span class="label">Sign Out</span>
+                  </a>
+                </div>
+              </li>  
+              <li>                
+                <a routerLink="/blurays">
+                  <mat-icon class="icon">home</mat-icon>
+                  <span class="label">Blurays</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </mat-toolbar>
+        <main>
+          <router-outlet></router-outlet>
+        </main>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+</div>

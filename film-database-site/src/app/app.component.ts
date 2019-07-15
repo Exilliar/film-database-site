@@ -5,6 +5,8 @@ import { UserService } from './auth/user.service';
 import { Router, NavigationEnd } from "@angular/router";
 
 import { environment } from '../environments/environment';
+import { Observable } from 'rxjs';
+import { ThemeService } from './core/services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +18,7 @@ export class AppComponent implements OnInit{
     private authService: AuthService,
     private router: Router,
     private userService: UserService,
+    private themeService: ThemeService,
   ) {
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd && !this.urlBlacklist.includes(router.url)) {
@@ -24,7 +27,7 @@ export class AppComponent implements OnInit{
     })
   }
 
-  urlBlacklist = ['/login','/register'] // list of urls that the user will not be on if they are logged in
+  urlBlacklist = ['/login','/register'] // list of urls that the user will not be on if they are logged in (pages where sign out button will not be visible)
 
   title = 'film-database-site';
 
@@ -35,9 +38,17 @@ export class AppComponent implements OnInit{
   dataSource = new MatTableDataSource();
 
   signedIn = false;
+
+  isDarkTheme: Observable<boolean>;
   
   ngOnInit(){
     this.checkSignedIn();
+    this.isDarkTheme = this.themeService.isDarkTheme;
+  }
+
+  toggleDarkTheme(checked: boolean) {
+    console.log("toggle");
+    this.themeService.setDarkTheme(checked);
   }
   
   checkSignedIn(){

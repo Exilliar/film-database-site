@@ -28,12 +28,7 @@
               "src/manifest.json"
             ],
             "styles": [
-<<<<<<< HEAD
-              "src/styles.less",
-              "src/theme.scss"
-=======
               "src/styles.scss"
->>>>>>> e1ec2e9ee993e09c14e67679e3ff48086659bef4
             ],
             "scripts": [],
             "es5BrowserSupport": true
@@ -92,12 +87,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-<<<<<<< HEAD
-              "src/styles.less",
-              "src/theme.scss"
-=======
               "src/styles.scss"
->>>>>>> e1ec2e9ee993e09c14e67679e3ff48086659bef4
             ],
             "scripts": [],
             "assets": [
