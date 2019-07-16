@@ -11,6 +11,8 @@ mat-sidenav-container, mat-sidenav-content, mat-sidenav {
   a {
     text-decoration: none;
     color: white;
+    display: flex;
+    align-items: center;
   }
   
   a:hover,
@@ -28,17 +30,18 @@ mat-sidenav-container, mat-sidenav-content, mat-sidenav {
   .icon {
     display: inline-block;
     height: 30px;
-    margin: 0 auto;
+    // margin: 0 auto;
     padding-right: 5px;
     text-align: center;
     vertical-align: middle;
-    width: 15%;
+    width: auto;
   }
   
   .label {
     display: inline-block;
     line-height: 30px;
     margin: 0.5em;
+    margin-left: 0;
     // width: auto;//80%;
     vertical-align: middle;
   }
