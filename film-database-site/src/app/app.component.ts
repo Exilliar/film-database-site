@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
-import { AuthService } from './auth/auth.service';
-import { UserService } from './auth/user.service';
 import { Router, NavigationEnd } from "@angular/router";
 
+import { AuthService } from './auth/auth.service';
+import { UserService } from './auth/user.service';
+
 import { environment } from '../environments/environment';
-import { Observable } from 'rxjs';
+
 import { ThemeService } from './core/services/theme.service';
+
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -37,20 +40,20 @@ export class AppComponent implements OnInit{
 
   dataSource = new MatTableDataSource();
 
-  signedIn = false;
+  signedIn: boolean = false;
 
   isDarkTheme: Observable<boolean>;
   
   ngOnInit(){
     this.checkSignedIn();
+    
     this.isDarkTheme = this.themeService.isDarkTheme;
   }
 
   toggleDarkTheme(checked: boolean) {
-    console.log("toggle");
     this.themeService.setDarkTheme(checked);
   }
-  
+
   checkSignedIn(){
     this.userService.getCurrentUser()
     .then(() => {

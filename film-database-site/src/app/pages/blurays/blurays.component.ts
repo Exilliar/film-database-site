@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource, MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, } from '@angular/material';
 
 import { DataServiceService } from 'src/app/services/data-service.service';
@@ -111,11 +111,9 @@ export class BluraysComponent implements OnInit {
     config.duration = 5000;
 
     const snackBarRef = this.snackBar.open(message[0], actionButtonLabel, config);
-    console.log("first");
 
     if (message.length > 1) {
       snackBarRef.afterDismissed().subscribe(() => {
-        console.log("second");
         this.snackBar.open(message[1], actionButtonLabel, config);
       })
     }

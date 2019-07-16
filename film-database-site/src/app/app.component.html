@@ -3,6 +3,9 @@
     <mat-sidenav-container style="overflow-x: hidden !important;">
       <mat-sidenav  #sidenav role="navigation">
         <mat-nav-list>
+          <div class="label">
+            <mat-slide-toggle [checked]="isDarkTheme | async" (change)="toggleDarkTheme($event.checked)">Change theme</mat-slide-toggle>
+          </div> 
           <div *ngIf="signedIn === true">
             <a mat-list-item (click)="signOut()">
               <mat-icon class="icon">person</mat-icon>
@@ -31,14 +34,14 @@
             <ul fxLayout fxLayoutGap="20px" class="navigation-items">
               <li>
                 <div class="label">
-                  <mat-slide-toggle [checked]="isDarkTheme | async" (change)="toggleDarkTheme($event.checked)">Dark theme</mat-slide-toggle>
+                  <mat-slide-toggle [checked]="isDarkTheme | async" (change)="toggleDarkTheme($event.checked)">Change theme</mat-slide-toggle>
                 </div>              
               </li>
               <li>
                 <div *ngIf="signedIn === true">
                   <a (click)="signOut()">
                     <mat-icon class="icon">person</mat-icon>
-                    <span class="label">Sign Out</span>
+                    <span class="label" color="primary">Sign Out</span>
                   </a>
                 </div>
               </li>  
