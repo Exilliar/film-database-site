@@ -17,6 +17,8 @@ import { BluraysComponent } from './pages/blurays/blurays.component';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
+import { CoreModule } from './core/core.module';
+
 // General components
 import { AddFilmDialogComponent } from './components/add-film-dialog/add-film-dialog.component';
 
@@ -69,6 +71,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     HttpModule,
     MatDialogModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    CoreModule,
   ],
   providers: [AuthService, UserService, AuthGuard],
   bootstrap: [AppComponent],

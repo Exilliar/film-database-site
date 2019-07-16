@@ -37,7 +37,6 @@ export class RegisterComponent implements OnInit {
   tryRegister(value){
     this.authService.Register(value)
     .then(res => {
-      console.log(res);
       this.errorMessage = "";
       this.successMessage = "Your account has been created";
       this.router.navigate(['/blurays']);
