@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource, MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource, MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, MatSort, } from '@angular/material';
 
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { UserService } from './../../auth/user.service';
@@ -32,6 +32,8 @@ export class BluraysComponent implements OnInit {
 
   dataSource = new MatTableDataSource();
 
+  @ViewChild(MatSort) sort: MatSort;
+
   user = null;
   role = null;
 
@@ -61,7 +63,9 @@ export class BluraysComponent implements OnInit {
     })
     .catch(() => {
       console.log("error getting user");
-    })
+    });
+
+    this.dataSource.sort = this.sort;
   }
 
   applyFilter(filterValue: string) {
