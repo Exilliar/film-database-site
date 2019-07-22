@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
   constructor( 
     public authService: AuthService,
     public router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
      ) {
        this.createForm();
       }
@@ -29,7 +29,7 @@ export class RegisterComponent implements OnInit {
 
   createForm() {
     this.registerForm = this.fb.group({
-      email: ['', Validators.required ],
+      email: ['', Validators.required],
       password: ['',Validators.required]
     });
   }
