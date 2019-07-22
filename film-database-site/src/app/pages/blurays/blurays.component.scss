@@ -1,27 +1,8 @@
 @import '~@angular/material/theming';
 
 table {
-    // text-align: center !important;
     width: 100%;
   }
-  
-td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
-  // text-align: center;
-}
-
-// .mat-sort-header-container {
-//   text-align: center;
-//   // display: flex;
-//   // justify-content: flex-end;
-// }
-
-// th.mat-header-cell {
-//   text-align: center !important;
-// }
-
-// .header {
-//   text-align: center !important;
-// }
 
 .topRow {
   display: flex;
@@ -31,7 +12,7 @@ td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
 
 .add {
   height: 3em;
-  width: 8em;
+  width: 25vw;
   text-align: center;
   background-color: rgb(63,81,181);
   color: white;

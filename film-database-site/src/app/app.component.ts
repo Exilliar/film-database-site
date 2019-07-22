@@ -8,6 +8,7 @@ import { UserService } from './auth/user.service';
 import { environment } from '../environments/environment';
 
 import { ThemeService } from './core/services/theme.service';
+import { AdminService } from './core/services/admin.service';
 
 import { Observable } from 'rxjs';
 
@@ -22,6 +23,7 @@ export class AppComponent implements OnInit{
     private router: Router,
     private userService: UserService,
     private themeService: ThemeService,
+    private adminService: AdminService,
   ) {
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd && !this.urlBlacklist.includes(router.url)) {
@@ -43,11 +45,14 @@ export class AppComponent implements OnInit{
   signedIn: boolean = false;
 
   isDarkTheme: Observable<boolean>;
+
+  isAdmin: Observable<boolean>;
   
   ngOnInit(){
     this.checkSignedIn();
     
     this.isDarkTheme = this.themeService.isDarkTheme;
+    this.isAdmin = this.adminService.isAdmin;
   }
 
   toggleDarkTheme(checked: boolean) {
@@ -74,6 +79,8 @@ export class AppComponent implements OnInit{
   }
 
   signOut() {
+    this.adminService.setAdmin(false);
+
     this.signedIn = false;
 
     this.authService.SignOut()
