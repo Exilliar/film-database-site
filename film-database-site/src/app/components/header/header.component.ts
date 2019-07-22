@@ -4,12 +4,12 @@ import { MatTableDataSource } from '@angular/material';
 import { Router, NavigationEnd } from "@angular/router";
 
 import { AuthService } from './../../auth/auth.service';
-import { UserService } from './../../auth/user.service';
 
 import { environment } from '../../../environments/environment';
 
 import { ThemeService } from './../../core/services/theme.service';
 import { AdminService } from './../../core/services/admin.service';
+import { SignedInService } from './../../core/services/signed-in.service';
 
 import { Observable } from 'rxjs';
 
@@ -22,13 +22,13 @@ export class HeaderComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private userService: UserService,
     private themeService: ThemeService,
     private adminService: AdminService,
+    private signedInService: SignedInService,
   ) {
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd && !this.urlBlacklist.includes(router.url)) {
-        this.checkSignedIn();
+        // this.checkSignedIn();
       }
     })
   }
@@ -43,31 +43,20 @@ export class HeaderComponent implements OnInit {
 
   dataSource = new MatTableDataSource();
 
-  signedIn: boolean = false;
+  signedIn: Observable<boolean>;
 
   isDarkTheme: Observable<boolean>;
 
   isAdmin: Observable<boolean>;
   
   ngOnInit(){
-    this.checkSignedIn();
-    
+    this.signedIn = this.signedInService.isSignedIn;
     this.isDarkTheme = this.themeService.isDarkTheme;
     this.isAdmin = this.adminService.isAdmin;
   }
 
   toggleDarkTheme(checked: boolean) {
     this.themeService.setDarkTheme(checked);
-  }
-
-  checkSignedIn(){
-    this.userService.getCurrentUser()
-    .then(() => {
-      this.signedIn = true;
-    })
-    .catch(() => {
-      this.signedIn = false;
-    })
   }
 
   applyFilter(filterValue: string) {
@@ -81,8 +70,6 @@ export class HeaderComponent implements OnInit {
 
   signOut() {
     this.adminService.setAdmin(false);
-
-    this.signedIn = false;
 
     this.authService.SignOut()
     .then(() => {

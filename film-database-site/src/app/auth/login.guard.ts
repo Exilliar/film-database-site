@@ -11,16 +11,12 @@ export class LoginGuard implements CanActivate {
     private router: Router
   ) {}
 
-  canActivate(): Promise<boolean> {
-    return new Promise((resolve, reject) => {
-      this.userService.getCurrentUser()
-      .then((user) => {
-        this.router.navigate(['/blurays']);
-        return resolve(false);
-      })
-      .catch((err) => {
-        return resolve(true);
-      });
-    })
+  canActivate(): boolean {
+    const user: boolean = localStorage.getItem('signedIn') === 'true';
+
+    if (user) {
+      this.router.navigate(['/blurays']);
+      return false;
+    } else return true;
   }
 }
