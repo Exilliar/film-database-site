@@ -8,6 +8,8 @@ import {MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 import { AddFilmDialogComponent } from './../../components/add-film-dialog/add-film-dialog.component';
 
+import { AdminService } from './../../core/services/admin.service';
+
 export interface DialogData {
   name: string;
   length: number;
@@ -26,6 +28,7 @@ export class BluraysComponent implements OnInit {
     private userService: UserService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
+    private adminService: AdminService,
   ) { }
 
   displayedColumns: string[] = ['id', 'name', 'length', 'watched'];
@@ -54,6 +57,7 @@ export class BluraysComponent implements OnInit {
         if (this.role === 2) {
           this.displayedColumns.push('removeFilm');
           this.admin = true;
+          this.adminService.setAdmin(true);
         }
 
         this.getFilms(false);
