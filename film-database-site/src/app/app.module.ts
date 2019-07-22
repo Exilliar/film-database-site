@@ -44,6 +44,7 @@ import {
 } from '@angular/material/dialog';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { HeaderComponent } from './components/header/header.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     RegisterComponent,
     UserComponent,
     AddFilmDialogComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
