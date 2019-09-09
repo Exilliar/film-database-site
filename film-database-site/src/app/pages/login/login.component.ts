@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { UserService } from '../../auth/user.service';
-import { SignedInService } from '../../core/services/signed-in.service';
+import { SignedInService } from '../../core/services/signed-in/signed-in.service';
 
 @Component({
   selector: 'page-login',

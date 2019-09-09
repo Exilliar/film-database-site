@@ -8,7 +8,7 @@ import {MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 import { AddFilmDialogComponent } from './../../components/add-film-dialog/add-film-dialog.component';
 
-import { AdminService } from './../../core/services/admin.service';
+import { AdminService } from '../../core/services/admin/admin.service';
 
 export interface DialogData {
   name: string;
