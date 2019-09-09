@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, MatSort, } from '@angular/material';
 
 import { DataServiceService } from 'src/app/services/data-service.service';
-import { UserService } from './../../auth/user.service';
+import { UserService } from '../../auth/user/user.service';
 
 import {MatDialog, MatDialogConfig } from '@angular/material/dialog';
 

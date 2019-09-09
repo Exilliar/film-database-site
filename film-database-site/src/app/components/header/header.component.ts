@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { Router, NavigationEnd } from "@angular/router";
 
-import { AuthService } from './../../auth/auth.service';
+import { AuthService } from '../../auth/service/auth.service';
 
 import { environment } from '../../../environments/environment';
 

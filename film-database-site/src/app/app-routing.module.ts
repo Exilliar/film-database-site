@@ -9,8 +9,8 @@ import { UserComponent } from './pages/user/user.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 // Guards
-import { AuthGuard } from './auth/auth.guard';
-import { LoginGuard } from './auth/login.guard';
+import { AuthGuard } from './auth/guard/auth.guard';
+import { LoginGuard } from './auth/login/login.guard';
 
 const routes: Routes = [
   {
