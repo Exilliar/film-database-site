@@ -2,7 +2,7 @@
 <div class="topRow">
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-  </mat-form-field>  
+  </mat-form-field>
   <!-- <button mat-stroked-button type="button" (click)="addFilm()">Add film</button> -->
   <div *ngIf="admin === true">
     <button mat-stroked-button type="button" class="add" (click)="addFilm()">Add film</button>
@@ -55,7 +55,7 @@
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="updateWatched(row.name)"></tr>
 </table>
 
 <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">

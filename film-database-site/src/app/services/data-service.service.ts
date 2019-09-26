@@ -64,7 +64,7 @@ export class DataServiceService {
       'film': film
     };
 
-    const url = 'https://localhost:8081/api/updateWatched';
+    const url = this.baseurl + '/api/updateWatched';
 
     return this.http.post(url,data, {responseType: 'text'});
   }
