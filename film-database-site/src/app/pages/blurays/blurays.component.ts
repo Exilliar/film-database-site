@@ -78,7 +78,7 @@ export class BluraysComponent implements OnInit {
 
   updateWatched(name){
     if (this.admin) {
-      if (confirm("Are you sure you want to flip watched value?")) {
+      if (confirm("Are you sure you want to flip watched value of " + name + "?")) {
         this.dataservice.updateWatched(name)
         .subscribe(res => {
           this.getFilms(false);
