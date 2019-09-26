@@ -72,7 +72,7 @@ app.post('/api/updateWatched', (req,res) => { // Flips the value of watched
 
   db.any('SELECT watched FROM blurays WHERE name=$1',[name])
   .then((w) => {
-    watched = !w;
+    watched = !w['watched'];
 
     console.log("change watched:", watched);
 
