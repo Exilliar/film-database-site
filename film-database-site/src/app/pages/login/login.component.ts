@@ -1,10 +1,10 @@
 import { Component  } from '@angular/core';
-import { AuthService } from '../../auth/auth.service';
+import { AuthService } from '../../auth/service/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { UserService } from '../../auth/user.service';
-import { SignedInService } from '../../core/services/signed-in.service';
+import { UserService } from '../../auth/user/user.service';
+import { SignedInService } from '../../core/services/signed-in/signed-in.service';
 
 @Component({
   selector: 'page-login',

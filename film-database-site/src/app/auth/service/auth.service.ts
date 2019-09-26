@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 
-import { SignedInService } from './../core/services/signed-in.service';
+import { SignedInService } from '../../core/services/signed-in/signed-in.service';
 
 @Injectable({
   providedIn: 'root'

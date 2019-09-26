@@ -2,13 +2,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, MatSort, } from '@angular/material';
 
 import { DataServiceService } from 'src/app/services/data-service.service';
-import { UserService } from './../../auth/user.service';
+import { UserService } from '../../auth/user/user.service';
 
 import {MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 import { AddFilmDialogComponent } from './../../components/add-film-dialog/add-film-dialog.component';
 
-import { AdminService } from './../../core/services/admin.service';
+import { AdminService } from '../../core/services/admin/admin.service';
 
 export interface DialogData {
   name: string;
@@ -46,7 +46,7 @@ export class BluraysComponent implements OnInit {
 
   isLoading: boolean = true;
   offline: boolean = false;
-  
+
   ngOnInit(){
     this.userService.getCurrentUser()
     .then((user) => {
@@ -76,15 +76,23 @@ export class BluraysComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  onRowClicked(row)
-  {
-
+  updateWatched(name){
+    if (this.admin) {
+      if (confirm("Are you sure you want to flip watched value?")) {
+        this.dataservice.updateWatched(name)
+        .subscribe(res => {
+          this.getFilms(false);
+        }, err => {
+          console.log(err);
+        })
+      }
+    }
   }
 
   getFilms(userFailed: boolean) {
     const userFailedMessage = "Error getting user, if you're an admin you will not have the privileges in this session. Refresh the page to try again.";
     this.dataservice.getData()
-    .subscribe(res => {
+    .subscribe(res => { // If the user is connected to the internet
         this.dataSource.data = res;
         this.isLoading = false;
         this.totalFilms = res.length;
@@ -92,7 +100,7 @@ export class BluraysComponent implements OnInit {
         localStorage.setItem("films", JSON.stringify(res));
 
         if (userFailed) this.openSnackbar([userFailedMessage]);
-      }, err => {
+      }, err => { // Assumed that the user is not connected to the internet
         console.log(err);
         const adminMessage: string = this.admin ? ' For admins, adding and removing films will not work.' : ''; // this will only work if the get user call comes in before this one fails which is unlikely, but it's still kinda nice to have
         const message: string = "Could not get table data, loading data from cache." + adminMessage;
@@ -112,7 +120,7 @@ export class BluraysComponent implements OnInit {
     const actionButtonLabel: string = 'Okay';
     const horizontalPosition: MatSnackBarHorizontalPosition = 'right';
     const verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-    
+
     let config = new MatSnackBarConfig();
     config.verticalPosition = verticalPosition;
     config.horizontalPosition = horizontalPosition;
@@ -135,8 +143,8 @@ export class BluraysComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = {
-      name: name, 
-      length: len, 
+      name: name,
+      length: len,
       watched: watched
     }
 
@@ -165,5 +173,4 @@ export class BluraysComponent implements OnInit {
       );
     }
   }
-
 }

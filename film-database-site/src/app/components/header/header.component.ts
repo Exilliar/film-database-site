@@ -3,13 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { Router, NavigationEnd } from "@angular/router";
 
-import { AuthService } from './../../auth/auth.service';
+import { AuthService } from '../../auth/service/auth.service';
 
 import { environment } from '../../../environments/environment';
 
-import { ThemeService } from './../../core/services/theme.service';
-import { AdminService } from './../../core/services/admin.service';
-import { SignedInService } from './../../core/services/signed-in.service';
+import { ThemeService } from '../../core/services/theme/theme.service';
+import { AdminService } from '../../core/services/admin/admin.service';
+import { SignedInService } from '../../core/services/signed-in/signed-in.service';
 
 import { Observable } from 'rxjs';
 
