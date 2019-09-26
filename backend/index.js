@@ -64,6 +64,30 @@ app.post('/api/addFilm', (req,res) => { // Adds film to blurays table
   .catch((err) => {
     res.status(500).send(err);
   });
+});
+
+app.post('/api/updateWatched', (req,res) => { // Flips the value of watched
+  const name = req.body.film;
+  console.log("name:", name);
+  let watched;
+
+  db.any('SELECT watched FROM blurays WHERE name=$1',[name])
+  .then((w) => {
+    watched = !w;
+
+    console.log("change watched:", watched);
+
+    db.any('UPDATE blurays SET watched=$1 WHERE name=$2',[watched,name])
+    .then(() => {
+      res.status(200).send("success");
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+  })
+  .catch((err) => {
+    res.status(500).send(err);
+  });
 })
 
 app.listen(process.env.PORT || 8081, () => {
