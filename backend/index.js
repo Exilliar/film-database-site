@@ -68,7 +68,6 @@ app.post('/api/addFilm', (req,res) => { // Adds film to blurays table
 
 app.post('/api/updateWatched', (req,res) => { // Flips the value of watched
   const name = req.body.film;
-  console.log("name:", name);
   let watched;
 
   db.any('SELECT watched FROM blurays WHERE name=$1',[name])
