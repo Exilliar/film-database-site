@@ -30,9 +30,9 @@ import { environment } from '../environments/environment';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 
-import { AuthGuard } from './auth/auth.guard';
-import { AuthService } from './auth/auth.service';
-import { UserService } from './auth/user.service';
+import { AuthGuard } from './auth/guard/auth.guard';
+import { AuthService } from './auth/service/auth.service';
+import { UserService } from './auth/user/user.service';
 
 // Forms
 import { ReactiveFormsModule } from '@angular/forms';
