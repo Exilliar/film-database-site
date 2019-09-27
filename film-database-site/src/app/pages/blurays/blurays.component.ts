@@ -10,6 +10,8 @@ import { AddFilmDialogComponent } from './../../components/add-film-dialog/add-f
 
 import { AdminService } from '../../core/services/admin/admin.service';
 
+import { Data } from '../../models/data.model';
+
 export interface DialogData {
   name: string;
   length: number;
@@ -93,6 +95,8 @@ export class BluraysComponent implements OnInit {
     const userFailedMessage = "Error getting user, if you're an admin you will not have the privileges in this session. Refresh the page to try again.";
     this.dataservice.getData()
     .subscribe(res => { // If the user is connected to the internet
+        res = this.sortById(res);
+
         this.dataSource.data = res;
         this.isLoading = false;
         this.totalFilms = res.length;
@@ -114,6 +118,22 @@ export class BluraysComponent implements OnInit {
         this.totalFilms = this.dataSource.data.length;
       }
     )
+  }
+
+  sortById(data: Data[]): Data[] { // Very basic sort, probably already a built in function to do this
+    let placeholder: Data;
+
+    for (let y = 0; y < data.length; y++) {
+      for (let x = y; x < data.length; x++) {
+        if (data[y].id > data[x].id) {
+          placeholder = data[y];
+          data[y] = data[x];
+          data[x] = placeholder;
+        }
+      }
+    }
+
+    return data;
   }
 
   openSnackbar(message: string[]) {
