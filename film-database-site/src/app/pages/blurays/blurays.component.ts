@@ -10,6 +10,8 @@ import { AddFilmDialogComponent } from './../../components/add-film-dialog/add-f
 
 import { AdminService } from '../../services/admin/admin.service';
 
+import { Data } from '../../models/data.model';
+
 export interface DialogData {
   name: string;
   length: number;
@@ -76,15 +78,25 @@ export class BluraysComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  onRowClicked(row)
-  {
-
+  updateWatched(name){
+    if (this.admin) {
+      if (confirm("Are you sure you want to flip watched value of " + name + "?")) {
+        this.dataservice.updateWatched(name)
+        .subscribe(res => {
+          this.getFilms(false);
+        }, err => {
+          console.log(err);
+        })
+      }
+    }
   }
 
   getFilms(userFailed: boolean) {
     const userFailedMessage = "Error getting user, if you're an admin you will not have the privileges in this session. Refresh the page to try again.";
     this.dataservice.getData()
-    .subscribe(res => {
+    .subscribe(res => { // If the user is connected to the internet
+        res = this.sortById(res);
+
         this.dataSource.data = res;
         this.isLoading = false;
         this.totalFilms = res.length;
@@ -92,7 +104,7 @@ export class BluraysComponent implements OnInit {
         localStorage.setItem("films", JSON.stringify(res));
 
         if (userFailed) this.openSnackbar([userFailedMessage]);
-      }, err => {
+      }, err => { // Assumed that the user is not connected to the internet
         console.log(err);
         const adminMessage: string = this.admin ? ' For admins, adding and removing films will not work.' : ''; // this will only work if the get user call comes in before this one fails which is unlikely, but it's still kinda nice to have
         const message: string = "Could not get table data, loading data from cache." + adminMessage;
@@ -106,6 +118,22 @@ export class BluraysComponent implements OnInit {
         this.totalFilms = this.dataSource.data.length;
       }
     )
+  }
+
+  sortById(data: Data[]): Data[] { // Very basic sort, probably already a built in function to do this
+    let placeholder: Data;
+
+    for (let y = 0; y < data.length; y++) {
+      for (let x = y; x < data.length; x++) {
+        if (data[y].id > data[x].id) {
+          placeholder = data[y];
+          data[y] = data[x];
+          data[x] = placeholder;
+        }
+      }
+    }
+
+    return data;
   }
 
   openSnackbar(message: string[]) {
@@ -165,5 +193,4 @@ export class BluraysComponent implements OnInit {
       );
     }
   }
-
 }
