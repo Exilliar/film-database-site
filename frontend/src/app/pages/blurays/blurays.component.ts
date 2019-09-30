@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
-        MatTableDataSource,
-        MatSnackBar,
-        MatSnackBarConfig,
-        MatSnackBarHorizontalPosition,
-        MatSnackBarVerticalPosition,
-        MatSort,
-        MatSnackBarRef
-      } from '@angular/material';
+    MatTableDataSource,
+    MatSnackBar,
+    MatSnackBarConfig,
+    MatSnackBarHorizontalPosition,
+    MatSnackBarVerticalPosition,
+    MatSort,
+    MatSnackBarRef
+} from '@angular/material';
 import {MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 
 import { Film } from 'src/app/models/film.model';
