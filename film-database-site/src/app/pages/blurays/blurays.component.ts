@@ -1,14 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, MatSort, } from '@angular/material';
 
-import { DataServiceService } from 'src/app/services/data-service.service';
-import { UserService } from '../../auth/user/user.service';
+import { DataServiceService } from 'src/app/services/dataService/data-service.service';
+import { UserService } from '../../auth/userService/user.service';
 
 import {MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 import { AddFilmDialogComponent } from './../../components/add-film-dialog/add-film-dialog.component';
 
-import { AdminService } from '../../core/services/admin/admin.service';
+import { AdminService } from '../../services/admin/admin.service';
 
 export interface DialogData {
   name: string;
@@ -46,7 +46,7 @@ export class BluraysComponent implements OnInit {
 
   isLoading: boolean = true;
   offline: boolean = false;
-  
+
   ngOnInit(){
     this.userService.getCurrentUser()
     .then((user) => {
@@ -112,7 +112,7 @@ export class BluraysComponent implements OnInit {
     const actionButtonLabel: string = 'Okay';
     const horizontalPosition: MatSnackBarHorizontalPosition = 'right';
     const verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-    
+
     let config = new MatSnackBarConfig();
     config.verticalPosition = verticalPosition;
     config.horizontalPosition = horizontalPosition;
@@ -135,8 +135,8 @@ export class BluraysComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = {
-      name: name, 
-      length: len, 
+      name: name,
+      length: len,
       watched: watched
     }
 

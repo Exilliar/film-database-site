@@ -17,8 +17,6 @@ import { BluraysComponent } from './pages/blurays/blurays.component';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { CoreModule } from './core/core.module';
-
 // General components
 import { AddFilmDialogComponent } from './components/add-film-dialog/add-film-dialog.component';
 
@@ -31,20 +29,20 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 
 import { AuthGuard } from './auth/guard/auth.guard';
-import { AuthService } from './auth/service/auth.service';
-import { UserService } from './auth/user/user.service';
+import { AuthService } from './auth/authService/auth.service';
+import { UserService } from './auth/userService/user.service';
 
 // Forms
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserComponent } from './pages/user/user.component';
 import { FormsModule } from '@angular/forms';
 
-import {
-  MatDialogModule,
-} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { HeaderComponent } from './components/header/header.component';
+
+import { ThemeService } from './services/theme/theme.service';
 
 
 @NgModule({
@@ -73,9 +71,8 @@ import { HeaderComponent } from './components/header/header.component';
     HttpModule,
     MatDialogModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    CoreModule,
   ],
-  providers: [AuthService, UserService, AuthGuard],
+  providers: [AuthService, UserService, AuthGuard, ThemeService],
   bootstrap: [AppComponent],
   entryComponents: [AddFilmDialogComponent],
 })

@@ -1,10 +1,10 @@
 import { Component  } from '@angular/core';
-import { AuthService } from '../../auth/service/auth.service';
+import { AuthService } from '../../auth/authService/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { UserService } from '../../auth/user/user.service';
-import { SignedInService } from '../../core/services/signed-in/signed-in.service';
+import { UserService } from '../../auth/userService/user.service';
+import { SignedInService } from '../../services/signed-in/signed-in.service';
 
 @Component({
   selector: 'page-login',
@@ -58,7 +58,7 @@ export class LoginComponent {
     .catch(err => {
       console.log(err);
     })
-    
+
 
     // this.authService.Login(event)
     // .then(res => {
