@@ -7,7 +7,7 @@ import {
     MatButtonModule,
     MatFormFieldModule,
     MatCardModule,
-    MatInputModule, 
+    MatInputModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatSortModule,
@@ -15,12 +15,8 @@ import {
     MatSnackBarModule,
     MatSlideToggleModule,
     MatSelectModule,
+    MatDialogModule,
 } from '@angular/material';
-// import { MatButtonToggleModule } from '@angular/material/button-toggle';
-
-// import {
-//     MatDialogModule,
-// } from '@angular/material/dialog';
 
 import {  } from "@angular/material";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -33,18 +29,17 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
         MatListModule,
         MatButtonModule,
         MatFormFieldModule,
-        MatInputModule, 
-        MatPaginatorModule, 
-        MatProgressSpinnerModule, 
-        MatSortModule, 
+        MatInputModule,
+        MatPaginatorModule,
+        MatProgressSpinnerModule,
+        MatSortModule,
         MatTableModule,
         BrowserAnimationsModule,
-        // MatDialogModule,
         MatCardModule,
         MatSnackBarModule,
         MatSlideToggleModule,
         MatSelectModule,
-        // MatButtonToggleModule,
+        MatDialogModule,
     ],
     exports: [
         MatSidenavModule,
@@ -53,19 +48,18 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
         MatListModule,
         MatButtonModule,
         MatFormFieldModule,
-        MatInputModule, 
-        MatPaginatorModule, 
-        MatProgressSpinnerModule, 
-        MatSortModule, 
+        MatInputModule,
+        MatPaginatorModule,
+        MatProgressSpinnerModule,
+        MatSortModule,
         MatTableModule,
         BrowserAnimationsModule,
-        // MatDialogModule,
         MatCardModule,
         MatSnackBarModule,
         MatSlideToggleModule,
         MatSelectModule,
+        MatDialogModule,
     ],
-    // providers: [MatDialogRef]
 })
 
 export class MaterialModule {}

@@ -1,22 +1,23 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, MatSort, } from '@angular/material';
+import {
+        MatTableDataSource,
+        MatSnackBar,
+        MatSnackBarConfig,
+        MatSnackBarHorizontalPosition,
+        MatSnackBarVerticalPosition,
+        MatSort,
+        MatSnackBarRef
+      } from '@angular/material';
+import {MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 
-import { DataServiceService } from 'src/app/services/dataService/data-service.service';
-import { UserService } from '../../auth/userService/user.service';
+import { Film } from 'src/app/models/film.model';
 
-import {MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { UserService } from 'src/app/auth/userService/user.service';
 
-import { AddFilmDialogComponent } from './../../components/add-film-dialog/add-film-dialog.component';
+import { FilmDataService } from 'src/app/services/film-data/film-data.service';
+import { AdminService } from 'src/app/services/admin/admin.service';
 
-import { AdminService } from '../../services/admin/admin.service';
-
-import { Film } from '../../models/film.model';
-
-export interface DialogData {
-  name: string;
-  length: number;
-  watched: boolean;
-}
+import { AddFilmDialogComponent } from 'src/app/components/add-film-dialog/add-film-dialog.component';
 
 @Component({
   selector: 'app-blurays',
@@ -26,7 +27,7 @@ export interface DialogData {
 export class BluraysComponent implements OnInit {
 
   constructor(
-    private dataservice: DataServiceService,
+    private filmDataService: FilmDataService,
     private userService: UserService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
@@ -35,12 +36,12 @@ export class BluraysComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'name', 'length', 'watched'];
 
-  dataSource = new MatTableDataSource();
+  dataSource: MatTableDataSource<unknown> = new MatTableDataSource();
 
   @ViewChild(MatSort) sort: MatSort;
 
-  user = null;
-  role = null;
+  user: Object = null;
+  role: number = null;
 
   totalFilms: number = null;
 
@@ -49,13 +50,13 @@ export class BluraysComponent implements OnInit {
   isLoading: boolean = true;
   offline: boolean = false;
 
-  ngOnInit(){
+  ngOnInit(): void {
     this.userService.getCurrentUser()
     .then((user) => {
-      this.dataservice.getUser(user.uid)
+      this.filmDataService.getUser(user.uid)
       .subscribe(res => {
         this.user = res;
-        this.role = this.user.role;
+        this.role = this.user['role'];
         if (this.role === 2) {
           this.displayedColumns.push('removeFilm');
           this.admin = true;
@@ -74,14 +75,14 @@ export class BluraysComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  applyFilter(filterValue: string) {
+  applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  updateWatched(name){
+  updateWatched(name): void {
     if (this.admin) {
       if (confirm("Are you sure you want to flip watched value of " + name + "?")) {
-        this.dataservice.updateWatched(name)
+        this.filmDataService.updateWatched(name)
         .subscribe(res => {
           this.getFilms(false);
         }, err => {
@@ -91,9 +92,9 @@ export class BluraysComponent implements OnInit {
     }
   }
 
-  getFilms(userFailed: boolean) {
-    const userFailedMessage = "Error getting user, if you're an admin you will not have the privileges in this session. Refresh the page to try again.";
-    this.dataservice.getData()
+  getFilms(userFailed: boolean): void {
+    const userFailedMessage: string = "Error getting user, if you're an admin you will not have the privileges in this session. Refresh the page to try again.";
+    this.filmDataService.getData()
     .subscribe(res => { // If the user is connected to the internet
         res = this.sortById(res);
 
@@ -136,7 +137,7 @@ export class BluraysComponent implements OnInit {
     return data;
   }
 
-  openSnackbar(message: string[]) {
+  openSnackbar(message: string[]): void {
     const actionButtonLabel: string = 'Okay';
     const horizontalPosition: MatSnackBarHorizontalPosition = 'right';
     const verticalPosition: MatSnackBarVerticalPosition = 'bottom';
@@ -146,19 +147,19 @@ export class BluraysComponent implements OnInit {
     config.horizontalPosition = horizontalPosition;
     config.duration = 5000;
 
-    const snackBarRef = this.snackBar.open(message[0], actionButtonLabel, config);
+    const snackBarRef: MatSnackBarRef<unknown> = this.snackBar.open(message[0], actionButtonLabel, config);
 
     if (message.length > 1) {
       snackBarRef.afterDismissed().subscribe(() => {
         this.snackBar.open(message[1], actionButtonLabel, config);
-      })
+      });
     }
   }
 
-  addFilm() {
-    let name, len, watched;
+  addFilm(): void {
+    let name: string, len: number, watched: boolean;
 
-    const dialogConfig = new MatDialogConfig();
+    const dialogConfig: MatDialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
@@ -168,12 +169,12 @@ export class BluraysComponent implements OnInit {
       watched: watched
     }
 
-    const dialogRef = this.dialog.open(AddFilmDialogComponent, dialogConfig);
+    const dialogRef: MatDialogRef<unknown> = this.dialog.open(AddFilmDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(
       data => {
         if (data) {
-          this.dataservice.addFilm(data)
+          this.filmDataService.addFilm(data)
           .subscribe(
             () => {
               this.getFilms(false);
@@ -181,14 +182,16 @@ export class BluraysComponent implements OnInit {
           );
         }
       }
-    )
+    );
   }
 
-  removeFilm(id) {
+  removeFilm(id): void {
     if (confirm("Are you sure you want to delete this film?")){
-      this.dataservice.removeFilm(id).subscribe(
-        () => {
+      this.filmDataService.removeFilm(id).subscribe(
+        (res) => {
           this.getFilms(false);
+        }, err => {
+          console.log(err);
         }
       );
     }

@@ -5,7 +5,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { BluraysComponent } from './pages/blurays/blurays.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
-import { UserComponent } from './pages/user/user.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 // Guards
@@ -29,9 +28,6 @@ const routes: Routes = [
     path: 'blurays',
     component: BluraysComponent,
     canActivate: [AuthGuard]
-  }, {
-    path: 'user',
-    component: UserComponent
   }, {
     path: '**',
     component: PageNotFoundComponent

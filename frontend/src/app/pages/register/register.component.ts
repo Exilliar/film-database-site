@@ -1,40 +1,36 @@
-import { Component, OnInit } from '@angular/core';
-
-import { AuthService } from '../../auth/authService/auth.service';
-
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
+
+import { AuthService } from 'src/app/auth/authService/auth.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
 
   registerForm: FormGroup;
   errorMessage: string = '';
   successMessage: string = '';
 
-  constructor( 
+  constructor(
     public authService: AuthService,
     public router: Router,
     private fb: FormBuilder,
-     ) {
+    ) {
        this.createForm();
-      }
+    }
 
-  ngOnInit() {
-  }
-
-  createForm() {
+  createForm(): void {
     this.registerForm = this.fb.group({
       email: ['', Validators.required],
       password: ['',Validators.required]
     });
   }
 
-  tryRegister(value){
+  tryRegister(value): void {
     this.authService.Register(value)
     .then(res => {
       this.errorMessage = "";
@@ -44,15 +40,14 @@ export class RegisterComponent implements OnInit {
       console.log(err);
       this.errorMessage = err.message;
       this.successMessage = "";
-    })
+    });
   }
 
-  tryGoogleLogin(){
+  tryGoogleLogin(): void {
     this.authService.GoogleLogin()
     .then(res =>{
       this.router.navigate(['/blurays']);
     }, err => console.log(err)
-    )
+    );
   }
-
 }

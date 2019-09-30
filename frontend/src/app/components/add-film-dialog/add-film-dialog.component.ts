@@ -1,20 +1,13 @@
-import { Component, Inject, Injectable } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
-export interface DialogData {
-  name: string;
-  length: number;
-  watched: string;
-}
+import { DialogData } from 'src/app/models/dialog-data.model';
 
 @Component({
   selector: 'app-add-film-dialog',
   templateUrl: './add-film-dialog.component.html',
   styleUrls: ['./add-film-dialog.component.scss']
 })
-// @Injectable({
-//   providedIn: 'root'
-// })
 export class AddFilmDialogComponent {
 
   constructor(
@@ -28,7 +21,7 @@ export class AddFilmDialogComponent {
     this.dialogRef.close();
   }
 
-  save() {
+  save(): void {
     this.data.watched = this.data.watched.toLowerCase();
     if ((this.data.watched === 'true' || this.data.watched === 'false') && !isNaN(+this.data.length)) {
       this.dialogRef.close(this.data);

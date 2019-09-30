@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
-// import 'rxjs/add/operator/toPromise';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
+
 import * as firebase from 'firebase/app';
 
-import { SignedInService } from '../../services/signed-in/signed-in.service';
+import { SignedInService } from 'src/app/services/signed-in/signed-in.service';
 
 @Injectable()
 export class UserService {
@@ -16,10 +16,10 @@ export class UserService {
  ){
  }
 
-  getCurrentUser(){
-    const vm = this;
-    return new Promise<any>((resolve, reject) => {
-      var user = firebase.auth().onAuthStateChanged(function(user){
+  getCurrentUser(): Promise<firebase.User> {
+    const vm: this = this;
+    return new Promise<firebase.User>((resolve, reject) => {
+      firebase.auth().onAuthStateChanged(function(user){
         if (user) {
           vm.signedInService.setSignedIn(true);
           resolve(user);
@@ -27,12 +27,12 @@ export class UserService {
           vm.signedInService.setSignedIn(false);
           reject('No user logged in');
         }
-      })
-    })
+      });
+    });
   }
 
-  updateCurrentUser(value){
-    return new Promise<any>((resolve, reject) => {
+  updateCurrentUser(value): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
       var user = firebase.auth().currentUser;
       user.updateProfile({
         displayName: value.name,
@@ -40,6 +40,6 @@ export class UserService {
       }).then(res => {
         resolve(res)
       }, err => reject(err))
-    })
+    });
   }
 }

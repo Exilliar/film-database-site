@@ -7,26 +7,21 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 
-// Material modules
-import { MaterialModule } from './material.module';
-
 import {CdkTableModule} from '@angular/cdk/table';
-
-// Page components
-import { BluraysComponent } from './pages/blurays/blurays.component';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-// General components
-import { AddFilmDialogComponent } from './components/add-film-dialog/add-film-dialog.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+
+import { environment } from '../environments/environment';
+
+// Material modules
+import { MaterialModule } from './material.module';
 
 // Firebase authentication
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { environment } from '../environments/environment';
-import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
 
 import { AuthGuard } from './auth/guard/auth.guard';
 import { AuthService } from './auth/authService/auth.service';
@@ -34,15 +29,18 @@ import { UserService } from './auth/userService/user.service';
 
 // Forms
 import { ReactiveFormsModule } from '@angular/forms';
-import { UserComponent } from './pages/user/user.component';
 import { FormsModule } from '@angular/forms';
 
-import { MatDialogModule } from '@angular/material/dialog';
-import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { HeaderComponent } from './components/header/header.component';
-
+// Services
 import { ThemeService } from './services/theme/theme.service';
+
+// Components
+import { AddFilmDialogComponent } from './components/add-film-dialog/add-film-dialog.component';
+import { BluraysComponent } from './pages/blurays/blurays.component';
+import { HeaderComponent } from './components/header/header.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 
 @NgModule({
@@ -51,7 +49,6 @@ import { ThemeService } from './services/theme/theme.service';
     BluraysComponent,
     LoginComponent,
     RegisterComponent,
-    UserComponent,
     AddFilmDialogComponent,
     PageNotFoundComponent,
     HeaderComponent
@@ -69,7 +66,6 @@ import { ThemeService } from './services/theme/theme.service';
     ReactiveFormsModule,
     FormsModule,
     HttpModule,
-    MatDialogModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [AuthService, UserService, AuthGuard, ThemeService],

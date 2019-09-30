@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-
-import { MatTableDataSource } from '@angular/material';
-import { Router, NavigationEnd } from "@angular/router";
-
-import { AuthService } from '../../auth/authService/auth.service';
-
-import { environment } from '../../../environments/environment';
-
-import { ThemeService } from '../../services/theme/theme.service';
-import { AdminService } from '../../services/admin/admin.service';
-import { SignedInService } from '../../services/signed-in/signed-in.service';
+import { Router } from "@angular/router";
 
 import { Observable } from 'rxjs';
+
+import { environment } from 'src/environments/environment';
+
+import { AuthService } from 'src/app/auth/authService/auth.service';
+
+import { ThemeService } from 'src/app/services/theme/theme.service';
+import { AdminService } from 'src/app/services/admin/admin.service';
+import { SignedInService } from 'src/app/services/signed-in/signed-in.service';
 
 @Component({
   selector: 'app-header',
@@ -25,23 +23,13 @@ export class HeaderComponent implements OnInit {
     private themeService: ThemeService,
     private adminService: AdminService,
     private signedInService: SignedInService,
-  ) {
-    router.events.forEach((event) => {
-      if (event instanceof NavigationEnd && !this.urlBlacklist.includes(router.url)) {
-        // this.checkSignedIn();
-      }
-    })
-  }
+  ) {  }
 
-  urlBlacklist = ['/login','/register'] // list of urls that the user will not be on if they are logged in (pages where sign out button will not be visible)
+  title: String = 'film-database-site';
 
-  title = 'film-database-site';
-
-  ver = environment.version;
+  ver: String = environment.version;
 
   displayedColumns: string[] = ['id', 'name', 'length', 'watched'];
-
-  dataSource = new MatTableDataSource();
 
   signedIn: Observable<boolean>;
 
@@ -59,21 +47,12 @@ export class HeaderComponent implements OnInit {
     this.themeService.setDarkTheme(checked);
   }
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  onRowClicked(row)
-  {
-    console.log('Row clicked:',row);
-  }
-
   signOut() {
     this.adminService.setAdmin(false);
 
     this.authService.SignOut()
     .then(() => {
       this.router.navigate(['/login']);
-    })
+    });
   }
 }
