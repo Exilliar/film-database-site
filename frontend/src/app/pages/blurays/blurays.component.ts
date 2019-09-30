@@ -10,7 +10,7 @@ import { AddFilmDialogComponent } from './../../components/add-film-dialog/add-f
 
 import { AdminService } from '../../services/admin/admin.service';
 
-import { Data } from '../../models/data.model';
+import { Film } from '../../models/film.model';
 
 export interface DialogData {
   name: string;
@@ -120,8 +120,8 @@ export class BluraysComponent implements OnInit {
     )
   }
 
-  sortById(data: Data[]): Data[] { // Very basic sort, probably already a built in function to do this
-    let placeholder: Data;
+  sortById(data: Film[]): Film[] { // Very basic sort, probably already a built in function to do this
+    let placeholder: Film;
 
     for (let y = 0; y < data.length; y++) {
       for (let x = y; x < data.length; x++) {
