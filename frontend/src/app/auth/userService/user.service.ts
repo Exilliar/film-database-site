@@ -30,16 +30,4 @@ export class UserService {
       });
     });
   }
-
-  updateCurrentUser(value): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      var user = firebase.auth().currentUser;
-      user.updateProfile({
-        displayName: value.name,
-        photoURL: user.photoURL
-      }).then(res => {
-        resolve(res)
-      }, err => reject(err))
-    });
-  }
 }

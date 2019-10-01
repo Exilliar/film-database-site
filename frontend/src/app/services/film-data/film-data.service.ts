@@ -23,7 +23,7 @@ export class FilmDataService {
     );
   }
 
-  getUser(uid: any): Observable<Object> {
+  getUser(uid: string): Observable<Object> {
     const headerDict = {
       'user': uid,
       'Access-Control-Allow-Origin': origin,
@@ -38,7 +38,7 @@ export class FilmDataService {
     return this.http.get(url, requestOptions);
   }
 
-  addFilm(film): Observable<string> {
+  addFilm(film: string): Observable<string> {
     const data = {
       'film': film,
       'Access-Control-Allow-Origin': origin,
@@ -49,7 +49,7 @@ export class FilmDataService {
     return this.http.post(url, data, {responseType: 'text'});
   }
 
-  removeFilm(filmid): Observable<string> {
+  removeFilm(filmid: number): Observable<string> {
     const data = {
       'filmid': filmid,
       'Access-Control-Allow-Origin': origin,

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { LoginValue } from 'src/app/models/login-value.model';
+
 import { AuthService } from 'src/app/auth/authService/auth.service';
 
 @Component({
@@ -30,7 +32,7 @@ export class RegisterComponent {
     });
   }
 
-  tryRegister(value): void {
+  tryRegister(value: LoginValue): void {
     this.authService.Register(value)
     .then(res => {
       this.errorMessage = "";

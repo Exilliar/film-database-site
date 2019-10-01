@@ -3,6 +3,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 
 import * as firebase from 'firebase/app';
 
+import { LoginValue } from 'src/app/models/login-value.model';
+
 import { SignedInService } from 'src/app/services/signed-in/signed-in.service';
 
 @Injectable({
@@ -32,7 +34,7 @@ export class AuthService {
     });
   }
 
-  Login(value): Promise<firebase.auth.UserCredential> {
+  Login(value: LoginValue): Promise<firebase.auth.UserCredential> {
     const vm: this = this;
     return new Promise<firebase.auth.UserCredential>((resolve, reject) => {
       firebase.auth().signInWithEmailAndPassword(value.email, value.password)
@@ -43,7 +45,7 @@ export class AuthService {
     });
   }
 
-  Register(value): Promise<firebase.auth.UserCredential> {
+  Register(value: LoginValue): Promise<firebase.auth.UserCredential> {
     const vm: this = this;
     return new Promise<firebase.auth.UserCredential>((resolve, reject) => {
       firebase.auth().createUserWithEmailAndPassword(value.email, value.password)

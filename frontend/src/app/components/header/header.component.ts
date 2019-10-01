@@ -37,17 +37,17 @@ export class HeaderComponent implements OnInit {
 
   isAdmin: Observable<boolean>;
 
-  ngOnInit(){
+  ngOnInit(): void {
     this.signedIn = this.signedInService.isSignedIn;
     this.isDarkTheme = this.themeService.isDarkTheme;
     this.isAdmin = this.adminService.isAdmin;
   }
 
-  toggleDarkTheme(checked: boolean) {
+  toggleDarkTheme(checked: boolean): void {
     this.themeService.setDarkTheme(checked);
   }
 
-  signOut() {
+  signOut(): void {
     this.adminService.setAdmin(false);
 
     this.authService.SignOut()

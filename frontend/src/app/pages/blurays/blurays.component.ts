@@ -79,7 +79,7 @@ export class BluraysComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  updateWatched(name): void {
+  updateWatched(name: string): void {
     if (this.admin) {
       if (confirm("Are you sure you want to flip watched value of " + name + "?")) {
         this.filmDataService.updateWatched(name)
@@ -87,7 +87,7 @@ export class BluraysComponent implements OnInit {
           this.getFilms(false);
         }, err => {
           console.log(err);
-        })
+        });
       }
     }
   }
@@ -118,7 +118,7 @@ export class BluraysComponent implements OnInit {
         this.isLoading = false;
         this.totalFilms = this.dataSource.data.length;
       }
-    )
+    );
   }
 
   sortById(data: Film[]): Film[] { // Very basic sort, probably already a built in function to do this
@@ -185,10 +185,10 @@ export class BluraysComponent implements OnInit {
     );
   }
 
-  removeFilm(id): void {
+  removeFilm(id: number): void {
     if (confirm("Are you sure you want to delete this film?")){
       this.filmDataService.removeFilm(id).subscribe(
-        (res) => {
+        res => {
           this.getFilms(false);
         }, err => {
           console.log(err);

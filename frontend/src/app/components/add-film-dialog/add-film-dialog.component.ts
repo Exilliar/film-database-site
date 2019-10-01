@@ -30,5 +30,4 @@ export class AddFilmDialogComponent {
       this.valid = false;
     }
   }
-
 }
