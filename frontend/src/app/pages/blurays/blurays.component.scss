@@ -21,6 +21,17 @@ table {
   margin-top: 0.5em;
 }
 
+.toggleRemove {
+  height: 3em;
+  width: 25vw;
+  text-align: center;
+  background-color: rgb(255, 0, 0);
+  color: white;
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5em;
+}
+
 .remove {
   height: 2em;
   width: 2em;
