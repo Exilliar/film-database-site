@@ -1,4 +1,4 @@
-<!-- adding in a filter option -->
+<!-- Options -->
 <div class="topRow">
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
@@ -6,6 +6,7 @@
   <!-- <button mat-stroked-button type="button" (click)="addFilm()">Add film</button> -->
   <div *ngIf="admin === true">
     <button mat-stroked-button type="button" class="add" (click)="addFilm()">Add film</button>
+    <button mat-stroked-button type="button" class="toggleRemove" (click)="toggleRemoveFilm()">Remove films</button>
   </div>
 </div>
 <div class="secondRow">
@@ -18,6 +19,7 @@
   </mat-card>
 </div>
 
+<!-- Table -->
 <!-- will not auto update, call renderRows() to update -->
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 

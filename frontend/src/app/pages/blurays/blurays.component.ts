@@ -50,6 +50,8 @@ export class BluraysComponent implements OnInit {
   isLoading: boolean = true;
   offline: boolean = false;
 
+  removeToggle: boolean = false; // If false then remove buttons are not shown and film watched can be updated, opposite if true
+
   ngOnInit(): void {
     this.userService.getCurrentUser()
     .then((user) => {
@@ -58,7 +60,7 @@ export class BluraysComponent implements OnInit {
         this.user = res;
         this.role = this.user['role'];
         if (this.role === 2) {
-          this.displayedColumns.push('removeFilm');
+          // this.displayedColumns.push('removeFilm');
           this.admin = true;
           this.adminService.setAdmin(true);
         }
@@ -75,12 +77,19 @@ export class BluraysComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
+  toggleRemoveFilm(): void {
+    this.removeToggle = !this.removeToggle;
+
+    if (!this.removeToggle) this.displayedColumns.pop();
+    else this.displayedColumns.push('removeFilm');
+  }
+
   applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   updateWatched(name: string): void {
-    if (this.admin) {
+    if (this.admin && !this.removeToggle) {
       if (confirm("Are you sure you want to flip watched value of " + name + "?")) {
         this.filmDataService.updateWatched(name)
         .subscribe(res => {
