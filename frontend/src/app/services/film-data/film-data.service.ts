@@ -14,8 +14,8 @@ export class FilmDataService {
     private http: HttpClient,
   ) { }
 
-  baseurl: string = "https://api.film-database.co.uk";
-  // baseurl: string = "http://localhost:8081";
+  // baseurl: string = "https://api.film-database.co.uk";
+  baseurl: string = "http://localhost:8081";
 
   getData(): Observable<Film[]> {
     return this.http.get<Film[]>(
@@ -38,9 +38,10 @@ export class FilmDataService {
     return this.http.get(url, requestOptions);
   }
 
-  addFilm(film: string): Observable<string> {
+  addFilm(film: string, uid: string): Observable<string> {
     const data = {
       'film': film,
+      'uid': uid,
       'Access-Control-Allow-Origin': origin,
     }
 

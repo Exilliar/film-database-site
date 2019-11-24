@@ -60,7 +60,6 @@ export class BluraysComponent implements OnInit {
         this.user = res;
         this.role = this.user['role'];
         if (this.role === 2) {
-          // this.displayedColumns.push('removeFilm');
           this.admin = true;
           this.adminService.setAdmin(true);
         }

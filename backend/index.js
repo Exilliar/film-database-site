@@ -15,7 +15,9 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/getData', (req,res) => { // Gets all films from blurays table
-  db.any('SELECT * FROM blurays')
+  const uid = req.body.uid;
+
+  db.any('SELECT * FROM blurays WHERE uid=$1',[uid])
   .then(function(data) {
     res.status(200).send(data);
   })
@@ -33,7 +35,7 @@ app.get('/api/getUser', (req,res) => { // Gets the user with a given uid, if the
   })
   .catch((err) => {
     if (err.message === 'No data returned from the query.') {
-      db.any(`INSERT INTO users (uid,role) VALUES ($1,$2); 
+      db.any(`INSERT INTO users (uid,role) VALUES ($1,$2);
               SELECT * FROM users WHERE uid=$1`,[user,1])
       .then((data) => {
         res.status(200).send(data);
@@ -49,15 +51,15 @@ app.get('/api/getUser', (req,res) => { // Gets the user with a given uid, if the
 })
 
 app.post('/api/removeFilm', (req,res) => { // Removes film from blurays table
-  db.any('DELETE FROM blurays WHERE id=$1',[req.body.filmid]);
+  db.any('DELETE FROM blurays WHERE id=$1 AND uid=$2',[req.body.filmid, req.body.uid]);
 
   res.status(200).send("success");
 })
 
 app.post('/api/addFilm', (req,res) => { // Adds film to blurays table
-  const { name, length, watched } = req.body.film;
+  const { name, length, watched, uid } = req.body.film;
 
-  db.any('INSERT INTO blurays (name, length, watched) VALUES ($1,$2,$3)',[name,length,watched])
+  db.any('INSERT INTO blurays (name, length, watched, uid) VALUES ($1,$2,$3,$4)',[name,length,watched,uid])
   .then(() => {
     res.status(200).send("success");
   })
@@ -68,13 +70,15 @@ app.post('/api/addFilm', (req,res) => { // Adds film to blurays table
 
 app.post('/api/updateWatched', (req,res) => { // Flips the value of watched
   const name = req.body.film;
+  const uid = req.body.uid;
+
   let watched;
 
-  db.any('SELECT watched FROM blurays WHERE name=$1',[name])
+  db.any('SELECT watched FROM blurays WHERE name=$1 AND uid=$2',[name, uid])
   .then((w) => {
     watched = !w[0].watched;
 
-    db.any('UPDATE blurays SET watched=$1 WHERE name=$2',[watched,name])
+    db.any('UPDATE blurays SET watched=$1 WHERE name=$2 AND uid=$2',[watched,name,uid])
     .then(() => {
       res.status(200).send("success");
     })
