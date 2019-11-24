@@ -17,9 +17,19 @@ export class FilmDataService {
   baseurl: string = "https://api.film-database.co.uk";
   // baseurl: string = "http://localhost:8081";
 
-  getData(): Observable<Film[]> {
+  getData(uid: string): Observable<Film[]> {
+    const headerDict = {
+      'uid': uid,
+      'Access-Control-Allow-Origin': origin,
+    }
+
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    }
+
     return this.http.get<Film[]>(
-      this.baseurl + '/api/getData'
+      this.baseurl + '/api/getData',
+      requestOptions
     );
   }
 
@@ -38,9 +48,10 @@ export class FilmDataService {
     return this.http.get(url, requestOptions);
   }
 
-  addFilm(film: string): Observable<string> {
+  addFilm(film: string, uid: string): Observable<string> {
     const data = {
       'film': film,
+      'uid': uid,
       'Access-Control-Allow-Origin': origin,
     }
 
@@ -60,7 +71,7 @@ export class FilmDataService {
     return this.http.post(url, data, {responseType: 'text'});
   }
 
-  updateWatched(film: string): Observable<string> {
+  updateWatched(film: object): Observable<string> {
     const data = {
       'film': film
     }
