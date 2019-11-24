@@ -47,6 +47,8 @@ export class BluraysComponent implements OnInit {
 
   admin: boolean = false;
 
+  uid: string;
+
   isLoading: boolean = true;
   offline: boolean = false;
 
@@ -55,6 +57,7 @@ export class BluraysComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getCurrentUser()
     .then((user) => {
+      this.uid = user.uid;
       this.filmDataService.getUser(user.uid)
       .subscribe(res => {
         this.user = res;
@@ -87,10 +90,10 @@ export class BluraysComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  updateWatched(name: string): void {
-    if (this.admin && !this.removeToggle) {
-      if (confirm("Are you sure you want to flip watched value of " + name + "?")) {
-        this.filmDataService.updateWatched(name)
+  updateWatched(film: object): void {
+    if (!this.removeToggle) {
+      if (confirm("Are you sure you want to flip watched value of " + film['name'] + "?")) {
+        this.filmDataService.updateWatched(film)
         .subscribe(res => {
           this.getFilms(false);
         }, err => {
@@ -102,7 +105,7 @@ export class BluraysComponent implements OnInit {
 
   getFilms(userFailed: boolean): void {
     const userFailedMessage: string = "Error getting user, if you're an admin you will not have the privileges in this session. Refresh the page to try again.";
-    this.filmDataService.getData()
+    this.filmDataService.getData(this.uid)
     .subscribe(res => { // If the user is connected to the internet
         res = this.sortById(res);
 
@@ -115,7 +118,7 @@ export class BluraysComponent implements OnInit {
         if (userFailed) this.openSnackbar([userFailedMessage]);
       }, err => { // Assumed that the user is not connected to the internet
         console.log(err);
-        const adminMessage: string = this.admin ? ' For admins, adding and removing films will not work.' : ''; // this will only work if the get user call comes in before this one fails which is unlikely, but it's still kinda nice to have
+        const adminMessage: string = this.admin ? ' For admins, admin features will not work.' : ''; // this will only work if the get user call comes in before this one fails which is unlikely, but it's still kinda nice to have
         const message: string = "Could not get table data, loading data from cache." + adminMessage;
 
         userFailed === true ? this.openSnackbar([userFailedMessage, message]) : this.openSnackbar([message]);
@@ -182,7 +185,7 @@ export class BluraysComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       data => {
         if (data) {
-          this.filmDataService.addFilm(data)
+          this.filmDataService.addFilm(data,this.uid)
           .subscribe(
             () => {
               this.getFilms(false);
