@@ -1,0 +1,24 @@
+<!-- <fusioncharts width="500" height="300" type="pie2d" dataFormat="json" [dataSource]="testData"></fusioncharts> -->
+
+<!-- <ngx-charts-line-chart
+      [view]="view"
+      [scheme]="colorScheme"
+      [results]="multi"
+      [gradient]="gradient"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [legend]="showLegend"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+      [autoScale]="autoScale"
+      [timeline]="timeline"
+      (select)="onSelect($event)">
+</ngx-charts-line-chart> -->
+
+<ngx-charts-pie-chart
+      [results]="watchedResults"
+      [legend]="true"
+      [trimLabels]="false">
+</ngx-charts-pie-chart>

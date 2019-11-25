@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { BluraysComponent } from './pages/blurays/blurays.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { GraphsComponent } from './pages/graphs/graphs.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 // Guards
@@ -27,6 +28,10 @@ const routes: Routes = [
   }, {
     path: 'blurays',
     component: BluraysComponent,
+    canActivate: [AuthGuard]
+  }, {
+    path: 'graphs',
+    component: GraphsComponent,
     canActivate: [AuthGuard]
   }, {
     path: '**',

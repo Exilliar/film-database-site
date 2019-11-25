@@ -34,6 +34,15 @@ import { FormsModule } from '@angular/forms';
 // Services
 import { ThemeService } from './services/theme/theme.service';
 
+// Charts
+import { FusionChartsModule } from 'angular-fusioncharts';
+import * as FusionCharts from 'fusioncharts';
+import * as Charts from 'fusioncharts/fusioncharts.charts';
+
+FusionChartsModule.fcRoot(FusionCharts, Charts);
+
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 // Components
 import { AddFilmDialogComponent } from './components/add-film-dialog/add-film-dialog.component';
 import { BluraysComponent } from './pages/blurays/blurays.component';
@@ -41,6 +50,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { GraphsComponent } from './pages/graphs/graphs.component';
 
 
 @NgModule({
@@ -51,7 +61,8 @@ import { RegisterComponent } from './pages/register/register.component';
     RegisterComponent,
     AddFilmDialogComponent,
     PageNotFoundComponent,
-    HeaderComponent
+    HeaderComponent,
+    GraphsComponent
   ],
   imports: [
     BrowserModule,
@@ -67,6 +78,8 @@ import { RegisterComponent } from './pages/register/register.component';
     FormsModule,
     HttpModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    FusionChartsModule,
+    NgxChartsModule
   ],
   providers: [AuthService, UserService, AuthGuard, ThemeService],
   bootstrap: [AppComponent],
