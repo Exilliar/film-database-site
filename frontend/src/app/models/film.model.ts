@@ -3,4 +3,5 @@ export interface Film {
     name: string;
     length: number;
     watched: boolean;
+    displayId: number;
 }
