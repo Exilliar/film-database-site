@@ -109,7 +109,7 @@ export class BluraysComponent implements OnInit {
     .subscribe(res => { // If the user is connected to the internet
         res = this.sortById(res);
 
-        this.dataSource.data = res;
+        this.dataSource.data = this.addDisplayID(res);
         this.isLoading = false;
         this.totalFilms = res.length;
 
@@ -130,6 +130,14 @@ export class BluraysComponent implements OnInit {
         this.totalFilms = this.dataSource.data.length;
       }
     );
+  }
+
+  addDisplayID(res: Film[]) : Film[] {
+    for(let i = 0; i < res.length; i++) {
+      res[i].displayId = i+1;
+    }
+
+    return res;
   }
 
   sortById(data: Film[]): Film[] { // Very basic sort, probably already a built in function to do this
