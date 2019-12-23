@@ -58,7 +58,7 @@ export class BluraysComponent implements OnInit {
     this.userService.getCurrentUser()
     .then((user) => {
       this.uid = user.uid;
-      this.filmDataService.getUser(user.uid)
+      this.filmDataService.getUser(user.uid,user.email)
       .subscribe(res => {
         this.user = res;
         this.role = this.user['role'];

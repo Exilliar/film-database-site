@@ -28,6 +28,7 @@ app.get('/api/getData', (req,res) => { // Gets all films from blurays table
 
 app.get('/api/getUser', (req,res) => { // Gets the user with a given uid, if the user does not exist then adds the user and returns the newly created user
   const user = req.headers.user;
+  const email = req.headers.email;
 
   db.one('SELECT * FROM users WHERE uid=$1',[user])
   .then((data) => {
@@ -35,8 +36,8 @@ app.get('/api/getUser', (req,res) => { // Gets the user with a given uid, if the
   })
   .catch((err) => {
     if (err.message === 'No data returned from the query.') {
-      db.any(`INSERT INTO users (uid,role) VALUES ($1,$2);
-              SELECT * FROM users WHERE uid=$1`,[user,1])
+      db.any(`INSERT INTO users (uid,role,email) VALUES ($1,$2,$3);
+              SELECT * FROM users WHERE uid=$1`,[user,1,email])
       .then((data) => {
         res.status(200).send(data);
       })

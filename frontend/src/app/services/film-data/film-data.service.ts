@@ -33,8 +33,9 @@ export class FilmDataService {
     );
   }
 
-  getUser(uid: string): Observable<Object> {
+  getUser(uid: string, email: string): Observable<Object> {
     const headerDict = {
+      'email': email,
       'user': uid,
       'Access-Control-Allow-Origin': origin,
     }
