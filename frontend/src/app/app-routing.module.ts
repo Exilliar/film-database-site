@@ -6,11 +6,12 @@ import { BluraysComponent } from './pages/blurays/blurays.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { AdminComponent } from './pages/admin/admin.component';
 
 // Guards
-import { AuthGuard } from './auth/guard/auth.guard';
-import { LoginGuard } from './auth/login/login.guard';
-import { AdminComponent } from './pages/admin/admin.component';
+import { AuthGuard } from './guards/auth/auth.guard';
+import { LoginGuard } from './guards/login/login.guard';
+import { AdminGuard } from './guards/admin/admin.guard';
 
 const routes: Routes = [
   {
@@ -32,7 +33,7 @@ const routes: Routes = [
   }, {
     path: 'admin',
     component: AdminComponent,
-    canActivate: [AuthGuard] // Include admin guard in here
+    canActivate: [AuthGuard, AdminGuard] // Include admin guard in here
   }, {
     path: '**',
     component: PageNotFoundComponent

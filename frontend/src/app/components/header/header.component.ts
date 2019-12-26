@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
-import { AuthService } from 'src/app/auth/authService/auth.service';
+import { AuthService } from 'src/app/services/authService/auth.service';
 
 import { ThemeService } from 'src/app/services/theme/theme.service';
 import { AdminService } from 'src/app/services/admin/admin.service';

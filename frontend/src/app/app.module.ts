@@ -23,9 +23,9 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
-import { AuthGuard } from './auth/guard/auth.guard';
-import { AuthService } from './auth/authService/auth.service';
-import { UserService } from './auth/userService/user.service';
+import { AuthGuard } from './guards/auth/auth.guard';
+import { AuthService } from './services/authService/auth.service';
+import { UserService } from './services/userService/user.service';
 
 // Forms
 import { ReactiveFormsModule } from '@angular/forms';

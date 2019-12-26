@@ -12,7 +12,7 @@ import {MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialo
 
 import { Film } from 'src/app/models/film.model';
 
-import { UserService } from 'src/app/auth/userService/user.service';
+import { UserService } from 'src/app/services/userService/user.service';
 
 import { FilmDataService } from 'src/app/services/film-data/film-data.service';
 import { AdminService } from 'src/app/services/admin/admin.service';
@@ -62,7 +62,7 @@ export class BluraysComponent implements OnInit {
       .subscribe(res => {
         this.user = res;
         this.role = this.user['role'];
-        if (this.role === 2) {
+        if (this.role === 2 || this.role === 3) { //CHANGE THIS TO LOOKUP FROM ROLE TABLE TO FIND ADMIN/CREATOR NUMBER
           this.admin = true;
           this.adminService.setAdmin(true);
         }
