@@ -10,6 +10,7 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 // Guards
 import { AuthGuard } from './auth/guard/auth.guard';
 import { LoginGuard } from './auth/login/login.guard';
+import { AdminComponent } from './pages/admin/admin.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,10 @@ const routes: Routes = [
     path: 'blurays',
     component: BluraysComponent,
     canActivate: [AuthGuard]
+  }, {
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [AuthGuard] // Include admin guard in here
   }, {
     path: '**',
     component: PageNotFoundComponent

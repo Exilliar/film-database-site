@@ -26,6 +26,16 @@ app.get('/api/getData', (req,res) => { // Gets all films from blurays table
   });
 })
 
+app.get('/api/getAllUsers', (req,res) => { // Gets all users
+  db.any('SELECT * FROM users')
+  .then(function(data) {
+    res.status(200).send(data);
+  })
+  .catch((err) => {
+    res.status(500).send(err);
+  })
+})
+
 app.get('/api/getUser', (req,res) => { // Gets the user with a given uid, if the user does not exist then adds the user and returns the newly created user
   const user = req.headers.user;
   const email = req.headers.email;
