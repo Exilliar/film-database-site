@@ -11,7 +11,7 @@ export class AdminGuard implements CanActivate {
   ) {}
 
   canActivate(): boolean {
-    const isAdmin: boolean = localStorage.getItem("admin") === "true" ? true : false;
+    const isAdmin: boolean = localStorage.getItem("admin") === "true";
 
     if (isAdmin) return true;
     else {

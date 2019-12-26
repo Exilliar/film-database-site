@@ -1,5 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import {
+  MatSort,
+  MatTableDataSource,
+  MatSnackBar,
+  MatSnackBarConfig,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+  MatSnackBarRef,
+} from '@angular/material';
 import { AdminService } from 'src/app/services/admin/admin.service';
 import { User } from 'src/app/models/user.model';
 
@@ -12,6 +20,7 @@ export class AdminComponent implements OnInit {
 
   constructor(
     private adminService: AdminService,
+    private snackBar: MatSnackBar,
   ) { }
 
   displayedColumns: string[] = ['uid', 'email', 'role'];
@@ -25,13 +34,17 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
     this.adminService.getUsers()
     .subscribe(res => {
-      console.log(res);
       this.users = res;
       this.dataSource.data = this.users;
-      console.log("datasource:", this.dataSource.data);
 
       this.isLoading = false;
-    }); // INCLUDE A CATCH HERE (with some form of error snackbar or something)
+    }, err => {
+      console.log(err);
+
+      this.isLoading = false;
+
+      this.openSnackbar(["error getting users. Check internet connection"]);
+    });
 
     this.dataSource.sort = this.sort;
   }
@@ -40,4 +53,22 @@ export class AdminComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  openSnackbar(message: string[]): void { // MOVE THIS INTO A SEPARATE CLASS. IT IS NOW USED IN MULTIPLE COMPONENTS
+    const actionButtonLabel: string = 'Okay';
+    const horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+    const verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+
+    let config = new MatSnackBarConfig();
+    config.verticalPosition = verticalPosition;
+    config.horizontalPosition = horizontalPosition;
+    config.duration = 5000;
+
+    const snackBarRef: MatSnackBarRef<unknown> = this.snackBar.open(message[0], actionButtonLabel, config);
+
+    if (message.length > 1) {
+      snackBarRef.afterDismissed().subscribe(() => {
+        this.snackBar.open(message[1], actionButtonLabel, config);
+      });
+    }
+  }
 }

@@ -9,7 +9,7 @@ import { User } from 'src/app/models/user.model';
 export class AdminService {
   adminSet = localStorage.getItem("admin");
 
-  private admin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.adminSet === "true" ? true : false);
+  private admin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.adminSet === "true");
   isAdmin: Observable<boolean> = this.admin.asObservable();
 
   setAdmin(isAdmin: boolean): void {
