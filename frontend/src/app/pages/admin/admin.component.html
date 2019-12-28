@@ -13,9 +13,9 @@
     <td mat-cell *matCellDef="let element"> {{element.email}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="role">
+  <ng-container matColumnDef="rolename">
     <th mat-header-cell *matHeaderCellDef mat-sort-header class="header"> role </th>
-    <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+    <td class="pointer" mat-cell *matCellDef="let element" (click)="updateRole(element)"> {{element.rolename}} </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

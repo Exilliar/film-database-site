@@ -8,8 +8,12 @@ import {
   MatSnackBarVerticalPosition,
   MatSnackBarRef,
 } from '@angular/material';
+
 import { AdminService } from 'src/app/services/admin/admin.service';
+import { RolesService } from 'src/app/services/roles/roles.service';
+
 import { User } from 'src/app/models/user.model';
+import { Role } from 'src/app/models/role.model';
 
 @Component({
   selector: 'app-admin',
@@ -21,9 +25,10 @@ export class AdminComponent implements OnInit {
   constructor(
     private adminService: AdminService,
     private snackBar: MatSnackBar,
+    private rolesService: RolesService,
   ) { }
 
-  displayedColumns: string[] = ['uid', 'email', 'role'];
+  displayedColumns: string[] = ['uid', 'email','rolename']//, 'rolename'];
 
   @ViewChild(MatSort) sort: MatSort;
   dataSource: MatTableDataSource<User> = new MatTableDataSource();
@@ -31,11 +36,16 @@ export class AdminComponent implements OnInit {
 
   isLoading: boolean = true;
 
+  roles: Role[];
+
   ngOnInit() {
     this.adminService.getUsers()
     .subscribe(res => {
+      console.log("res:", res);
       this.users = res;
       this.dataSource.data = this.users;
+
+      console.log("users:", this.users);
 
       this.isLoading = false;
     }, err => {
@@ -46,7 +56,18 @@ export class AdminComponent implements OnInit {
       this.openSnackbar(["error getting users. Check internet connection"]);
     });
 
+    this.rolesService.getAll()
+    .subscribe(res => {
+      console.log("roles:", res);
+
+      this.roles = res;
+    })
+
     this.dataSource.sort = this.sort;
+  }
+
+  updateRole(uid: User): void {
+    console.log("clicked", uid);
   }
 
   applyFilter(filterValue: string): void {
