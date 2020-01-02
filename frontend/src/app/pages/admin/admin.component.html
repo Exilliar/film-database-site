@@ -15,7 +15,17 @@
 
   <ng-container matColumnDef="rolename">
     <th mat-header-cell *matHeaderCellDef mat-sort-header class="header"> role </th>
-    <td class="pointer" mat-cell *matCellDef="let element" (click)="updateRole(element)"> {{element.rolename}} </td>
+    <td class="pointer" mat-cell *matCellDef="let element">
+      <div *ngIf="element.roleid === 3; then thenBlock else elseBlock"></div>
+      <ng-template #thenBlock>{{element.rolename}}</ng-template>
+      <ng-template #elseBlock>
+        <mat-select [(value)]="element.roleid">
+          <mat-option *ngFor="let role of roles" [(value)]="role.role">
+            {{role.name}}
+          </mat-option>
+        </mat-select>
+      </ng-template>
+    </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

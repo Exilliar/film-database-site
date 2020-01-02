@@ -28,7 +28,7 @@ export class AdminComponent implements OnInit {
     private rolesService: RolesService,
   ) { }
 
-  displayedColumns: string[] = ['uid', 'email','rolename']//, 'rolename'];
+  displayedColumns: string[] = ['uid', 'email','rolename'];
 
   @ViewChild(MatSort) sort: MatSort;
   dataSource: MatTableDataSource<User> = new MatTableDataSource();
@@ -37,6 +37,7 @@ export class AdminComponent implements OnInit {
   isLoading: boolean = true;
 
   roles: Role[];
+  currentRole: Role;
 
   ngOnInit() {
     this.adminService.getUsers()
@@ -61,6 +62,9 @@ export class AdminComponent implements OnInit {
       console.log("roles:", res);
 
       this.roles = res;
+
+      this.currentRole = this.roles[0];
+      console.log("currentrole:", this.currentRole);
     })
 
     this.dataSource.sort = this.sort;
