@@ -46,9 +46,9 @@ app.get('/api/roles/all', (req, res) => {
   })
 })
 
-app.post('/api/updateUserRole', (req,res) => { // Updates the role of a user, given a uid
-  const uid = req.headers.uid;
-  const role = req.headers.role;
+app.post('/api/roles/update', (req,res) => { // Updates the role of a user, given a uid
+  const uid = req.body.uid;
+  const role = req.body.role;
 
   db.any('UPDATE users SET role=$1 WHERE uid=$2',[role,uid])
   .then(() => {

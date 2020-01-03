@@ -37,14 +37,25 @@ export class AdminComponent implements OnInit {
   isLoading: boolean = true;
 
   roles: Role[];
-  currentRole: Role;
+  creatorRole: Role = {
+    role: 3,
+    name: ""
+  }; // Default is role 3 as this is the creator role id at time of writing
 
   ngOnInit() {
+    this.getUserData();
+
+    this.getRoleData();
+
+    this.dataSource.sort = this.sort;
+  }
+
+  getUserData(): void {
     this.adminService.getUsers()
     .subscribe(res => {
       console.log("res:", res);
       this.users = res;
-      this.dataSource.data = this.users;
+      this.dataSource.data = this.copyUsers(this.users);
 
       console.log("users:", this.users);
 
@@ -54,24 +65,73 @@ export class AdminComponent implements OnInit {
 
       this.isLoading = false;
 
-      this.openSnackbar(["error getting users. Check internet connection"]);
+      this.openSnackbar(["Error getting users. Check internet connection"]);
     });
+  }
 
+  getRoleData(): void {
     this.rolesService.getAll()
     .subscribe(res => {
       console.log("roles:", res);
 
       this.roles = res;
 
-      this.currentRole = this.roles[0];
-      console.log("currentrole:", this.currentRole);
-    })
+      this.creatorRole = this.findCreator(this.roles)
+      console.log("creatorRole:", this.creatorRole);
+    }, err => {
+      console.log(err);
 
-    this.dataSource.sort = this.sort;
+      this.openSnackbar(["Error getting roles. Check internet connection"]);
+    });
   }
 
-  updateRole(uid: User): void {
-    console.log("clicked", uid);
+  copyUsers(users: User[]): User[] {
+    let newUsers: User[] = [];
+
+    for (let u = 0; u < users.length; u++) {
+      let currentUser: User = users[u];
+
+      newUsers.push({
+        rolename: currentUser.rolename,
+        roleid: currentUser.roleid,
+        uid: currentUser.uid,
+        email: currentUser.email
+      });
+    }
+
+    return newUsers;
+  }
+
+  findCreator(roles: Role[]): Role {
+    let creator: Role = roles[0];
+
+    for (let r = 0; r < roles.length; r++) {
+      if (roles[r].role > creator.role) creator = roles[r];
+    }
+
+    return creator;
+  }
+
+  updateRole(user: User, newRole: number): void {
+    console.log("user", user,"\nnewRole:", newRole);
+
+    if (newRole === this.creatorRole.role) {
+      if (!confirm("This will change the user to the creator role. This cannot be undone")) {
+        this.dataSource.data = this.users;
+
+        console.log("users:", this.users, "\ndataSource.data:", this.dataSource.data);
+
+        return;
+      }
+    }
+    console.log("update role");
+
+    this.adminService.updateUser(newRole, user.uid)
+    .subscribe(res => {
+      console.log("res:", res);
+
+      this.getUserData();
+    });
   }
 
   applyFilter(filterValue: string): void {

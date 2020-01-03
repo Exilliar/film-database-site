@@ -29,4 +29,16 @@ export class AdminService {
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.baseurl + '/api/getAllUsers');
   }
+
+  updateUser(role: number, uid: string): Observable<string> {
+    const data = {
+      'role': role,
+      'uid': uid,
+      'Access-Control-Allow-Origin': origin,
+    };
+
+    const url: string = this.baseurl + '/api/roles/update';
+
+    return this.http.post(url, data, {responseType: 'text'});
+  }
 }
