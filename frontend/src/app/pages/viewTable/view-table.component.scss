@@ -1,0 +1,11 @@
+@import '~@angular/material/theming';
+
+table {
+    width: 100%;
+}
+
+.topRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 2em;
+}

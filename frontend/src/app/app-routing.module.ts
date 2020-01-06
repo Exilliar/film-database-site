@@ -12,6 +12,7 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { LoginGuard } from './guards/login/login.guard';
 import { AdminGuard } from './guards/admin/admin.guard';
+import { ViewTableComponent } from './pages/viewTable/view-table.component';
 
 const routes: Routes = [
   {
@@ -33,7 +34,11 @@ const routes: Routes = [
   }, {
     path: 'admin',
     component: AdminComponent,
-    canActivate: [AuthGuard, AdminGuard] // Include admin guard in here
+    canActivate: [AuthGuard, AdminGuard]
+  }, {
+    path: 'viewTable',
+    component: ViewTableComponent,
+    canActivate: [AuthGuard, AdminGuard]
   }, {
     path: '**',
     component: PageNotFoundComponent

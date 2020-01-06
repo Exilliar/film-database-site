@@ -28,7 +28,7 @@ export class AdminComponent implements OnInit {
     private rolesService: RolesService,
   ) { }
 
-  displayedColumns: string[] = ['uid', 'email','rolename'];
+  displayedColumns: string[] = ['uid', 'email', 'rolename', 'viewTables'];
 
   @ViewChild(MatSort) sort: MatSort;
   dataSource: MatTableDataSource<User> = new MatTableDataSource();

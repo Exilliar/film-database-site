@@ -42,6 +42,7 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { AdminComponent } from './pages/admin/admin.component';
+import { ViewTableComponent } from './pages/viewTable/view-table.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { AdminComponent } from './pages/admin/admin.component';
     AddFilmDialogComponent,
     PageNotFoundComponent,
     HeaderComponent,
-    AdminComponent
+    AdminComponent,
+    ViewTableComponent
   ],
   imports: [
     BrowserModule,

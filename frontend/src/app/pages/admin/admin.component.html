@@ -4,17 +4,17 @@
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
   <ng-container matColumnDef="uid">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header class="header"> uid </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="header"> UID </th>
     <td mat-cell *matCellDef="let element"> {{element.uid}} </td>
   </ng-container>
 
   <ng-container matColumnDef="email">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header class="header"> email </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="header"> Email </th>
     <td mat-cell *matCellDef="let element"> {{element.email}} </td>
   </ng-container>
 
   <ng-container matColumnDef="rolename">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header class="header"> role </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="header"> Role </th>
     <td class="pointer" mat-cell *matCellDef="let element">
       <div *ngIf="element.roleid === creatorRole.role; then thenBlock else elseBlock"></div>
       <ng-template #thenBlock>{{element.rolename}}</ng-template>
@@ -25,6 +25,13 @@
           </mat-option>
         </mat-select>
       </ng-template>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="viewTables">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="header"> Tables </th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-stroked-button type="button">Veiw Table(s)</button>
     </td>
   </ng-container>
 
