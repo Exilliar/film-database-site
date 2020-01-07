@@ -60,10 +60,7 @@ export class AdminComponent implements OnInit {
     .subscribe(res => {
       console.log("res:", res);
       this.users = this.convertRawUser(res);
-      console.log("users:", this.users);
       this.dataSource.data = this.copyUsers(this.users);
-
-      console.log("users:", this.users);
 
       this.isLoading = false;
     }, err => {
