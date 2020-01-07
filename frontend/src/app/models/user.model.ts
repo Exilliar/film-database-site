@@ -1,6 +1,7 @@
+import { Role } from 'src/app/models/role.model';
+
 export interface User {
-    rolename: string;
-    roleid: number;
+    role: Role;
     uid: string;
     email: string;
 }

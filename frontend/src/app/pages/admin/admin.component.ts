@@ -16,6 +16,7 @@ import { RolesService } from 'src/app/services/roles/roles.service';
 
 import { User } from 'src/app/models/user.model';
 import { Role } from 'src/app/models/role.model';
+import { RawUser } from 'src/app/models/raw-user.model';
 
 @Component({
   selector: 'app-admin',
@@ -58,7 +59,8 @@ export class AdminComponent implements OnInit {
     this.adminService.getUsers()
     .subscribe(res => {
       console.log("res:", res);
-      this.users = res;
+      this.users = this.convertRawUser(res);
+      console.log("users:", this.users);
       this.dataSource.data = this.copyUsers(this.users);
 
       console.log("users:", this.users);
@@ -89,15 +91,40 @@ export class AdminComponent implements OnInit {
     });
   }
 
+  convertRawUser(raw: RawUser[]): User[] {
+    let convertedUsers: User[] = [];
+
+    for (let i = 0; i < raw.length; i++) {
+      const current: RawUser = raw[i];
+
+      const currentRole: Role = {
+        name: current.rolename,
+        role: current.roleid
+      }
+
+      convertedUsers.push({
+        role: currentRole,
+        uid: current.uid,
+        email: current.email
+      });
+    }
+
+    return convertedUsers;
+  }
+
   copyUsers(users: User[]): User[] {
     let newUsers: User[] = [];
 
     for (let u = 0; u < users.length; u++) {
       let currentUser: User = users[u];
 
+      const newRole: Role = {
+        name: currentUser.role.name,
+        role: currentUser.role.role
+      }
+
       newUsers.push({
-        rolename: currentUser.rolename,
-        roleid: currentUser.roleid,
+        role: newRole,
         uid: currentUser.uid,
         email: currentUser.email
       });
