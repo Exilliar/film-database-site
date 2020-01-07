@@ -10,14 +10,10 @@ import {
 } from '@angular/material';
 
 import { ActivatedRoute } from '@angular/router';
-import {MatDialog } from '@angular/material/dialog';
 
 import { Film } from 'src/app/models/film.model';
 
-import { UserService } from 'src/app/services/userService/user.service';
-
 import { FilmDataService } from 'src/app/services/film-data/film-data.service';
-import { AdminService } from 'src/app/services/admin/admin.service';
 
 @Component({
   selector: 'app-view-table',
