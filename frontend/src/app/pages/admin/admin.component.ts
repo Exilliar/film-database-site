@@ -9,6 +9,8 @@ import {
   MatSnackBarRef,
 } from '@angular/material';
 
+import { Router } from '@angular/router';
+
 import { AdminService } from 'src/app/services/admin/admin.service';
 import { RolesService } from 'src/app/services/roles/roles.service';
 
@@ -26,6 +28,8 @@ export class AdminComponent implements OnInit {
     private adminService: AdminService,
     private snackBar: MatSnackBar,
     private rolesService: RolesService,
+
+    private router: Router,
   ) { }
 
   displayedColumns: string[] = ['uid', 'email', 'rolename', 'viewTables'];
@@ -132,6 +136,10 @@ export class AdminComponent implements OnInit {
 
       this.getUserData();
     });
+  }
+
+  viewTable(uid: string): void {
+    this.router.navigate(['/viewTable', uid])
   }
 
   applyFilter(filterValue: string): void {

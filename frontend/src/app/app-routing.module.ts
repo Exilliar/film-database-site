@@ -36,7 +36,7 @@ const routes: Routes = [
     component: AdminComponent,
     canActivate: [AuthGuard, AdminGuard]
   }, {
-    path: 'viewTable',
+    path: 'viewTable/:uid',
     component: ViewTableComponent,
     canActivate: [AuthGuard, AdminGuard]
   }, {

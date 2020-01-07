@@ -8,7 +8,9 @@ import {
     MatSort,
     MatSnackBarRef
 } from '@angular/material';
-import {MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+
+import { ActivatedRoute } from '@angular/router';
+import {MatDialog } from '@angular/material/dialog';
 
 import { Film } from 'src/app/models/film.model';
 
@@ -16,8 +18,6 @@ import { UserService } from 'src/app/services/userService/user.service';
 
 import { FilmDataService } from 'src/app/services/film-data/film-data.service';
 import { AdminService } from 'src/app/services/admin/admin.service';
-
-import { AddFilmDialogComponent } from 'src/app/components/add-film-dialog/add-film-dialog.component';
 
 @Component({
   selector: 'app-view-table',
@@ -28,10 +28,9 @@ export class ViewTableComponent implements OnInit {
 
   constructor(
     private filmDataService: FilmDataService,
-    private userService: UserService,
-    private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private adminService: AdminService,
+
+    private route: ActivatedRoute,
   ) { }
 
   displayedColumns: string[] = ['id', 'name', 'length', 'watched'];
@@ -55,6 +54,10 @@ export class ViewTableComponent implements OnInit {
   removeToggle: boolean = false; // If false then remove buttons are not shown and film watched can be updated, opposite if true
 
   ngOnInit(): void {
+    this.uid = this.route.snapshot.paramMap.get("uid");
+
+    console.log("uid:", this.uid);
+
     this.getFilms(false);
   }
 

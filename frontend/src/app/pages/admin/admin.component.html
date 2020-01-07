@@ -31,7 +31,7 @@
   <ng-container matColumnDef="viewTables">
     <th mat-header-cell *matHeaderCellDef mat-sort-header class="header"> Tables </th>
     <td mat-cell *matCellDef="let element">
-      <button mat-stroked-button type="button">Veiw Table(s)</button>
+      <button mat-stroked-button type="button" (click)="viewTable(element.uid)">Veiw Table(s)</button>
     </td>
   </ng-container>
 
