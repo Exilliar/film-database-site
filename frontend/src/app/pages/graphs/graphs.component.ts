@@ -4,6 +4,7 @@ import { UserService } from 'src/app/auth/userService/user.service';
 import { FilmDataService } from 'src/app/services/film-data/film-data.service';
 
 import { Film } from 'src/app/models/film.model';
+import { ChartData } from 'src/app/models/chartData.model';
 
 @Component({
   selector: 'app-graphs',
@@ -11,26 +12,18 @@ import { Film } from 'src/app/models/film.model';
   styleUrls: ['./graphs.component.scss']
 })
 export class GraphsComponent implements OnInit {
-
-  testData : Object;
-
   constructor(
     private filmDataService: FilmDataService,
     private userService: UserService,
-  ) {
-    this.testData = {
-      chart: { },
-      data: [
-        { value: 500 },
-        { value: 600 },
-        { value: 700 }
-      ]
-    };
-   }
+  ) {  }
 
-  watchedResults : any[];
+  watchedResults : ChartData[];
 
-  // data: Film[];
+  allLengths : ChartData[]; // All the lengths of all the films
+  lengthResults : ChartData[]; // The lengths of the films that are being show (might only be the top 10)
+
+  limit : number = 10; // The number that the length films graph can be limited to
+  lengthLimited : boolean = false; // If true then only the top 10 film lengths will be saved
 
   ngOnInit() {
     this.userService.getCurrentUser()
@@ -39,13 +32,9 @@ export class GraphsComponent implements OnInit {
       this.filmDataService.getData(uid)
       .subscribe(res => {
         console.log(res);
+
         const countTrue = this.countWatched(res);
         const countFalse = res.length-countTrue;
-
-        this.testData['data'] = [
-          { value: countTrue },
-          { value: countFalse }
-        ];
 
         this.watchedResults = [
           {
@@ -56,7 +45,21 @@ export class GraphsComponent implements OnInit {
             "name": "Not Watched",
             "value": countFalse
           }
-        ]
+        ];
+
+        let lengths : ChartData[] = [];
+
+        for (let i = 0; i < res.length; i++) {
+          lengths.push({
+            "name": res[i].name,
+            "value": res[i].length
+          });
+        }
+
+        lengths = this.sortChartData(lengths);
+
+        this.lengthResults = lengths;
+        this.allLengths = lengths;
       }, err => {
         console.log(err);
       })
@@ -73,57 +76,30 @@ export class GraphsComponent implements OnInit {
     return count;
   }
 
-  view: any[] = [700, 400];
-
-  // options
-  showXAxis = true;
-  showYAxis = true;
-  gradient = false;
-  showLegend = true;
-  showXAxisLabel = true;
-  xAxisLabel = 'Number';
-  showYAxisLabel = true;
-  yAxisLabel = 'Color Value';
-  timeline = true;
-
-  colorScheme = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
-  };
-
-
-  multi: any[] = [
-    {
-      name: 'Cyan',
-      series: [
-        {
-          name: 5,
-          value: 2650
-        },
-        {
-          name: 10,
-          value: 2800      },
-        {
-          name: 15,
-          value: 2000
+  sortChartData(lengths : ChartData[]) : ChartData[] {
+    for (let a = 0; a < lengths.length; a++) {
+      for (let b = a; b < lengths.length; b++) {
+        if (lengths[a].value < lengths[b].value) {
+          const placeholder : ChartData = lengths[a];
+          lengths[a] = lengths[b];
+          lengths[b] = placeholder;
         }
-      ]
-    },
-    {
-      name: 'Yellow',
-      series: [
-        {
-          name: 5,
-          value: 2500
-        },
-        {
-          name: 10,
-          value: 3100
-        },
-        {
-          name: 15,
-          value: 2350
-        }
-      ]
+      }
     }
-  ];
+
+    return lengths;
+  }
+
+  limitLenght() : void {
+    this.lengthLimited = !this.lengthLimited;
+
+    if (this.lengthLimited) {
+      this.lengthResults = [];
+      for (let i = 0; i < this.limit; i++) {
+        this.lengthResults.push(this.allLengths[i]);
+      }
+    } else {
+      this.lengthResults = this.allLengths;
+    }
+  }
 }

@@ -1,24 +1,25 @@
-<!-- <fusioncharts width="500" height="300" type="pie2d" dataFormat="json" [dataSource]="testData"></fusioncharts> -->
+<div class="charts">
+      <div class="pie-chart temp-chart">
+            <h2>Watched/Not Watched</h2>
+            <ngx-charts-pie-chart
+                  [results]="watchedResults"
+                  [legend]="true"
+                  [trimLabels]="false">
+            </ngx-charts-pie-chart>
+      </div>
 
-<!-- <ngx-charts-line-chart
-      [view]="view"
-      [scheme]="colorScheme"
-      [results]="multi"
-      [gradient]="gradient"
-      [xAxis]="showXAxis"
-      [yAxis]="showYAxis"
-      [legend]="showLegend"
-      [showXAxisLabel]="showXAxisLabel"
-      [showYAxisLabel]="showYAxisLabel"
-      [xAxisLabel]="xAxisLabel"
-      [yAxisLabel]="yAxisLabel"
-      [autoScale]="autoScale"
-      [timeline]="timeline"
-      (select)="onSelect($event)">
-</ngx-charts-line-chart> -->
-
-<ngx-charts-pie-chart
-      [results]="watchedResults"
-      [legend]="true"
-      [trimLabels]="false">
-</ngx-charts-pie-chart>
+      <div class="vertical-chart temp-chart">
+            <h2>Lengths</h2>
+            <button mat-stroked-button type="button" (click)="limitLenght()">Top {{limit}}</button>
+            <ngx-charts-bar-vertical
+                  [results]="lengthResults"
+                  [xAxisLabel]="film"
+                  [yAxisLabel]="length"
+                  [showXAxisLabel]="true"
+                  [showYAxisLabel]="true"
+                  [xAxis]="true"
+                  [yAxis]="true"
+                  [barPadding]="4">
+            </ngx-charts-bar-vertical>
+      </div>
+</div>
