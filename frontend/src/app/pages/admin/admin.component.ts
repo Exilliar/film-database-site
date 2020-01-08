@@ -42,10 +42,7 @@ export class AdminComponent implements OnInit {
   isLoading: boolean = true;
 
   roles: Role[];
-  creatorRole: Role = {
-    role: 3,
-    name: ""
-  }; // Default is role 3 as this is the creator role id at time of writing
+  protectedRoles: Role[] = [];
 
   ngOnInit() {
     this.getUserData();
@@ -79,8 +76,9 @@ export class AdminComponent implements OnInit {
 
       this.roles = res;
 
-      this.creatorRole = this.findCreator(this.roles)
-      console.log("creatorRole:", this.creatorRole);
+      this.protectedRoles = this.findProtectedRoles(this.roles);
+      // this.creatorRole = this.findCreator(this.roles)
+      // console.log("creatorRole:", this.creatorRole);
     }, err => {
       console.log(err);
 
@@ -96,7 +94,8 @@ export class AdminComponent implements OnInit {
 
       const currentRole: Role = {
         name: current.rolename,
-        role: current.roleid
+        id: current.roleid,
+        protected: current.roleprotected
       }
 
       convertedUsers.push({
@@ -117,7 +116,8 @@ export class AdminComponent implements OnInit {
 
       const newRole: Role = {
         name: currentUser.role.name,
-        role: currentUser.role.role
+        id: currentUser.role.id,
+        protected: currentUser.role.protected
       }
 
       newUsers.push({
@@ -130,21 +130,21 @@ export class AdminComponent implements OnInit {
     return newUsers;
   }
 
-  findCreator(roles: Role[]): Role {
-    let creator: Role = roles[0];
+  findProtectedRoles(roles: Role[]): Role[] {
+    let protect: Role[] = [];
 
     for (let r = 0; r < roles.length; r++) {
-      if (roles[r].role > creator.role) creator = roles[r];
+      if (roles[r].protected) protect.push(roles[r]);
     }
 
-    return creator;
+    return protect;
   }
 
   updateRole(user: User, newRole: number): void {
     console.log("user", user,"\nnewRole:", newRole);
 
-    if (newRole === this.creatorRole.role) {
-      if (!confirm("This will change the user to the creator role. This cannot be undone")) {
+    if (this.isProtected(newRole)) {
+      if (!confirm("This will change the user to a protected role. This cannot be undone")) {
         this.dataSource.data = this.users;
 
         console.log("users:", this.users, "\ndataSource.data:", this.dataSource.data);
@@ -160,6 +160,14 @@ export class AdminComponent implements OnInit {
 
       this.getUserData();
     });
+  }
+
+  isProtected(newRole: number): boolean {
+    for (let i = 0; i < this.protectedRoles.length; i++) {
+      if (this.protectedRoles[i].id == newRole) return true;
+    }
+
+    return false;
   }
 
   viewTable(uid: string): void {

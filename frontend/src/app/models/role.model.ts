@@ -1,4 +1,5 @@
 export interface Role {
-    role: number;
+    id: number;
     name: string;
+    protected: boolean;
 }

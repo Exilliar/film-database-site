@@ -27,7 +27,7 @@ app.get('/api/getData', (req,res) => { // Gets all films from blurays table
 })
 
 app.get('/api/getAllUsers', (req,res) => { // Gets all users
-  db.any('SELECT u.uid, u.email, r.name AS roleName, u.role AS roleId FROM users u, roles r WHERE r.role=u.role')
+  db.any('SELECT u.uid, u.email, r.name AS roleName, u.role AS roleId, r.protected FROM users u, roles r WHERE r.role=u.role')
   .then(function(data) {
     res.status(200).send(data);
   })

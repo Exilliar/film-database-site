@@ -16,11 +16,11 @@
   <ng-container matColumnDef="rolename">
     <th mat-header-cell *matHeaderCellDef mat-sort-header class="header"> Role </th>
     <td class="pointer" mat-cell *matCellDef="let element">
-      <div *ngIf="element.role.role === creatorRole.role; then thenBlock else elseBlock"></div>
+      <div *ngIf="element.role.protected === true; then thenBlock else elseBlock"></div>
       <ng-template #thenBlock>{{element.role.name}}</ng-template>
       <ng-template #elseBlock>
-        <mat-select [(value)]="element.role.role" (selectionChange)="updateRole(element,$event.value)">
-          <mat-option *ngFor="let role of roles" [(value)]="role.role">
+        <mat-select [(value)]="element.role.id" (selectionChange)="updateRole(element,$event.value)">
+          <mat-option *ngFor="let role of roles" [(value)]="role.id">
             {{role.name}}
           </mat-option>
         </mat-select>
