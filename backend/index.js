@@ -37,7 +37,7 @@ app.get('/api/getAllUsers', (req,res) => { // Gets all users
 })
 
 app.get('/api/roles/all', (req, res) => {
-  db.any('SELECT * FROM roles')
+  db.any('SELECT role AS id, name, protected FROM roles')
   .then((data) => {
     res.status(200).send(data);
   })

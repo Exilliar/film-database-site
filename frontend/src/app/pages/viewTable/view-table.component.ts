@@ -52,8 +52,6 @@ export class ViewTableComponent implements OnInit {
   ngOnInit(): void {
     this.uid = this.route.snapshot.paramMap.get("uid");
 
-    console.log("uid:", this.uid);
-
     this.getFilms(false);
   }
 

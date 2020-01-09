@@ -55,7 +55,6 @@ export class AdminComponent implements OnInit {
   getUserData(): void {
     this.adminService.getUsers()
     .subscribe(res => {
-      console.log("res:", res);
       this.users = this.convertRawUser(res);
       this.dataSource.data = this.copyUsers(this.users);
 
@@ -72,18 +71,33 @@ export class AdminComponent implements OnInit {
   getRoleData(): void {
     this.rolesService.getAll()
     .subscribe(res => {
-      console.log("roles:", res);
 
       this.roles = res;
 
+      this.roles = this.sortRoles(this.roles);
+
       this.protectedRoles = this.findProtectedRoles(this.roles);
-      // this.creatorRole = this.findCreator(this.roles)
-      // console.log("creatorRole:", this.creatorRole);
     }, err => {
       console.log(err);
 
       this.openSnackbar(["Error getting roles. Check internet connection"]);
     });
+  }
+
+  sortRoles(roles: Role[]): Role[] {
+    let placeholder: Role;
+
+    for (let i = 0; i < roles.length; i++) {
+      for (let x = i; x < roles.length; x++) {
+        if (roles[i].id > roles[x].id) {
+          placeholder = roles[i];
+          roles[i] = roles[x];
+          roles[x] = placeholder;
+        }
+      }
+    }
+
+    return roles;
   }
 
   convertRawUser(raw: RawUser[]): User[] {
@@ -95,7 +109,7 @@ export class AdminComponent implements OnInit {
       const currentRole: Role = {
         name: current.rolename,
         id: current.roleid,
-        protected: current.roleprotected
+        protected: current.protected
       }
 
       convertedUsers.push({
@@ -141,23 +155,16 @@ export class AdminComponent implements OnInit {
   }
 
   updateRole(user: User, newRole: number): void {
-    console.log("user", user,"\nnewRole:", newRole);
-
     if (this.isProtected(newRole)) {
       if (!confirm("This will change the user to a protected role. This cannot be undone")) {
         this.dataSource.data = this.users;
 
-        console.log("users:", this.users, "\ndataSource.data:", this.dataSource.data);
-
         return;
       }
     }
-    console.log("update role");
 
     this.adminService.updateUser(newRole, user.uid)
     .subscribe(res => {
-      console.log("res:", res);
-
       this.getUserData();
     });
   }

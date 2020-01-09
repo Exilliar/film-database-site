@@ -3,5 +3,5 @@ export interface RawUser {
     email: string;
     rolename: string;
     roleid: number;
-    roleprotected: boolean;
+    protected: boolean;
 }
