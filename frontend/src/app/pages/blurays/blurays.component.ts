@@ -56,13 +56,13 @@ export class BluraysComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getCurrentUser()
-    .then((user) => {
+    .then((user: firebase.User) => {
       this.uid = user.uid;
       this.filmDataService.getUser(user.uid,user.email)
       .subscribe(res => {
         this.user = res;
         this.role = this.user['role'];
-        if (this.role === 2 || this.role === 3) { //CHANGE THIS TO LOOKUP FROM ROLE TABLE TO FIND ADMIN/CREATOR NUMBER
+        if (this.role >= 2) { // TODO CHANGE THIS TO LOOKUP FROM ROLE TABLE TO FIND ADMIN/CREATOR NUMBER
           this.admin = true;
           this.adminService.setAdmin(true);
         }

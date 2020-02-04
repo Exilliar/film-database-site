@@ -11,6 +11,8 @@ import {
 
 import { Router } from '@angular/router';
 
+import { UserService } from 'src/app/services/userService/user.service';
+import { FilmDataService } from 'src/app/services/film-data/film-data.service';
 import { AdminService } from 'src/app/services/admin/admin.service';
 import { RolesService } from 'src/app/services/roles/roles.service';
 
@@ -29,6 +31,8 @@ export class AdminComponent implements OnInit {
     private adminService: AdminService,
     private snackBar: MatSnackBar,
     private rolesService: RolesService,
+    private userService: UserService,
+    private filmDataService: FilmDataService,
 
     private router: Router,
   ) { }
@@ -43,6 +47,8 @@ export class AdminComponent implements OnInit {
 
   roles: Role[];
   protectedRoles: Role[] = [];
+
+  currentUserProtected: boolean; // Stores whether the current user is in a protected role (so can change other users to protected roles)
 
   ngOnInit() {
     this.getUserData();
@@ -68,6 +74,23 @@ export class AdminComponent implements OnInit {
     });
   }
 
+  getCurrentUser(): void {
+    let user: User;
+
+    this.userService.getCurrentUser()
+    .then((user: firebase.User) => {
+      this.filmDataService.getUser(user.uid,user.email)
+      .subscribe(res => {
+        this.currentUserProtected = this.isProtected(res['role']);
+      }, err => {
+        console.log(err);
+      })
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+
   getRoleData(): void {
     this.rolesService.getAll()
     .subscribe(res => {
@@ -77,6 +100,8 @@ export class AdminComponent implements OnInit {
       this.roles = this.sortRoles(this.roles);
 
       this.protectedRoles = this.findProtectedRoles(this.roles);
+
+      this.getCurrentUser();
     }, err => {
       console.log(err);
 
@@ -156,7 +181,7 @@ export class AdminComponent implements OnInit {
 
   updateRole(user: User, newRole: number): void {
     if (this.isProtected(newRole)) {
-      if (!confirm("This will change the user to a protected role. This cannot be undone")) {
+      if (!this.currentUserProtected || !confirm("This will change the user to a protected role. This cannot be undone")) {
         this.dataSource.data = this.users;
 
         return;
