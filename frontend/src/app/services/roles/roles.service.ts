@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
@@ -19,7 +19,7 @@ export class RolesService {
 
   getAll(): Observable<Role[]> {
     return this.http.get<Role[]>(
-      this.baseurl + '/api/roles/all'
+      this.baseurl + '/roles/getAll'
     )
   }
 }

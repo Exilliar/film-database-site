@@ -1,15 +1,15 @@
-film database site endpoints
+Film Database Site endpoints
 
-Current             Description                                                             ChangeTo
-/			        basic alive check                                                       no changes
+Endpoint                    Description
+/			                basic alive check
 
-/api/getData		gets all films from blurays table	                                    /blurays/getAll
-/api/removeFilm     removes one film from blurays table                                     /blurays/removeSingle
-/api/addFilm        adds single film                                                        /blurays/addSingle
-/api/updateWatched  updates the watched value of a single film in blurays table             /blurays/updateWatched
+/blurays/getAll		        gets all films from blurays table
+/blurays/removeSingle       removes one film from blurays table
+/blurays/addSingle          adds single film
+/blurays/updateWatched      updates the watched value of a single film in blurays table
 
-/api/getAllUsers	gets all users from users table                                         /users/getAll
-/api/getUser        gets a given user, if user does not exist, a new user will be created   /users/getSingle
+/users/getAll	            gets all users from users table
+/users/getSingle            gets a given user, if user does not exist, a new user will be created
 
-/api/roles/all      get all roles from roles table                                          /roles/getAll
-/api/roles/update   updates role of a single given user                                     /roles/updateSingle
+/roles/getAll               get all roles from roles table
+/roles/updateSingle         updates role of a single given user

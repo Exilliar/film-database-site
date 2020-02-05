@@ -28,7 +28,7 @@ export class FilmDataService {
     }
 
     return this.http.get<Film[]>(
-      this.baseurl + '/api/getData',
+      this.baseurl + '/blurays/getAll',
       requestOptions
     );
   }
@@ -44,7 +44,7 @@ export class FilmDataService {
       headers: new HttpHeaders(headerDict),
     }
 
-    const url: string = this.baseurl + '/api/getUser';
+    const url: string = this.baseurl + '/users/getSingle';
 
     return this.http.get(url, requestOptions);
   }
@@ -56,7 +56,7 @@ export class FilmDataService {
       'Access-Control-Allow-Origin': origin,
     }
 
-    const url: string = this.baseurl + '/api/addFilm';
+    const url: string = this.baseurl + '/blurays/addSingle';
 
     return this.http.post(url, data, {responseType: 'text'});
   }
@@ -67,7 +67,7 @@ export class FilmDataService {
       'Access-Control-Allow-Origin': origin,
     }
 
-    const url: string = this.baseurl + '/api/removeFilm';
+    const url: string = this.baseurl + '/blurays/removeSingle';
 
     return this.http.post(url, data, {responseType: 'text'});
   }
@@ -77,7 +77,7 @@ export class FilmDataService {
       'film': film
     }
 
-    const url: string = this.baseurl + '/api/updateWatched';
+    const url: string = this.baseurl + '/blurays/updateWatched';
 
     return this.http.post(url,data, {responseType: 'text'});
   }
