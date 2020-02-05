@@ -14,6 +14,7 @@ app.get('/', (req, res) => {
   res.send("It's alive!")
 });
 
+// blurays
 app.get('/api/getData', (req,res) => { // Gets all films from blurays table
   const uid = req.headers.uid;
 
@@ -26,33 +27,42 @@ app.get('/api/getData', (req,res) => { // Gets all films from blurays table
   });
 })
 
-app.get('/api/getAllUsers', (req,res) => { // Gets all users
-  db.any('SELECT u.uid, u.email, r.name AS roleName, u.role AS roleId, r.protected FROM users u, roles r WHERE r.role=u.role')
-  .then(function(data) {
-    res.status(200).send(data);
+app.post('/api/removeFilm', (req,res) => { // Removes film from blurays table
+  db.any('DELETE FROM blurays WHERE id=$1',[req.body.filmid]);
+
+  res.status(200).send("success");
+})
+
+app.post('/api/addFilm', (req,res) => { // Adds film to blurays table
+  const { name, length, watched } = req.body.film;
+  const uid = req.body.uid;
+
+  db.any('INSERT INTO blurays (name, length, watched, uid) VALUES ($1,$2,$3,$4)',[name,length,watched,uid])
+  .then(() => {
+    res.status(200).send("success");
   })
   .catch((err) => {
     res.status(500).send(err);
   });
 })
 
-app.get('/api/roles/all', (req, res) => {
-  db.any('SELECT role AS id, name, protected FROM roles')
-  .then((data) => {
-    res.status(200).send(data);
+app.post('/api/updateWatched', (req,res) => { // Flips the value of watched
+  const { id, watched} = req.body.film;
+
+  db.any('UPDATE blurays SET watched=$1 WHERE id=$2',[!watched,id])
+  .then(() => {
+    res.status(200).send("success");
   })
   .catch((err) => {
     res.status(500).send(err);
-  })
+  });
 })
 
-app.post('/api/roles/update', (req,res) => { // Updates the role of a user, given a uid
-  const uid = req.body.uid;
-  const role = req.body.role;
-
-  db.any('UPDATE users SET role=$1 WHERE uid=$2',[role,uid])
-  .then(() => {
-    res.status(200).send("success");
+// users
+app.get('/api/getAllUsers', (req,res) => { // Gets all users
+  db.any('SELECT u.uid, u.email, r.name AS roleName, u.role AS roleId, r.protected FROM users u, roles r WHERE r.role=u.role')
+  .then(function(data) {
+    res.status(200).send(data);
   })
   .catch((err) => {
     res.status(500).send(err);
@@ -84,29 +94,22 @@ app.get('/api/getUser', (req,res) => { // Gets the user with a given uid, if the
   });
 })
 
-app.post('/api/removeFilm', (req,res) => { // Removes film from blurays table
-  db.any('DELETE FROM blurays WHERE id=$1',[req.body.filmid]);
-
-  res.status(200).send("success");
-})
-
-app.post('/api/addFilm', (req,res) => { // Adds film to blurays table
-  const { name, length, watched } = req.body.film;
-  const uid = req.body.uid;
-
-  db.any('INSERT INTO blurays (name, length, watched, uid) VALUES ($1,$2,$3,$4)',[name,length,watched,uid])
-  .then(() => {
-    res.status(200).send("success");
+// roles
+app.get('/api/roles/all', (req, res) => {
+  db.any('SELECT role AS id, name, protected FROM roles')
+  .then((data) => {
+    res.status(200).send(data);
   })
   .catch((err) => {
     res.status(500).send(err);
-  });
-});
+  })
+})
 
-app.post('/api/updateWatched', (req,res) => { // Flips the value of watched
-  const { id, watched} = req.body.film;
+app.post('/api/roles/update', (req,res) => { // Updates the role of a user, given a uid
+  const uid = req.body.uid;
+  const role = req.body.role;
 
-  db.any('UPDATE blurays SET watched=$1 WHERE id=$2',[!watched,id])
+  db.any('UPDATE users SET role=$1 WHERE uid=$2',[role,uid])
   .then(() => {
     res.status(200).send("success");
   })
