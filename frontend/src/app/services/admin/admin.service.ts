@@ -27,7 +27,7 @@ export class AdminService {
   // baseurl: string = "http://localhost:8081";
 
   getUsers(): Observable<RawUser[]> {
-    return this.http.get<RawUser[]>(this.baseurl + '/api/getAllUsers');
+    return this.http.get<RawUser[]>(this.baseurl + '/users/getAll');
   }
 
   updateUser(role: number, uid: string): Observable<string> {
@@ -37,7 +37,7 @@ export class AdminService {
       'Access-Control-Allow-Origin': origin,
     };
 
-    const url: string = this.baseurl + '/api/roles/update';
+    const url: string = this.baseurl + '/roles/updateSingle';
 
     return this.http.post(url, data, {responseType: 'text'});
   }
