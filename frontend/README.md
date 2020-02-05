@@ -8,6 +8,10 @@ Ensure that the node version used is 12.5 . Other versions could cause errors wi
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
+## Database info
+
+IT IS VERY IMPORTANT THAT THE ROLEID OF THE CREATOR ROLE HAS THE HIGHEST "ROLE" VALUE, IT IS HARDCODED IN THE FRONTEND
+
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.

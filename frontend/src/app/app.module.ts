@@ -23,9 +23,9 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
-import { AuthGuard } from './auth/guard/auth.guard';
-import { AuthService } from './auth/authService/auth.service';
-import { UserService } from './auth/userService/user.service';
+import { AuthGuard } from './guards/auth/auth.guard';
+import { AuthService } from './services/authService/auth.service';
+import { UserService } from './services/userService/user.service';
 
 // Forms
 import { ReactiveFormsModule } from '@angular/forms';
@@ -41,6 +41,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { AdminComponent } from './pages/admin/admin.component';
+import { ViewTableComponent } from './pages/viewTable/view-table.component';
 
 
 @NgModule({
@@ -51,7 +53,9 @@ import { RegisterComponent } from './pages/register/register.component';
     RegisterComponent,
     AddFilmDialogComponent,
     PageNotFoundComponent,
-    HeaderComponent
+    HeaderComponent,
+    AdminComponent,
+    ViewTableComponent
   ],
   imports: [
     BrowserModule,

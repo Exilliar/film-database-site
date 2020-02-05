@@ -8,30 +8,25 @@ import {
     MatSort,
     MatSnackBarRef
 } from '@angular/material';
-import {MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+
+import { ActivatedRoute } from '@angular/router';
 
 import { Film } from 'src/app/models/film.model';
 
-import { UserService } from 'src/app/services/userService/user.service';
-
 import { FilmDataService } from 'src/app/services/film-data/film-data.service';
-import { AdminService } from 'src/app/services/admin/admin.service';
-
-import { AddFilmDialogComponent } from 'src/app/components/add-film-dialog/add-film-dialog.component';
 
 @Component({
-  selector: 'app-blurays',
-  templateUrl: './blurays.component.html',
-  styleUrls: ['./blurays.component.scss']
+  selector: 'app-view-table',
+  templateUrl: './view-table.component.html',
+  styleUrls: ['./view-table.component.scss']
 })
-export class BluraysComponent implements OnInit {
+export class ViewTableComponent implements OnInit {
 
   constructor(
     private filmDataService: FilmDataService,
-    private userService: UserService,
-    private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private adminService: AdminService,
+
+    private route: ActivatedRoute,
   ) { }
 
   displayedColumns: string[] = ['id', 'name', 'length', 'watched'];
@@ -55,52 +50,13 @@ export class BluraysComponent implements OnInit {
   removeToggle: boolean = false; // If false then remove buttons are not shown and film watched can be updated, opposite if true
 
   ngOnInit(): void {
-    this.userService.getCurrentUser()
-    .then((user: firebase.User) => {
-      this.uid = user.uid;
-      this.filmDataService.getUser(user.uid,user.email)
-      .subscribe(res => {
-        this.user = res;
-        this.role = this.user['role'];
-        if (this.role >= 2) { // TODO CHANGE THIS TO LOOKUP FROM ROLE TABLE TO FIND ADMIN/CREATOR NUMBER
-          this.admin = true;
-          this.adminService.setAdmin(true);
-        }
+    this.uid = this.route.snapshot.paramMap.get("uid");
 
-        this.getFilms(false);
-      }, err => {
-        this.getFilms(true);
-      });
-    })
-    .catch(() => {
-      console.log("error getting user");
-    });
-
-    this.dataSource.sort = this.sort;
-  }
-
-  toggleRemoveFilm(): void {
-    this.removeToggle = !this.removeToggle;
-
-    if (!this.removeToggle) this.displayedColumns.pop();
-    else this.displayedColumns.push('removeFilm');
+    this.getFilms(false);
   }
 
   applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  updateWatched(film: object): void {
-    if (!this.removeToggle) {
-      if (confirm("Are you sure you want to flip watched value of " + film['name'] + "?")) {
-        this.filmDataService.updateWatched(film)
-        .subscribe(res => {
-          this.getFilms(false);
-        }, err => {
-          console.log(err);
-        });
-      }
-    }
   }
 
   getFilms(userFailed: boolean): void {
@@ -175,44 +131,4 @@ export class BluraysComponent implements OnInit {
     }
   }
 
-  addFilm(): void {
-    let name: string, len: number, watched: boolean;
-
-    const dialogConfig: MatDialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.data = {
-      name: name,
-      length: len,
-      watched: watched
-    }
-
-    const dialogRef: MatDialogRef<unknown> = this.dialog.open(AddFilmDialogComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(
-      data => {
-        if (data) {
-          this.filmDataService.addFilm(data,this.uid)
-          .subscribe(
-            () => {
-              this.getFilms(false);
-            }
-          );
-        }
-      }
-    );
-  }
-
-  removeFilm(id: number): void {
-    if (confirm("Are you sure you want to delete this film?")){
-      this.filmDataService.removeFilm(id).subscribe(
-        res => {
-          this.getFilms(false);
-        }, err => {
-          console.log(err);
-        }
-      );
-    }
-  }
 }

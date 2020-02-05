@@ -16,6 +16,12 @@
             <mat-icon class="icon">movie</mat-icon>
             <span class="label">Blurays</span>
           </a>
+          <div *ngIf="isAdmin | async">
+            <a mat-list-item routerLink="/admin">
+              <mat-icon class="icon">supervised_user_circle</mat-icon>
+              <span class="label">Users</span>
+            </a>
+          </div>
         </mat-nav-list>
       </mat-sidenav>
       <mat-sidenav-content>
@@ -27,7 +33,7 @@
         </div>
           <div>
             <a>
-              <div class="title">Film Database {{ver}} <ng-container *ngIf="isAdmin | async"><mat-icon class="adminIcon">person_add</mat-icon></ng-container></div> 
+              <div class="title">Film Database {{ver}} <ng-container *ngIf="isAdmin | async"><mat-icon class="adminIcon">verified_user</mat-icon></ng-container></div> 
             </a>
           </div>
           <div fxFlex fxLayout fxLayoutAlign="flex-end"  fxHide.xs>
@@ -50,6 +56,14 @@
                   <mat-icon class="icon">movie</mat-icon>
                   <span class="label">Blurays</span>
                 </a>
+              </li>
+              <li>
+                <div *ngIf="isAdmin | async">
+                  <a routerLink="/admin">
+                    <mat-icon class="icon">supervised_user_circle</mat-icon>
+                    <span class="label">Users</span>
+                  </a>
+                </div>
               </li>
             </ul>
           </div>

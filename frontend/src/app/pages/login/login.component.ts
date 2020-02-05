@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { LoginValue } from 'src/app/models/login-value.model';
 
-import { AuthService } from 'src/app/auth/authService/auth.service';
+import { AuthService } from 'src/app/services/authService/auth.service';
 
 @Component({
   selector: 'page-login',

@@ -26,8 +26,42 @@ app.get('/api/getData', (req,res) => { // Gets all films from blurays table
   });
 })
 
+app.get('/api/getAllUsers', (req,res) => { // Gets all users
+  db.any('SELECT u.uid, u.email, r.name AS roleName, u.role AS roleId, r.protected FROM users u, roles r WHERE r.role=u.role')
+  .then(function(data) {
+    res.status(200).send(data);
+  })
+  .catch((err) => {
+    res.status(500).send(err);
+  });
+})
+
+app.get('/api/roles/all', (req, res) => {
+  db.any('SELECT role AS id, name, protected FROM roles')
+  .then((data) => {
+    res.status(200).send(data);
+  })
+  .catch((err) => {
+    res.status(500).send(err);
+  })
+})
+
+app.post('/api/roles/update', (req,res) => { // Updates the role of a user, given a uid
+  const uid = req.body.uid;
+  const role = req.body.role;
+
+  db.any('UPDATE users SET role=$1 WHERE uid=$2',[role,uid])
+  .then(() => {
+    res.status(200).send("success");
+  })
+  .catch((err) => {
+    res.status(500).send(err);
+  });
+})
+
 app.get('/api/getUser', (req,res) => { // Gets the user with a given uid, if the user does not exist then adds the user and returns the newly created user
   const user = req.headers.user;
+  const email = req.headers.email;
 
   db.one('SELECT * FROM users WHERE uid=$1',[user])
   .then((data) => {
@@ -35,8 +69,8 @@ app.get('/api/getUser', (req,res) => { // Gets the user with a given uid, if the
   })
   .catch((err) => {
     if (err.message === 'No data returned from the query.') {
-      db.any(`INSERT INTO users (uid,role) VALUES ($1,$2);
-              SELECT * FROM users WHERE uid=$1`,[user,1])
+      db.any(`INSERT INTO users (uid,role,email) VALUES ($1,$2,$3);
+              SELECT * FROM users WHERE uid=$1`,[user,1,email])
       .then((data) => {
         res.status(200).send(data);
       })
