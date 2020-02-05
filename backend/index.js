@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
 });
 
 // blurays
-app.get('/api/getData', (req,res) => { // Gets all films from blurays table
+app.get('/blurays/getAll', (req,res) => { // Gets all films from blurays table
   const uid = req.headers.uid;
 
   db.any('SELECT * FROM blurays WHERE uid=$1',[uid])
@@ -27,13 +27,13 @@ app.get('/api/getData', (req,res) => { // Gets all films from blurays table
   });
 })
 
-app.post('/api/removeFilm', (req,res) => { // Removes film from blurays table
+app.post('/blurays/removeSingle', (req,res) => { // Removes film from blurays table
   db.any('DELETE FROM blurays WHERE id=$1',[req.body.filmid]);
 
   res.status(200).send("success");
 })
 
-app.post('/api/addFilm', (req,res) => { // Adds film to blurays table
+app.post('/blurays/addSingle', (req,res) => { // Adds film to blurays table
   const { name, length, watched } = req.body.film;
   const uid = req.body.uid;
 
@@ -46,7 +46,7 @@ app.post('/api/addFilm', (req,res) => { // Adds film to blurays table
   });
 })
 
-app.post('/api/updateWatched', (req,res) => { // Flips the value of watched
+app.post('/blurays/updateWatched', (req,res) => { // Flips the value of watched
   const { id, watched} = req.body.film;
 
   db.any('UPDATE blurays SET watched=$1 WHERE id=$2',[!watched,id])
@@ -59,7 +59,7 @@ app.post('/api/updateWatched', (req,res) => { // Flips the value of watched
 })
 
 // users
-app.get('/api/getAllUsers', (req,res) => { // Gets all users
+app.get('/users/getAll', (req,res) => { // Gets all users
   db.any('SELECT u.uid, u.email, r.name AS roleName, u.role AS roleId, r.protected FROM users u, roles r WHERE r.role=u.role')
   .then(function(data) {
     res.status(200).send(data);
@@ -69,7 +69,7 @@ app.get('/api/getAllUsers', (req,res) => { // Gets all users
   });
 })
 
-app.get('/api/getUser', (req,res) => { // Gets the user with a given uid, if the user does not exist then adds the user and returns the newly created user
+app.get('/users/getSingle', (req,res) => { // Gets the user with a given uid, if the user does not exist then adds the user and returns the newly created user
   const user = req.headers.user;
   const email = req.headers.email;
 
@@ -95,7 +95,7 @@ app.get('/api/getUser', (req,res) => { // Gets the user with a given uid, if the
 })
 
 // roles
-app.get('/api/roles/all', (req, res) => {
+app.get('/roles/getAll', (req, res) => {
   db.any('SELECT role AS id, name, protected FROM roles')
   .then((data) => {
     res.status(200).send(data);
@@ -105,7 +105,7 @@ app.get('/api/roles/all', (req, res) => {
   })
 })
 
-app.post('/api/roles/update', (req,res) => { // Updates the role of a user, given a uid
+app.post('/roles/updateSingle', (req,res) => { // Updates the role of a user, given a uid
   const uid = req.body.uid;
   const role = req.body.role;
 
