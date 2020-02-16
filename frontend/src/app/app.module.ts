@@ -17,45 +17,36 @@ import { environment } from '../environments/environment';
 
 // Material modules
 import { MaterialModule } from './material.module';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 // Firebase authentication
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
-import { AuthGuard } from './guards/auth/auth.guard';
-import { AuthService } from './services/authService/auth.service';
-import { UserService } from './services/userService/user.service';
+import { AuthGuard } from './core/guards/auth/auth.guard';
+import { AuthService } from './core/services/authService/auth.service';
+import { UserService } from './core/services/userService/user.service';
 
 // Forms
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 
 // Services
-import { ThemeService } from './services/theme/theme.service';
+import { ThemeService } from './core/services/theme/theme.service';
 
 // Components
-import { AddFilmDialogComponent } from './components/add-film-dialog/add-film-dialog.component';
-import { BluraysComponent } from './pages/blurays/blurays.component';
-import { HeaderComponent } from './components/header/header.component';
-import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
-import { AdminComponent } from './pages/admin/admin.component';
-import { ViewTableComponent } from './pages/viewTable/view-table.component';
+import { AddFilmDialogComponent } from './core/components/add-film-dialog/add-film-dialog.component';
+import { HeaderComponent } from './core/components/header/header.component';
+import { PageNotFoundComponent } from './core/components/page-not-found/page-not-found.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    BluraysComponent,
-    LoginComponent,
-    RegisterComponent,
     AddFilmDialogComponent,
     PageNotFoundComponent,
     HeaderComponent,
-    AdminComponent,
-    ViewTableComponent
   ],
   imports: [
     BrowserModule,
@@ -70,6 +61,7 @@ import { ViewTableComponent } from './pages/viewTable/view-table.component';
     ReactiveFormsModule,
     FormsModule,
     HttpModule,
+    BrowserAnimationsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [AuthService, UserService, AuthGuard, ThemeService],

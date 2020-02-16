@@ -2,17 +2,12 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 // Components
-import { BluraysComponent } from './pages/blurays/blurays.component';
-import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
-import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-import { AdminComponent } from './pages/admin/admin.component';
+import { PageNotFoundComponent } from './core/components/page-not-found/page-not-found.component';
 
 // Guards
-import { AuthGuard } from './guards/auth/auth.guard';
-import { LoginGuard } from './guards/login/login.guard';
-import { AdminGuard } from './guards/admin/admin.guard';
-import { ViewTableComponent } from './pages/viewTable/view-table.component';
+import { AuthGuard } from './core/guards/auth/auth.guard';
+import { LoginGuard } from './core/guards/login/login.guard';
+import { AdminGuard } from './core/guards/admin/admin.guard';
 
 const routes: Routes = [
   {
@@ -21,24 +16,24 @@ const routes: Routes = [
     pathMatch: 'full'
   }, {
     path: 'login',
-    component: LoginComponent,
-    canActivate: [LoginGuard]
+    canActivate: [LoginGuard],
+    loadChildren: () =>
+      import('./login/login.module').then(m => m.LoginModule)
   }, {
     path: 'register',
-    component: RegisterComponent,
-    canActivate: [LoginGuard]
+    canActivate: [LoginGuard],
+    loadChildren: () =>
+      import('./register/register.module').then(m => m.RegisterModule)
   }, {
     path: 'blurays',
-    component: BluraysComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./blurays/blurays.module').then(m => m.BluraysModule)
   }, {
     path: 'admin',
-    component: AdminComponent,
-    canActivate: [AuthGuard, AdminGuard]
-  }, {
-    path: 'viewTable/:uid',
-    component: ViewTableComponent,
-    canActivate: [AuthGuard, AdminGuard]
+    canActivate: [AuthGuard, AdminGuard],
+    loadChildren: () =>
+      import('./admin/admin.module').then(m => m.AdminModule)
   }, {
     path: '**',
     component: PageNotFoundComponent

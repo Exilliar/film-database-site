@@ -1,0 +1,26 @@
+.all {
+    display: flex;
+  
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .container {
+    width: 66%;
+  
+    text-align: center;
+  
+    margin: 2em;
+  }
+  
+  .form {display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+  }
+  
+  .pad-up {
+    padding-top: 0.5em;
+  }

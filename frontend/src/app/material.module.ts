@@ -18,9 +18,6 @@ import {
     MatDialogModule,
 } from '@angular/material';
 
-import {  } from "@angular/material";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-
 @NgModule ({
     imports: [
         MatSidenavModule,
@@ -34,7 +31,6 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
         MatProgressSpinnerModule,
         MatSortModule,
         MatTableModule,
-        BrowserAnimationsModule,
         MatCardModule,
         MatSnackBarModule,
         MatSlideToggleModule,
@@ -53,7 +49,6 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
         MatProgressSpinnerModule,
         MatSortModule,
         MatTableModule,
-        BrowserAnimationsModule,
         MatCardModule,
         MatSnackBarModule,
         MatSlideToggleModule,
