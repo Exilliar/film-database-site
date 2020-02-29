@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 import { UserService } from 'src/app/core/services/userService/user.service';
 import { FilmDataService } from 'src/app/core/services/film-data/film-data.service';
 import { AdminService } from 'src/app/core/services/admin/admin.service';
-import { RolesService } from 'src/app/core/services/roles/roles.service';
+import { RolesService } from 'src/app/admin/services/roles/roles.service';
 
 import { User } from 'src/app/core/models/user.model';
 import { Role } from 'src/app/core/models/role.model';
